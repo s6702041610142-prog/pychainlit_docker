@@ -1,0 +1,6 @@
+.env
+python_data.pdf
+embeddings_tmp.npy
+__pycache__/
+*.pyc
+.DS_Store

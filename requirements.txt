@@ -1,0 +1,8 @@
+chainlit
+openai
+google-genai>=1.0.0
+python-dotenv
+pandas
+openpyxl
+numpy
+pythainlp>=5.0.0
