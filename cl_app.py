@@ -75,10 +75,13 @@ def _note_failure(where: str, model: str, e: Exception):
 REWRITE_WAIT = 3   # วินาที
 _rewrite_pool = ThreadPoolExecutor(max_workers=4)
 
+REWRITE_QUERY = True
+
 def rewrite_query(query: str, chunks: list) -> str:
     """แก้คำสะกดผิด + เติม keyword ไทย/อังกฤษ ในการเรียก Gemini ครั้งเดียว
     (เดิมแยกเป็น normalize_query + expand_query สองครั้งต่อกัน ทำให้รอนานก่อนเริ่มค้น)"""
-    if not client or _cooling(HELPER_MODEL): return query
+    if not REWRITE_QUERY: return query
+    if not (os.getenv("OPENROUTER_API_KEY") or client): return query
     future = _rewrite_pool.submit(_rewrite_query, query, chunks)
     try:
         return future.result(timeout=REWRITE_WAIT)
@@ -86,22 +89,38 @@ def rewrite_query(query: str, chunks: list) -> str:
         log.info(f"rewrite_query skipped: slower than {REWRITE_WAIT}s")
         return query
 
+def _rewrite_prompt(query: str, chunks: list) -> str:
+    # ไม่แนบเนื้อหาจากการค้นรอบแรก — ถ้ารอบแรกค้นผิดเรื่อง โมเดลจะเติม keyword ผิดตาม และ prompt ยาวทำให้ช้า
+    return (
+        f"คำถามเกี่ยวกับภาษา Python: '{query}'\n"
+        f"แก้คำที่สะกดผิดหรือคำทับศัพท์ภาษาไทย (เช่น ลูปวายล์ = while loop, ลิส = list, ดิกชันนารี = dictionary) "
+        f"แล้วตอบเป็นศัพท์ Python ภาษาอังกฤษและคำไทยที่ตรงกับหัวข้อของคำถาม 2-5 คำ\n"
+        f"ตอบเฉพาะคำ คั่นด้วย space ห้ามอธิบาย"
+    )
+
 def _rewrite_query(query: str, chunks: list) -> str:
+    """ใช้ DeepSeek (เสียเงิน ตอบ ~1 วิ) ถ้ามี OpenRouter key — Gemini ฟรีตอบขั้นนี้ไม่ทัน 3 วิแทบทุกครั้ง"""
+    prompt = _rewrite_prompt(query, chunks)
+    key = os.getenv("OPENROUTER_API_KEY")
+    model = OPENROUTER_PAID_MODELS[0] if key else HELPER_MODEL
+    if _cooling(model):
+        return query
     try:
-        initial_context = search_pdf(query, chunks)   # keyword search ในเครื่อง ไม่เรียก API
-        result = client.models.generate_content(
-            model=HELPER_MODEL,
-            contents=(
-                f"เนื้อหาจากหนังสือ Python MSU:\n{initial_context[:1500]}\n\n"
-                f"คำถามเกี่ยวกับ Python: '{query}'\n\n"
-                f"งาน: แก้คำที่สะกดผิด แล้วบอก Python keyword ที่ถูกต้อง และคำภาษาไทย/อังกฤษที่เกี่ยวข้อง 3-6 คำ\n"
-                f"ตอบเฉพาะ keywords คั่นด้วย space เท่านั้น ห้ามอธิบาย"
-            ),
-            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=40, http_options=HELPER_HTTP),
-        )
-        return f"{query} {result.text.strip().replace(chr(10), ' ')}"
+        if key:
+            from openai import OpenAI
+            r = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=key, timeout=REWRITE_WAIT, max_retries=0) \
+                .chat.completions.create(model=model, messages=[{"role": "user", "content": prompt}],
+                                         temperature=0.0, max_tokens=40,
+                                         extra_body={"reasoning": {"enabled": False}})
+            words = (r.choices[0].message.content or "").strip()
+        else:
+            words = client.models.generate_content(
+                model=model, contents=prompt,
+                config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=40, http_options=HELPER_HTTP),
+            ).text.strip()
+        return f"{query} {words.replace(chr(10), ' ')}"
     except Exception as e:
-        _note_failure("rewrite_query skipped", HELPER_MODEL, e)
+        _note_failure("rewrite_query skipped", model, e)
         return query
 
 GREETING_PATTERNS = {
@@ -275,7 +294,9 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
                 messages=or_history,
                 temperature=0.0,
                 max_tokens=2048,
-                stream=True
+                stream=True,
+                # ปิดโหมด "คิดก่อนตอบ" ของโมเดลเสียเงิน — ตัวอักษรแรกขึ้นเร็วขึ้น (โมเดลฟรีบางตัวไม่รองรับ จึงไม่ส่ง)
+                extra_body={"reasoning": {"enabled": False}} if model_name in OPENROUTER_PAID_MODELS else None,
             )
             async for chunk in _with_idle_timeout(stream):
                 if chunk.choices and chunk.choices[0].delta.content:
