@@ -4,3 +4,4 @@ embeddings_tmp.npy
 __pycache__/
 *.pyc
 .DS_Store
+.streamlit/secrets.toml
