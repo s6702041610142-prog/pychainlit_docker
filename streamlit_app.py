@@ -113,3 +113,4 @@ if user_input:
         else:
             st.session_state.messages.append({"role": "user", "content": user_input})
             st.session_state.messages.append({"role": "model", "content": msg.content})
+            st.caption(f"ตอบโดย: {success}")

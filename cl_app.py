@@ -2,6 +2,8 @@ import os
 import re
 import time
 import asyncio
+import logging
+import sys
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 import chainlit as cl
 from dotenv import load_dotenv
@@ -14,6 +16,15 @@ from retriever import load_chunks, load_qa, load_embeddings, embeddings_ready, s
 from prompt import PROMPT_PYBOT
 
 load_dotenv()
+
+# log ของแอปเอง — ใช้ logging แทน print() ให้ขึ้นใน log ของ Render/Streamlit Cloud ครบทุกบรรทัด
+log = logging.getLogger("pybot")
+if not log.handlers:
+    _h = logging.StreamHandler(sys.stdout)
+    _h.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - pybot - %(message)s"))
+    log.addHandler(_h)
+    log.setLevel(logging.INFO)
+    log.propagate = False
 api_key = os.getenv("GEMINI_API_KEY", "")
 try:
     # timeout (ms) กันคำขอที่ค้างไม่ตอบ และปิดการ retry ภายใน SDK (attempts=1)
@@ -57,7 +68,7 @@ def _note_failure(where: str, model: str, e: Exception):
     if any(k in msg for k in ("429", "RESOURCE_EXHAUSTED", "402", "503", "UNAVAILABLE", "504", "DEADLINE_EXCEEDED")) \
             or isinstance(e, asyncio.TimeoutError):
         _quota_until[model] = time.monotonic() + QUOTA_COOLDOWN
-    print(f"{where} ({model} failed): {type(e).__name__} {msg[:160]}")
+    log.warning(f"{where} ({model} failed): {type(e).__name__} {msg[:160]}")
 
 # ขั้น rewrite เป็นแค่ตัวช่วย — รอไม่เกินเท่านี้ ถ้า Gemini ช้ากว่านี้ก็ค้นด้วยคำถามเดิมไปเลย
 # (timeout ของ API ตั้งต่ำกว่า 10 วินาทีไม่ได้ จึงตัดรอเองฝั่งเรา คำขอที่ค้างจะจบเองในพื้นหลัง)
@@ -72,7 +83,7 @@ def rewrite_query(query: str, chunks: list) -> str:
     try:
         return future.result(timeout=REWRITE_WAIT)
     except FutureTimeout:
-        print(f"rewrite_query skipped: slower than {REWRITE_WAIT}s")
+        log.info(f"rewrite_query skipped: slower than {REWRITE_WAIT}s")
         return query
 
 def _rewrite_query(query: str, chunks: list) -> str:
@@ -213,13 +224,13 @@ async def _reset(msg: cl.Message):
         msg.content = ""
         await msg.update()
 
-async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str) -> bool:
+async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str) -> str | bool:
     if not client:
         return False
     gemini_history = [types.Content(role=h["role"], parts=[types.Part(text=h["content"])]) for h in raw_history]
     for model in GEMINI_MODELS:
         if _cooling(model):
-            print(f"Gemini skip {model}: quota cooldown")
+            log.info(f"Gemini skip {model}: quota cooldown")
             continue
         try:
             await _reset(msg)
@@ -232,14 +243,14 @@ async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str
             if not msg.content.strip():
                 raise RuntimeError("empty answer")   # บางครั้งตอบสำเร็จแต่ไม่มีข้อความ
             await msg.update()
-            print(f"Answered by {model}")
-            return True
+            log.info(f"Answered by {model}")
+            return model
         except Exception as e:   # 404 / 429 / 503 / timeout -> ข้ามไปโมเดลถัดไปทันที ไม่ลองซ้ำ
             _note_failure("Gemini Fallback", model, e)
     return False
 
 async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input: str,
-                                 openrouter_key: str | None, models: list[str] | None = None) -> bool:
+                                 openrouter_key: str | None, models: list[str] | None = None) -> str | bool:
     if not openrouter_key:
         return False
     from openai import AsyncOpenAI
@@ -255,7 +266,7 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
 
     for model_name in (OPENROUTER_MODELS if models is None else models):
         if _cooling(model_name):
-            print(f"OpenRouter skip {model_name}: quota cooldown")
+            log.info(f"OpenRouter skip {model_name}: quota cooldown")
             continue
         try:
             await _reset(msg)
@@ -273,8 +284,8 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
                 # โมเดลฟรีบางตัวตอบ HTTP 200 แต่ข้างในเป็น error ("Upstream error ... overloaded")
                 raise RuntimeError("empty answer")
             await msg.update()
-            print(f"Answered by {model_name}")
-            return True
+            log.info(f"Answered by {model_name}")
+            return model_name
         except Exception as e:
             _note_failure("OpenRouter Fallback", model_name, e)
     return False
@@ -297,8 +308,9 @@ def build_raw_history(session_messages: list, relevant_context: str) -> list:
     })
     return raw_history
 
-async def answer(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> bool:
-    """ลองตอบตามลำดับ: OpenRouter เสียเงิน -> Gemini ฟรี -> OpenRouter ฟรี (ใช้ร่วมกับ streamlit_app.py)"""
+async def answer(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> str | bool:
+    """ลองตอบตามลำดับ: OpenRouter เสียเงิน -> Gemini ฟรี -> OpenRouter ฟรี (ใช้ร่วมกับ streamlit_app.py)
+    คืนชื่อโมเดลที่ตอบได้ หรือ False ถ้าล้มทุกตัว"""
     return (await answer_with_openrouter(msg, raw_history, user_input, openrouter_key, OPENROUTER_PAID_MODELS)
             or await answer_with_gemini(msg, raw_history, user_input)
             or await answer_with_openrouter(msg, raw_history, user_input, openrouter_key))
@@ -345,6 +357,9 @@ async def main(message: cl.Message):
             session_messages.append({"role": "user", "content": user_input})
             session_messages.append({"role": "model", "content": msg.content})
             cl.user_session.set("messages", session_messages)
+            # แสดงว่าโมเดลไหนตอบ (ต่อท้ายหลังบันทึกประวัติแล้ว จึงไม่ถูกส่งกลับไปให้โมเดลในคำถามถัดไป)
+            msg.content += f"\n\n---\n*ตอบโดย: {success}*"
+            await msg.update()
 
     except Exception as e:
         await cl.Message(content=f"❌ เกิดข้อผิดพลาดจาก API: {str(e)}").send()
