@@ -2,6 +2,7 @@ import os
 import re
 import time
 import asyncio
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 import chainlit as cl
 from dotenv import load_dotenv
 from google import genai
@@ -58,40 +59,38 @@ def _note_failure(where: str, model: str, e: Exception):
         _quota_until[model] = time.monotonic() + QUOTA_COOLDOWN
     print(f"{where} ({model} failed): {type(e).__name__} {msg[:160]}")
 
-def normalize_query(query: str) -> str:
+# ขั้น rewrite เป็นแค่ตัวช่วย — รอไม่เกินเท่านี้ ถ้า Gemini ช้ากว่านี้ก็ค้นด้วยคำถามเดิมไปเลย
+# (timeout ของ API ตั้งต่ำกว่า 10 วินาทีไม่ได้ จึงตัดรอเองฝั่งเรา คำขอที่ค้างจะจบเองในพื้นหลัง)
+REWRITE_WAIT = 3   # วินาที
+_rewrite_pool = ThreadPoolExecutor(max_workers=4)
+
+def rewrite_query(query: str, chunks: list) -> str:
+    """แก้คำสะกดผิด + เติม keyword ไทย/อังกฤษ ในการเรียก Gemini ครั้งเดียว
+    (เดิมแยกเป็น normalize_query + expand_query สองครั้งต่อกัน ทำให้รอนานก่อนเริ่มค้น)"""
     if not client or _cooling(HELPER_MODEL): return query
+    future = _rewrite_pool.submit(_rewrite_query, query, chunks)
     try:
-        result = client.models.generate_content(
-            model=HELPER_MODEL,
-            contents=(
-                f"คำถามเกี่ยวกับ Python: '{query}'\n"
-                f"งาน: แก้ typo, ดึง Python keyword ที่ถูกต้อง, และแปลงเป็นคำภาษาไทยที่เกี่ยวข้อง\n"
-                f"ตอบเฉพาะ keywords 2-5 คำ คั่นด้วย space ห้ามอธิบาย"
-            ),
-            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=30, http_options=HELPER_HTTP),
-        )
-        return f"{query} {result.text.strip().replace(chr(10), ' ')}"
-    except Exception as e:
-        _note_failure("normalize_query skipped", HELPER_MODEL, e)
+        return future.result(timeout=REWRITE_WAIT)
+    except FutureTimeout:
+        print(f"rewrite_query skipped: slower than {REWRITE_WAIT}s")
         return query
 
-def expand_query(query: str, chunks: list) -> str:
-    if not client or _cooling(HELPER_MODEL): return query
+def _rewrite_query(query: str, chunks: list) -> str:
     try:
-        initial_context = search_pdf(query, chunks)
+        initial_context = search_pdf(query, chunks)   # keyword search ในเครื่อง ไม่เรียก API
         result = client.models.generate_content(
             model=HELPER_MODEL,
             contents=(
                 f"เนื้อหาจากหนังสือ Python MSU:\n{initial_context[:1500]}\n\n"
-                f"คำถาม: {query}\n\n"
-                f"ดึง keywords ภาษาไทยและอังกฤษที่เกี่ยวข้องกับ Python concept นี้ 2-3 คำ\n"
+                f"คำถามเกี่ยวกับ Python: '{query}'\n\n"
+                f"งาน: แก้คำที่สะกดผิด แล้วบอก Python keyword ที่ถูกต้อง และคำภาษาไทย/อังกฤษที่เกี่ยวข้อง 3-6 คำ\n"
                 f"ตอบเฉพาะ keywords คั่นด้วย space เท่านั้น ห้ามอธิบาย"
             ),
-            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=20, http_options=HELPER_HTTP),
+            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=40, http_options=HELPER_HTTP),
         )
         return f"{query} {result.text.strip().replace(chr(10), ' ')}"
     except Exception as e:
-        _note_failure("expand_query skipped", HELPER_MODEL, e)
+        _note_failure("rewrite_query skipped", HELPER_MODEL, e)
         return query
 
 GREETING_PATTERNS = {
@@ -160,7 +159,7 @@ async def start():
     chunks, qa, emb = load_all_data()
 
     await cl.Message(
-        content="สวัสดีครับ! ผม PyBot ผู้ช่วยเรียน Python จากหนังสือ Python MSU ครับ 🐍\n\n(ขับเคลื่อนด้วย Chainlit + Gemini)"
+        content="สวัสดีครับ! ผม PyBot ผู้ช่วยเรียน Python จากหนังสือ Python MSU ครับ 🐍\n\n(ขับเคลื่อนด้วย Chainlit + DeepSeek / Gemini)"
     ).send()
 
     if emb is None:
@@ -180,14 +179,20 @@ async def start():
                 )
             ).send()
 
+# ลำดับการตอบ: 1) OpenRouter แบบเสียเงิน  2) Gemini ฟรีต่อตรง  3) OpenRouter ฟรี
+# DeepSeek V4.1 Flash: เทส 36 ครั้ง ตอบได้ 100% ตัวอักษรแรกขึ้นค่ากลาง 3.7 วิ ~$0.0006 ต่อคำถาม
+# (Gemini ฟรีชุดเดียวกัน: 10.7 วิ และ quota หมดหลัง 5 ข้อ)
+OPENROUTER_PAID_MODELS = ["deepseek/deepseek-v4.1-flash"]
 # 3.6-flash ตอบครบ/นิ่งกว่า flash-lite — ถ้า quota หมดค่อยตกไป flash-lite
 GEMINI_MODELS     = ["gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.8-flash"]
 # ใช้เฉพาะโมเดลฟรี (:free) — ไม่เสียเครดิต แต่มักโดน rate limit จากต้นทางบ่อย จึงใส่ไว้หลายตัวเผื่อสลับ
 OPENROUTER_MODELS = [
     "nvidia/nemotron-3-super-120b-a12b:free",
     "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
     "qwen/qwen3.8-27b:free",
     "google/gemma-4-26b-a4b-it:free",
+    "cohere/north-mini-code:free",
 ]
 
 STREAM_IDLE_TIMEOUT = 30   # วินาที — สตรีมเงียบนานกว่านี้ถือว่าค้าง แล้วข้ามไปโมเดลถัดไป
@@ -224,6 +229,8 @@ async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str
             async for chunk in _with_idle_timeout(stream):
                 if chunk.text:
                     await msg.stream_token(chunk.text)
+            if not msg.content.strip():
+                raise RuntimeError("empty answer")   # บางครั้งตอบสำเร็จแต่ไม่มีข้อความ
             await msg.update()
             print(f"Answered by {model}")
             return True
@@ -231,7 +238,8 @@ async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str
             _note_failure("Gemini Fallback", model, e)
     return False
 
-async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> bool:
+async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input: str,
+                                 openrouter_key: str | None, models: list[str] | None = None) -> bool:
     if not openrouter_key:
         return False
     from openai import AsyncOpenAI
@@ -245,7 +253,7 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
         or_history.append({"role": role, "content": h["content"]})
     or_history.append({"role": "user", "content": user_input})
 
-    for model_name in OPENROUTER_MODELS:
+    for model_name in (OPENROUTER_MODELS if models is None else models):
         if _cooling(model_name):
             print(f"OpenRouter skip {model_name}: quota cooldown")
             continue
@@ -261,6 +269,9 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
             async for chunk in _with_idle_timeout(stream):
                 if chunk.choices and chunk.choices[0].delta.content:
                     await msg.stream_token(chunk.choices[0].delta.content)
+            if not msg.content.strip():
+                # โมเดลฟรีบางตัวตอบ HTTP 200 แต่ข้างในเป็น error ("Upstream error ... overloaded")
+                raise RuntimeError("empty answer")
             await msg.update()
             print(f"Answered by {model_name}")
             return True
@@ -286,6 +297,12 @@ def build_raw_history(session_messages: list, relevant_context: str) -> list:
     })
     return raw_history
 
+async def answer(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> bool:
+    """ลองตอบตามลำดับ: OpenRouter เสียเงิน -> Gemini ฟรี -> OpenRouter ฟรี (ใช้ร่วมกับ streamlit_app.py)"""
+    return (await answer_with_openrouter(msg, raw_history, user_input, openrouter_key, OPENROUTER_PAID_MODELS)
+            or await answer_with_gemini(msg, raw_history, user_input)
+            or await answer_with_openrouter(msg, raw_history, user_input, openrouter_key))
+
 @cl.on_message
 async def main(message: cl.Message):
     user_input = message.content
@@ -300,8 +317,7 @@ async def main(message: cl.Message):
     async with cl.Step(name="🔍 กำลังค้นหาข้อมูลในหนังสือ...") as step:
         step.input = user_input
         # ฟังก์ชันพวกนี้เรียก API แบบ sync — รันใน thread เพื่อไม่ให้บล็อกผู้ใช้คนอื่น
-        normalized = await asyncio.to_thread(normalize_query, user_input)
-        expanded = await asyncio.to_thread(expand_query, normalized, chunks)
+        expanded = await asyncio.to_thread(rewrite_query, user_input, chunks)
         relevant_context = await asyncio.to_thread(
             search, expanded, chunks, qa_rows, embeddings=embeddings, embed_fn=embed_query,
             semantic_query=user_input)
@@ -320,10 +336,7 @@ async def main(message: cl.Message):
         if not client and not openrouter_key:
             await cl.Message(content="❌ ไม่พบ Gemini API Key หรือ OpenRouter API Key").send()
             return
-        # Gemini เป็นหลัก ถ้าล้มเหลวทุกโมเดล (quota หมด / ล่ม) ค่อยไป OpenRouter
-        success = await answer_with_gemini(msg, raw_history, user_input)
-        if not success:
-            success = await answer_with_openrouter(msg, raw_history, user_input, openrouter_key)
+        success = await answer(msg, raw_history, user_input, openrouter_key)
 
         if not success:
             await cl.Message(content="⚠️ ไม่สามารถเชื่อมต่อกับโมเดลใดๆ ได้ในขณะนี้ กรุณาตรวจสอบ API Key หรือลองใหม่ภายหลัง").send()

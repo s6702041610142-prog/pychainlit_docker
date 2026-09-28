@@ -16,7 +16,7 @@ GREETING_REPLY = "สวัสดีครับ! ผม PyBot ผู้ช่�
 
 st.set_page_config(page_title="PyBot — Python MSU", page_icon="🐍")
 st.title("🐍 PyBot")
-st.caption("ผู้ช่วยเรียน Python จากหนังสือ Python MSU (ขับเคลื่อนด้วย Gemini)")
+st.caption("ผู้ช่วยเรียน Python จากหนังสือ Python MSU (ขับเคลื่อนด้วย DeepSeek / Gemini)")
 
 
 @st.cache_resource(show_spinner="กำลังโหลดเนื้อหาหนังสือ...")
@@ -89,8 +89,7 @@ if user_input:
             st.stop()
 
         with st.status("🔍 กำลังค้นหาข้อมูลในหนังสือ...", expanded=False) as status:
-            normalized = core.normalize_query(user_input)
-            expanded = core.expand_query(normalized, chunks)
+            expanded = core.rewrite_query(user_input, chunks)
             relevant_context = search(expanded, chunks, qa_rows, embeddings=embeddings,
                                       embed_fn=core.embed_query, semantic_query=user_input)
             st.text(relevant_context)
@@ -100,10 +99,8 @@ if user_input:
         msg = StreamlitMessage(st.empty())
 
         async def answer() -> bool:
-            # Gemini เป็นหลัก ถ้าล้มเหลวทุกโมเดล (quota หมด / ล่ม) ค่อยไป OpenRouter
-            if await core.answer_with_gemini(msg, raw_history, user_input):
-                return True
-            return await core.answer_with_openrouter(msg, raw_history, user_input, openrouter_key)
+            # ลำดับเดียวกับ cl_app.py: OpenRouter เสียเงิน -> Gemini ฟรี -> OpenRouter ฟรี
+            return await core.answer(msg, raw_history, user_input, openrouter_key)
 
         try:
             success = run_async(answer())

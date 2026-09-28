@@ -14,6 +14,8 @@ COPY . .
 # Hugging Face Spaces (Docker SDK) expects the app on port 7860.
 # Render/Railway/Fly inject their own $PORT — this falls back to 7860 if unset.
 ENV PORT=7860
+# แสดง print() ใน log ทันที (ไม่งั้น Python จะเก็บไว้ใน buffer และ log บน Render จะไม่ครบ)
+ENV PYTHONUNBUFFERED=1
 EXPOSE 7860
 
 CMD ["sh", "-c", "chainlit run cl_app.py --host 0.0.0.0 --port ${PORT} --headless"]
