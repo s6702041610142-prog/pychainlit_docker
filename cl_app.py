@@ -357,9 +357,6 @@ async def main(message: cl.Message):
             session_messages.append({"role": "user", "content": user_input})
             session_messages.append({"role": "model", "content": msg.content})
             cl.user_session.set("messages", session_messages)
-            # แสดงว่าโมเดลไหนตอบ (ต่อท้ายหลังบันทึกประวัติแล้ว จึงไม่ถูกส่งกลับไปให้โมเดลในคำถามถัดไป)
-            msg.content += f"\n\n---\n*ตอบโดย: {success}*"
-            await msg.update()
 
     except Exception as e:
         await cl.Message(content=f"❌ เกิดข้อผิดพลาดจาก API: {str(e)}").send()
