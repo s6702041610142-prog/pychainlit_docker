@@ -6,3 +6,4 @@ pandas
 openpyxl
 numpy
 pythainlp>=5.0.0
+streamlit

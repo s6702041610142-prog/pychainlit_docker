@@ -15,7 +15,8 @@ from prompt import PROMPT_PYBOT
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY", "")
 try:
-    client = genai.Client(api_key=api_key)
+    # timeout (ms) กันคำขอที่ค้างไม่ตอบ — ไม่งั้นแอปจะรอไปเรื่อย ๆ
+    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=60_000))
 except ValueError:
     client = None
 
@@ -34,7 +35,7 @@ CHAT_CONFIG = types.GenerateContentConfig(
 )
 
 BASE_DIR = os.path.dirname(__file__)
-MAX_HISTORY_MESSAGES = 6
+MAX_HISTORY_MESSAGES = 20   # 10 รอบคุย — 6 (3 รอบ) ทำให้ลืมสิ่งที่ผู้ใช้บอกเร็วเกินไป
 
 def normalize_query(query: str) -> str:
     if not client: return query
@@ -105,19 +106,160 @@ def embed_query(text: str) -> np.ndarray:
     )
     return np.array(result.embeddings[0].values, dtype=np.float32)
 
+# แคชผล self-test ของ semantic search ไว้ระดับ process — ไม่ยิง API ซ้ำทุกครั้งที่มีคนเปิดแชทใหม่
+# ผลสำเร็จแคชถาวร แต่ผลล้มเหลวแคชแค่ช่วงสั้นๆ เพราะอาจเป็นปัญหาชั่วคราว (เน็ตหลุด / rate limit)
+# ถ้าแคชถาวร ผู้ใช้ทุกคนหลังจากนั้นจะเห็นคำเตือนไปจนกว่าจะรีสตาร์ทแอป
+SEMANTIC_FAIL_TTL = 60   # วินาที
+_semantic_status = {"ok": False, "detail": "", "checked_at": None}
+
+def check_semantic_search() -> tuple[bool, str]:
+    """ทดสอบว่า semantic search ใช้งานได้จริง ไม่ใช่แค่เช็คว่ามีไฟล์ embeddings.npy อยู่หรือไม่
+    เพราะ embeddings.npy อาจมีอยู่และตรงกับจำนวน chunk แต่ query-time embedding ยังพังได้
+    (เช่น GEMINI_API_KEY หายไปจาก .env) โดยที่ embeddings_ready() มองไม่เห็นเคสนี้เลย"""
+    if not client:   # ไม่มี key เป็นปัญหาถาวร ไม่ต้องลองใหม่
+        return False, "ไม่มี GEMINI_API_KEY หรือ key ไม่ถูกต้อง (genai.Client สร้างไม่สำเร็จ)"
+    checked_at = _semantic_status["checked_at"]
+    if checked_at is not None and (
+        _semantic_status["ok"] or time.monotonic() - checked_at < SEMANTIC_FAIL_TTL
+    ):
+        return _semantic_status["ok"], _semantic_status["detail"]
+    try:
+        vec = embed_query("ทดสอบระบบ")
+        ok, detail = (False, "embed_query() คืนค่าว่าง") if vec is None or len(vec) == 0 else (True, "")
+    except Exception as e:
+        ok, detail = False, str(e)[:150]
+    _semantic_status.update(ok=ok, detail=detail, checked_at=time.monotonic())
+    return ok, detail
+
 @cl.on_chat_start
 async def start():
     cl.user_session.set("messages", [])
     chunks, qa, emb = load_all_data()
-    
+
     await cl.Message(
         content="สวัสดีครับ! ผม PyBot ผู้ช่วยเรียน Python จากหนังสือ Python MSU ครับ 🐍\n\n(ขับเคลื่อนด้วย Chainlit + Gemini)"
     ).send()
-    
+
     if emb is None:
         await cl.Message(content="ℹ️ คำเตือน: ไม่มีไฟล์ embeddings.npy ระบบจะใช้เฉพาะ Keyword Search").send()
     elif not embeddings_ready(emb, chunks):
         await cl.Message(content="⚠️ คำเตือน: embeddings.npy ไม่ตรงกับเนื้อหา ระบบจะปิด Semantic Search ชั่วคราว").send()
+    else:
+        ok, detail = await asyncio.to_thread(check_semantic_search)
+        if not ok:
+            await cl.Message(
+                content=(
+                    "⚠️ คำเตือน: ทดสอบ Semantic Search ไม่ผ่าน แม้ embeddings.npy จะมีอยู่ครบ "
+                    f"(สาเหตุ: {detail}) ระบบจะยังลองใช้ Semantic Search ทุกคำถาม "
+                    "และถ้าล้มเหลวจะค้นด้วย Keyword Search แทน "
+                    "ซึ่งอาจตอบไม่ครบถ้วนในคำถามที่ใช้คำภาษาอังกฤษ/ไทยสลับกับเนื้อหาต้นฉบับ "
+                    "— ตรวจสอบค่า GEMINI_API_KEY ใน .env หรือ environment secret"
+                )
+            ).send()
+
+# 3.6-flash ตอบครบ/นิ่งกว่า flash-lite — ถ้า quota หมดค่อยตกไป flash-lite
+GEMINI_MODELS     = ["gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.8-flash"]
+# ใช้เฉพาะโมเดลฟรี (:free) — ไม่เสียเครดิต แต่มักโดน rate limit จากต้นทางบ่อย จึงใส่ไว้หลายตัวเผื่อสลับ
+OPENROUTER_MODELS = [
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "google/gemma-4-31b-it:free",
+    "qwen/qwen3.8-27b:free",
+    "google/gemma-4-26b-a4b-it:free",
+]
+
+STREAM_IDLE_TIMEOUT = 30   # วินาที — สตรีมเงียบนานกว่านี้ถือว่าค้าง แล้วข้ามไปโมเดลถัดไป
+
+async def _with_idle_timeout(stream, seconds: float = STREAM_IDLE_TIMEOUT):
+    """วน async stream โดยโยน TimeoutError ถ้าไม่มี chunk ใหม่มาภายใน seconds"""
+    it = stream.__aiter__()
+    while True:
+        try:
+            chunk = await asyncio.wait_for(it.__anext__(), seconds)
+        except StopAsyncIteration:
+            return
+        yield chunk
+
+async def _reset(msg: cl.Message):
+    """ล้างข้อความที่สตรีมค้างไว้จากโมเดลที่ล้มกลางทาง ก่อนลองโมเดลถัดไป"""
+    if msg.content:
+        msg.content = ""
+        await msg.update()
+
+async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str) -> bool:
+    if not client:
+        return False
+    gemini_history = [types.Content(role=h["role"], parts=[types.Part(text=h["content"])]) for h in raw_history]
+    for model in GEMINI_MODELS:
+        for attempt in range(3):
+            try:
+                await _reset(msg)
+                # ใช้ client.aio (async) — ตัว sync จะบล็อก event loop ทั้งเซิร์ฟเวอร์ระหว่างรอ Gemini
+                chat = client.aio.chats.create(model=model, config=CHAT_CONFIG, history=gemini_history)
+                stream = await asyncio.wait_for(chat.send_message_stream(user_input), STREAM_IDLE_TIMEOUT)
+                async for chunk in _with_idle_timeout(stream):
+                    if chunk.text:
+                        await msg.stream_token(chunk.text)
+                await msg.update()
+                print(f"Answered by {model}")
+                return True
+            except errors.ServerError:
+                if attempt < 2:
+                    await asyncio.sleep(7)
+            except Exception as e:   # 404 / 429 quota หมด ฯลฯ -> ข้ามไปโมเดลถัดไป
+                print(f"Gemini Fallback ({model} failed): {type(e).__name__} {str(e)[:200]}")
+                break
+    return False
+
+async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> bool:
+    if not openrouter_key:
+        return False
+    from openai import AsyncOpenAI
+    openai_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=openrouter_key, timeout=60)
+
+    # แปลง role: "model" -> "assistant"
+    or_history = [{"role": "system", "content": PROMPT_PYBOT}]
+    for h in raw_history:
+        role = "assistant" if h["role"] == "model" else h["role"]
+        or_history.append({"role": role, "content": h["content"]})
+    or_history.append({"role": "user", "content": user_input})
+
+    for model_name in OPENROUTER_MODELS:
+        try:
+            await _reset(msg)
+            stream = await openai_client.chat.completions.create(
+                model=model_name,
+                messages=or_history,
+                temperature=0.0,
+                max_tokens=2048,
+                stream=True
+            )
+            async for chunk in _with_idle_timeout(stream):
+                if chunk.choices and chunk.choices[0].delta.content:
+                    await msg.stream_token(chunk.choices[0].delta.content)
+            await msg.update()
+            print(f"Answered by {model_name}")
+            return True
+        except Exception as e:
+            print(f"OpenRouter Fallback ({model_name} failed): {type(e).__name__} {str(e)[:200]}")
+    return False
+
+def build_raw_history(session_messages: list, relevant_context: str) -> list:
+    """ประวัติแชทล่าสุด + เนื้อหาจากหนังสือที่ค้นมา ในรูป dict กลาง (ใช้ร่วมกับ streamlit_app.py)"""
+    raw_history = [{"role": m["role"], "content": m["content"]}
+                   for m in session_messages[-MAX_HISTORY_MESSAGES:]]
+    raw_history.append({
+        "role": "user",
+        "content": (
+            f"[เนื้อหาจากหนังสือ Python MSU ที่เกี่ยวข้องกับคำถามถัดไป — ใช้เนื้อหานี้เป็นหลักในการตอบ]\n\n"
+            f"{relevant_context}\n\n"
+            f"[สิ้นสุดเนื้อหาจากหนังสือ]"
+        )
+    })
+    raw_history.append({
+        "role": "model",
+        "content": "รับทราบครับ จะตอบโดยอ้างอิงจากเนื้อหาหนังสือที่ให้มาเป็นหลักครับ"
+    })
+    return raw_history
 
 @cl.on_message
 async def main(message: cl.Message):
@@ -132,111 +274,31 @@ async def main(message: cl.Message):
     # แสดง Step การค้นหา (ผู้ใช้กดดูรายละเอียดได้)
     async with cl.Step(name="🔍 กำลังค้นหาข้อมูลในหนังสือ...") as step:
         step.input = user_input
-        normalized = normalize_query(user_input)
-        expanded = expand_query(normalized, chunks)
-        relevant_context = search(expanded, chunks, qa_rows, embeddings=embeddings, embed_fn=embed_query)
+        # ฟังก์ชันพวกนี้เรียก API แบบ sync — รันใน thread เพื่อไม่ให้บล็อกผู้ใช้คนอื่น
+        normalized = await asyncio.to_thread(normalize_query, user_input)
+        expanded = await asyncio.to_thread(expand_query, normalized, chunks)
+        relevant_context = await asyncio.to_thread(
+            search, expanded, chunks, qa_rows, embeddings=embeddings, embed_fn=embed_query,
+            semantic_query=user_input)
         step.output = relevant_context
     
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
     
-    # โหลดประวัติแบบ dict กลางไว้ก่อน
     session_messages = cl.user_session.get("messages")
-    raw_history = []
-    for msg in session_messages[-MAX_HISTORY_MESSAGES:]:
-        raw_history.append({"role": msg["role"], "content": msg["content"]})
-        
-    # แทรก Context แบบ dict
-    raw_history.append({
-        "role": "user",
-        "content": (
-            f"[เนื้อหาจากหนังสือ Python MSU ที่เกี่ยวข้องกับคำถามถัดไป — ใช้เนื้อหานี้เป็นหลักในการตอบ]\n\n"
-            f"{relevant_context}\n\n"
-            f"[สิ้นสุดเนื้อหาจากหนังสือ]"
-        )
-    })
-    raw_history.append({
-        "role": "model",
-        "content": "รับทราบครับ จะตอบโดยอ้างอิงจากเนื้อหาหนังสือที่ให้มาเป็นหลักครับ"
-    })
+    raw_history = build_raw_history(session_messages, relevant_context)
     
     # เตรียมส่งข้อความแบบสตรีม
     msg = cl.Message(content="")
     await msg.send()
     
     try:
-        success = False
-        if openrouter_key:
-            # === โหมด OpenRouter ===
-            from openai import AsyncOpenAI
-            openai_client = AsyncOpenAI(
-                base_url="https://openrouter.ai/api/v1",
-                api_key=openrouter_key,
-            )
-
-            # แปลง role: "model" -> "assistant"
-            or_history = [{"role": "system", "content": PROMPT_PYBOT}]
-            for h in raw_history:
-                role = "assistant" if h["role"] == "model" else h["role"]
-                or_history.append({"role": role, "content": h["content"]})
-            or_history.append({"role": "user", "content": user_input})
-
-            # ใช้โมเดลเดิมแต่ผ่าน OpenRouter (สามารถเปลี่ยนเป็น claude-3.5-sonnet ได้ตามต้องการ)
-            models = ["google/gemini-2.5-flash", "google/gemini-flash-1.5", "openai/gpt-4o-mini"]
-            for model_name in models:
-                try:
-                    stream = await openai_client.chat.completions.create(
-                        model=model_name,
-                        messages=or_history,
-                        temperature=0.0,
-                        max_tokens=2048,
-                        stream=True
-                    )
-
-                    async for chunk in stream:
-                        if chunk.choices[0].delta.content:
-                            await msg.stream_token(chunk.choices[0].delta.content)
-
-                    await msg.update()
-                    success = True
-                    break
-                except Exception as e:
-                    print(f"OpenRouter Fallback ({model_name} failed): {e}")
-                    continue
-        else:
-            # === โหมด Google Gemini ดั้งเดิม ===
-            if not client:
-                await cl.Message(content="❌ ไม่พบ Gemini API Key หรือ OpenRouter API Key").send()
-                return
-
-            gemini_history = []
-            for h in raw_history:
-                gemini_history.append(types.Content(role=h["role"], parts=[types.Part(text=h["content"])]))
-
-            models = ["gemini-3.5-flash-lite", "gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
-            for model in models:
-                for attempt in range(3):
-                    try:
-                        chat = client.chats.create(model=model, config=CHAT_CONFIG, history=gemini_history)
-                        response_stream = chat.send_message_stream(user_input)
-
-                        for chunk in response_stream:
-                            if chunk.text:
-                                await msg.stream_token(chunk.text)
-
-                        await msg.update()
-                        success = True
-                        break
-                    except errors.ServerError:
-                        if attempt < 2:
-                            await asyncio.sleep(7)
-                        continue
-                    except Exception as e:
-                        if "404" in str(e) or "not found" in str(e).lower():
-                            break  # ลองเปลี่ยนไปใช้ model ถัดไปใน list
-                        else:
-                            raise e
-                if success:
-                    break
+        if not client and not openrouter_key:
+            await cl.Message(content="❌ ไม่พบ Gemini API Key หรือ OpenRouter API Key").send()
+            return
+        # Gemini เป็นหลัก ถ้าล้มเหลวทุกโมเดล (quota หมด / ล่ม) ค่อยไป OpenRouter
+        success = await answer_with_gemini(msg, raw_history, user_input)
+        if not success:
+            success = await answer_with_openrouter(msg, raw_history, user_input, openrouter_key)
 
         if not success:
             await cl.Message(content="⚠️ ไม่สามารถเชื่อมต่อกับโมเดลใดๆ ได้ในขณะนี้ กรุณาตรวจสอบ API Key หรือลองใหม่ภายหลัง").send()

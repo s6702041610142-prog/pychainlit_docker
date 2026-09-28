@@ -1779,52 +1779,34 @@ C:\Python33> python Hello.py **ผ**
 
 เช่น   C:\Python33> python Hello.py **Suchart** 
 
-```
-Program Example 3.1: Hello World!
-```
 
-```
-1 #!/usr/bin/python
-2 #This program looks like the expert system, you can talk with
-this computer.
-3 #How to run this program:
-4 #In MS-DOS prompt, you should type: python name.py your_name
-5 #For example : python exam3_1.py Suchart
-6 #Version 1.0
-7 #Written by Mr Suchart
-8 #GNU License : You can modify and publish this software
-everywhere
-9
-10 import sys
-11
-12 if len(sys.argv) == 2 :
-13     if sys.argv[1] != '' :
-14         print("Computer said : Hello, I'm Python!!!")
-15         print("Computer said : How are you today?
-",sys.argv[1])
-16         feeling = input("You said : I'm ")
-17         print("Computer said : Ohh! you are ",feeling,"!!")
-18         print("You said : How about you?")
-19         print("Computer said : Very good!")
-20
-21 else :
-22     print("Computer said : I cannot talk with you, because
-your argv was missing!!!")
+**Program Example 3.1: Hello World!**
+
+```python
+#!/usr/bin/python
+#This program looks like the expert system, you can talk with this computer.
+#How to run this program:
+#In MS-DOS prompt, you should type: python name.py your_name
+#For example : python exam3_1.py Suchart
+#Version 1.0
+#Written by Mr Suchart
+#GNU License : You can modify and publish this software everywhere
+
+import sys
+
+if len(sys.argv) == 2 :
+    if sys.argv[1] != '' :
+        print("Computer said : Hello, I'm Python!!!")
+        print("Computer said : How are you today? ",sys.argv[1])
+        feeling = input("You said : I'm ")
+        print("Computer said : Ohh! you are ",feeling,"!!")
+        print("You said : How about you?")
+        print("Computer said : Very good!")
+
+else :
+    print("Computer said : I cannot talk with you, because your argv was missing!!!")
 ```
 
-หน้า 46 
-
-
-
-โปรแกรม Hello.py มีลักษณะการท างานคล้ายระบบผู้เชี่ยวชาญ ที่สามารถโต้ตอบกับผู้ใช้งาน คอมพิวเตอร์ได้ ซึ่งโปรแกรมแรกของเรา แม้ว่าจะโต้ตอบกับคอมพิวเตอร์ได้ไม่มากนัก แต่ก็ถือว่าเป็น การเริ่มต้นในการเขียนโปรแกรมแรกที่ดูท้าทายขึ้น ต่อไปเรามาลองศึกษากันดูซิว่าแต่ละบรรทัด หมายถึงอะไร 
-
-**1:** เครื่องหมาย # คือการ Comment หมายความว่าตัวแปลภาษาจะข้ามบรรทัด ดังกล่าวไป โดยไม่แปลความหมายใดๆ แต่ ส าหรับในบรรทัดนี้ มีความหมายที่แตกต่างไปเล็กน้อยคือ หลังเครื่องหมาย # มีข้อความ !/usr/bin/python ซึ่งหมายถึงการประกาศให้โปรแกรมรู้ว่าเรียกตัวแปล ภาษาได้จากที่ไหน ส าหรับในที่นี้เป็นการประกาศบนระบบปฏิบัติการยูนิกส์-ลินุกซ์ ส าหรับวินโดวส์ สามารถลบบรรทัดดังกล่าวทิ้งไปได้เลย ไม่จ าเป็นต้องใช้งาน 
-
-**2 - 8:** คือการอธิบายว่าโปรแกรมท างานอะไร ใช้ข้อมูลอะไรบ้างเพื่อให้โปรแกรม ท างานได้สมบูรณ์ โปรแกรมใช้งานได้อย่างไร เวอร์ชันอะไร ใครเป็นผู้พัฒนาโปรแกรม รวมถึงอาจจะ กล่าวถึงเรื่องลิขสิทธิ์ด้วยถ้าจ าเป็น 
-
-**10:** คือการเรียกใช้คลาส sys (system) เป็นไลบรารี่ที่จัดการเกี่ยวกับระบบ (System) 
-
-**12:** คือการตรวจสอบเงื่อนไขว่าพารามิเตอร์ที่รับเข้ามาพร้อมกับโปรแกรมนั้น มี จ านวน 2 ตัวแปรหรือไม่ (len(sys.argv คือการหาจ านวนพารามิเตอร์)) คือ ชื่อโปรแกรม (Hello.py) และชื่อผู้เขียนโปรแกรม (Suchart) ถ้ามีจ านวนตัวแปรเท่ากับ 2 ให้ท าค าสั่งหลัง if ต่อไป ถ้าไม่เป็นจริง ซึ่งแปลความหมายได้ 2 กรณี คือ ขณะสั่งรันโปรแกรมไม่ใส่พารามิเตอร์ต่อท้ายไฟล์มาด้วย หรือใส่ พารามิเตอร์เกินที่ก าหนด โปรแกรมจะกระโดดไปท างานในบรรทัดที่ 21 (หลังค าสั่ง else) เพื่อพิมพ์ ข้อความว่า “I cannot talk with you, because your argv was missing!!!" และจบการท างานทันที 
 
 **13:** คือการตรวจสอบเงื่อนไขว่าชื่อที่ต่อท้ายไฟล์ขณะท าการรันโปรแกรมนั้น เป็นค่า ว่างหรือไม่ (ผู้ใช้งานอาจจะใส่ค่า Space) ถ้าเป็นค่าว่าง โปรแกรมจะจบการท างานทันที แต่ถ้าเป็นจริง จะท างานในบรรทัดที่ 14 ต่อไป 
 
@@ -4459,7 +4441,22 @@ Start<br>if condition<br>is  True<br>condition<br>if condition  statement(s)<br>
 
 
 <!-- Start of picture text -->
-Program Example 6.1:  if<br>1  # If command testing<br> 2  var1 = 100;<br> 3  if var1: #This condition is True<br> 4     print ("1 - Got a true expression value")<br> 5     print (var1)<br> 6  var2 = 0;<br> 7  if var2: #This condition is False<br>8     print ("2 - Got a true expression value")<br>9     print (var2)<br> 10  print("Good bye!")<br><!-- End of picture text -->
+
+**Program Example 6.1: if**
+
+```python
+# If command testing
+var1 = 100;
+if var1:    #This condition is True
+    print ("1 - Got a true expression value")
+    print (var1)
+var2 = 0;
+if var2:    #This condition is False
+    print ("2 - Got a true expression value")
+    print (var2)
+print("Good bye!")
+```
+
 
 `1 - Got a true expression value 100` **OUTPUT** `Good bye!` 
 
@@ -4579,7 +4576,19 @@ Start<br>if condition  if condition<br>is  False is  True<br>condition<br>else c
 
 <u>ตัวอยางโปรแกรมท่ 6.4 ี่</u> โปรแกรมตรวจสอบเลขจ านวนคี่คู่ 
 
-**<mark>`Program Example 6.4:`</mark>** **_<mark>`Odd or Even`</mark>_** `1` _`# Testing Odd or Even`_ <mark></mark> **<mark>`2`</mark>** `Num = int(input("Enter Integer Number :"))` <mark></mark> **<mark>`3`</mark>** `if Num % 2 != 0:` <mark></mark> **<mark>`4`</mark>** `print(Num," is Odd.")` <mark></mark> **<mark>`5`</mark>** `else:` <mark></mark> **<mark>`6`</mark>** `print(Num," is Even.")` <mark></mark> **<mark>`7`</mark>** <u>`print("Good bye!")`</u> 
+
+**Program Example 6.4: Odd or Even**
+
+```python
+# Testing Odd or Even
+Num = int(input("Enter Integer Number :"))
+if Num % 2  != 0:
+    print(Num," is Odd.")
+else:
+    print(Num," is Even.")
+print("Good bye!")
+```
+
 
 `Enter Integer Number :` **`35`** `35 is Odd.` **OUTPUT** `Good bye! Enter Integer Number :` **`22`** `22 is Even. Good bye!` 
 
@@ -4611,81 +4620,26 @@ if  condition 1 :<br>statement(s)<br>elif  condition 2 :<br>statement(s)<br>…<
 <!-- Start of picture text -->
 Start<br>if code of  True False<br>Condition 1<br>condition 1<br>if code of  True False<br>Condition 2<br>condition 2<br>if code of  True False<br>Condition 3<br>condition 3<br>if code of  True False Default else<br>Condition n<br>condition n code<br>End<br>รูปที่ 6.5  แสดงแผนภาพจ าลองการท างานของค าสั่ง if…elif<br>ตัวอยางโปรแกรมท่  6.5 ี่<br><!-- End of picture text -->
 
-**<mark>`Program Example 6.5:`</mark>** **_<mark>`if…elif`</mark>_** `1 var = 100` <mark></mark> **<mark>`2`</mark>** `if var == 200: 3 print ("1 - Got a true expression value") 4 print (var)` <mark></mark> **<mark>`5`</mark>** `elif var == 150: 6 print ("2 - Got a true expression value") 7 print (var)` <mark></mark> **<mark>`8`</mark>** `elif var == 100:` <mark></mark> **<mark>`9`</mark>** `print ("3 - Got a true expression value")` <mark></mark> **<mark>`10`</mark>** `print (var) 11 else: 12 print ("4 - Got a false expression value") 13 print (var)` <mark></mark> **<mark>`14`</mark>** <u>`print ("Good bye!")`</u> 
 
-`3 - Got a true expression value 100` **OUTPUT** `Good bye!` 
+**Program Example 6.5: if…elif**
 
-จากตัวอย่างโปรแกรมที่ 6.5 บรรทัดที่ 1 ก าหนดค่าให้ตัวแปร var เท่ากับ 100 ต่อจากนั้นโปรแกรม เลื่อนมาท างานบรรทัดที่ 2 เพื่อเปรียบเทียบเงื่อนไขว่า var เท่ากับ 200 จริงหรือไม่ ผลลัพธ์ที่ได้เป็นเท็จ จึงเลื่อนมาเปรียบเทียบในบรรทัดที่ 5 ผลที่ได้มีค่าเป็นเท็จ (ตัวแปร var มีค่าไม่เท่า 150) โปรแกรมจึง เลื่อนมาเปรียบเทียบเงื่อนไขต่อในบรรทัดที่ 8 ซึ่ง var มีค่าเท่ากับ 100 เป็นจริง โปรแกรมจึงท าค าสั่ง 
+```python
+var = 100
+if var == 200:
+    print ("1 - Got a true expression value")
+    print (var)
+elif var == 150:
+    print ("2 - Got a true expression value")
+    print (var)
+elif var == 100:
+    print ("3 - Got a true expression value")
+    print (var)
+else:
+    print ("4 - Got a false expression value")
+    print (var)
+print ("Good bye!")
+```
 
-หน้า 119 
-
-
-
-หลัง :  ในบรรทัดที่ 9 และ 10 โดยการพิมพ์ข้อความว่า  "3 - Got a true expression value" และ 100 ออกทางจอภาพ ต่อจากนั้นโปรแกรมจะกระโดดข้ามไปพิมพ์ข้อความว่า "Good bye!" ในบรรทัดที่ 14 แล้วจบการท างาน 
-
-<u>โจทยต์</u> ัวอย่างและผงงานั 
-
-จงเขียนโปรแกรมค านวณเกรดของนักเรียน โดยรับคะแนนจากแป้นพิมพ์ โดยมีเงื่อนไขการตัดเกรดดังนี้ 
-
-|**ช่วงคะแนน**|**เกรดที่ได**|
-|---|---|
-|80 - 100|A|
-|75 - 79|B+|
-|70 - 74|B|
-|65 - 69|C+|
-|60 - 64|C|
-|55 - 59|D+|
-|50 - 54|D|
-|0 - 49|F|
-
-
-
-
-
-ตัวอย่างอินพุต: Enter your score : **73** 
-
-ตัวอย่างเอาต์พุต: 
-
-Your grade is **B** 
-
-ผังงานของโปรแกรมค านวณเกรด ดังรูปที่ 6.6 
-
-
-
-หน้า 120 
-
-
-
-
-
-<!-- Start of picture text -->
-Start<br>True False<br>Print  A  Score >= 80<br>True False<br>Print  B+  Score >= 75<br>True False<br>Print  B  Score >= 70<br>True False<br>Print  C+  Score >= 65<br>True False<br>Print  C  Score >= 60<br>True False<br>Print  D+  Score >= 55<br>True False<br>Print  D  Score >= 50<br>Print  F<br>End<br><!-- End of picture text -->
-
-**รูปที่ 6.6** แสดง flowchart การท างานของโปรแกรมค านวณเกรด 
-
-### <u>ตัวอยางโปรแกรมท่ 6.6 ี่</u> โปรแกรมค านวณเกรด 
-
-|**`Prog `**|**`ram Example 6.6:`****_`Grade evaluation`_**|
-|---|---|
-|**`1`**|`Score = float(input("Enter your score :"))`|
-|**`2`**|`Msg = "Your grade is ";`|
-|**`3`**|`if Score >= 80:`|
-|`4`|`print(Msg + "A")`|
-|**`5`**|`elif Score >= 75:`|
-|**`6`**|`print(Msg + "B+")`|
-|`7`|`elif Score >= 70:`|
-|`8`|`print(Msg + "B")`|
-|`9`|`elif Score >= 65:`|
-|`10`|`print(Msg + "C+")`|
-|`11`|`elif Score >= 60:`|
-|`12`|`print(Msg + "C")`|
-|`13`|`elif Score >= 55:`|
-|`14`|`print(Msg + "D+")`|
-|`15`|`elif Score >= 50:`|
-|`16`|`print(Msg + "D")`|
-|`17`|`else:`|
-|`18`|`print(Msg + "F")`|
-|**`19`**|`print("Good bye!")`|
 
 
 
@@ -4780,17 +4734,26 @@ Start<br>Read(Num1<br>, Num2,<br>Num3)<br>False True<br>Num1 < Num2<br>False Tru
 
 ### <u>ตัวอยางโปรแกรมท่ 6.8 ี่</u> โปรแกรมตรวจสอบตัวเลขที่น้อยที่สุด 3 ค่า 
 
-**<mark>`Program Example 6.8:`</mark>** **_<mark>`comparing 3 minimum numbers`</mark>_** `1` _`# Comparing the minimum of 3 numbers`_ <mark></mark> **<mark>`2`</mark>** `num1 = float(input("Enter 1'st number :")); 3 num2 = float(input("Enter 2'nd number :")); 4 num3 = float(input("Enter 3'rd number :"));` <mark></mark> **<mark>`5`</mark>** `if num1 < num2: 6 if num1 < num3: 7 min_num = num1 8 else: 9 min_num = num3` <mark></mark> **<mark>`10`</mark>** `elif num2 < num3:` <mark></mark> **<mark>`11`</mark>** `min_num = num2 12 else: 13 min_num = num3` <mark></mark> **<mark>`14`</mark>** <u>`print("Minimum number is ",min_num)`</u> 
 
-`Enter 1'st number :` **`73`** `Enter 2'nd number :` **`35.7` OUTPUT** `Enter 3'rd number :` **`53.35`** `Minimum number is 35.7` 
+**Program Example 6.8: comparing 3 minimum numbers**
 
-จากโปรแกรมตัวอย่างที่ 6.8 เริ่มต้นบรรทัดที่ 2, 3 และ 4 ผู้ใช้งานป้อนข้อมูลจากแป้นพิมพ์ 3 ค่า (สมมติว่าค่าที่ป้อนเป็น 73, 35.7 และ 53.35 ตามล าดับ) เก็บไว้ในตัวแปรชื่อ num1, num2 และ num3 ขั้นตอนต่อไปบรรทัดที่ 5 โปรแกรมท าการเปรียบเทียบเงื่อนไขด้วย if ว่า num1 < num2 หรือไม่ ผลลัพธ์ที่ได้เป็นเท็จ (73 < 35.7) ส่งผลให้โปรแกรมเลื่อนไปประมวลผลค าสั่งในบรรทัดที่ 10 ซึ่งเป็นการ 
+```python
+# Comparing the minimum of 3 numbers
+num1 = float(input("Enter 1'st number :"));
+num2 = float(input("Enter 2'nd number :"));
+num3 = float(input("Enter 3'rd number :"));
+if num1 < num2:
+    if num1 < num3:
+        min_num = num1
+    else:
+        min_num = num3
+elif num2 < num3:
+    min_num = num2
+else:
+    min_num = num3
+print("Minimum number is ",min_num)
+```
 
-หน้า 125 
-
-
-
-เปรียบเทียบด้วยค าสั่ง elif num2 < num3 ผลลัพธ์ที่ได้เป็นจริง เพราะ (35.7 < 53.35) โปรแกรมจะ ประมวลผลค าสั่งหลัง elif ในบรรทัดที่ 11 โดยก าหนดค่า min_num (ซึ่งเป็นตัวแปรที่เก็บข้อมูลตัวที่น้อย ที่สุดไว้) ด้วยค่าในตัวแปร num2 ต่อจากนั้นโปรแกรมจะประมวลผลค าสั่งในบรรทัดที่ 14 โดยพิมพ์ ข้อความว่า "Minimum number is" พร้อมกับค่าข้อมูลในตัวแปร min_num มาแสดงผล และจบ โปรแกรม 
 
 ### **2. การควบคุมทิศทางแบบวนรอบ หรือท าซ ้า (Loop, Iteration)** 
 
@@ -4825,7 +4788,18 @@ While<br>condition<br>True False<br>Conditional<br>code<br><!-- End of picture t
 
 ### <u>ตัวอยางโปรแกรมท่ 6.9 ี่</u> 
 
-**<mark>`Program Example 6.9:`</mark>** **_<mark>`while`</mark>_** `1` _`# While loop testing`_ <mark></mark> **<mark>`2`</mark>** `count = 0` <mark></mark> **<mark>`3`</mark>** `while (count < 9):` <mark></mark> **<mark>`4`</mark>** `print ('The count is:', count)` <mark></mark> **<mark>`5`</mark>** `count = count + 1` <mark></mark> **<mark>`6`</mark>** <u>`print ("Good bye!")`</u> <mark>`The count is: 0`</mark> `The count is: 1` **OUTPUT** `The count is: 2 The count is: 3 The count is: 4 The count is: 5 The count is: 6 The count is: 7 The count is: 8 Good bye!` 
+
+**Program Example 6.9: while**
+
+```python
+# While loop test ing
+count = 0
+while (count < 9):
+    print ('The count is:', count)
+    count = count + 1
+print ("Good bye!")
+```
+
 
 จากตัวอย่างโปรแกรมที่ 6.9 เริ่มต้นบรรทัดที่ 2 เป็นการก าหนดค่าให้ตัวแปร count มีค่าเท่ากับ 0 เพื่อใช้ส าหรับนับค่า ขั้นตอนต่อไปบรรทัดที่ 3 โปรแกรมจะเปรียบเทียบเงื่อนไขใน while ว่า count มีค่า น้อยกว่า 9 หรือไม่ ถ้าเงื่อนไขเป็นเท็จ โปรแกรมจะข้ามไปท างานในบรรทัดที่ 6 โดยพิมพ์ข้อความว่า "Good bye!" ออกจอภาพ แต่ถ้าเงื่อนไขเป็นจริง (count < 9) โปรแกรมจะท างานหลัง while ในบรรทัดที่ 4 โดยพิมพ์ข้อความว่า 'The count is:' พร้อมกับค่าในตัวแปร count ต่อจากนั้นในบรรทัดที่ 5 จะท าการ เพิ่มค่าให้ตัวแปร count อีก 1 ต่อจากนั้นโปรแกรมจะวนกลับไปตรวจสอบเงื่อนไขของ while ในบรรทัด ที่ 3 ใหม่ เป็นรอบที่ 2 และท าการประมวลผลค าสั่งตามล าดับในบรรทัดที่ 3  4  5 ไปเรื่อยๆ จนกว่าเงื่อนไขที่ while จะเป็นเท็จ (count >= 9) เมื่อเงื่อนไขใน while เป็นเท็จโปรแกรมจะมาท างานใน บรรทัดที่ 6 โดยพิมพ์ข้อความว่า "Good bye!" ก่อนจบโปรแกรมเสมอ 
 
@@ -4841,7 +4815,19 @@ While<br>condition<br>True False<br>Conditional<br>code<br><!-- End of picture t
 
 <u>ตัวอยางโปรแกรมท่ 6.10 ี่</u> 
 
-**<mark>`Program Example 6.10:`</mark>** **_<mark>`infinite loop`</mark>_** `1` _`# Infinite loop program`_ `2` _`# When would you like to exit this program, push CTRL + C`_ <mark></mark> **<mark>`3`</mark>** `var = 1` <mark></mark> **<mark>`4`</mark>** `while var == 1 :` _`# This constructs an infinite loop`_ <mark></mark> **<mark>`5`</mark>** `num = int(input("Enter a number  :"))` <mark></mark> **<mark>`6`</mark>** `print("You entered: ", num)` <mark></mark> **<mark>`7`</mark>** <u>`print("Good bye!")`</u> 
+
+**Program Example 6.10: infinite loop**
+
+```python
+# Infinite loop program
+# When would you li ke to exit this program, push  CTRL + C
+var = 1
+while var == 1 :  # This constructs an infinite loop
+    num = int(input("Enter a number  :"))
+    print("You entered: ", num)
+print("Good bye!")
+```
+
 
 <mark>`Enter a number  :`</mark> **<mark>`394`</mark>** `You entered:  394` **OUTPUT** `Enter a number  :` **`3994`** `You entered:  3994 Enter a number  :`  **`Here user enter CTRL + C`** `Traceback (most recent call last): File "C:\Python34\exam6_10.py", line 5, in <module> num = int(input("Enter a number  :")) File "C:\Python34\lib\idlelib\PyShell.py", line 1381, in readline line = self._line_buffer or self.shell.readline() KeyboardInterrupt` จากตัวอย่างโปรแกรม 6.10 เริ่มต้นบรรทัดที่ 3 ก าหนดค่าให้ตัวแปร var = 1 เพื่อใช้ส าหรับ เปรียบเทียบเงื่อนไขก่อนเข้าท างานใน while loop ( **การก าหนดเงื่อนไขเพื่อใช้เปรียบเทียบก่อนเข้า ท างานใน while loop เป็นขั้นตอนที่ส าคัญมากและต้องท าเสมอ** ) บรรทัดที่ 4 ท าการตรวจสอบ เงื่อนไขก่อนเข้าท างานใน while ผลการตรวจสอบปรากฎว่า เป็นจริงเสมอ เพราะว่าค่าในตัวแปร var มี ค่าเท่ากับ 1 โปรแกรมจึงเลื่อนไปท าค าสั่งในบรรทัดที่ 5 หลังค าสั่ง while คือค าสั่งอ่านข้อมูลจ านวนเต็ม มาจากแป้นพิมพ์เก็บไว้ในตัวแปร num จากนั้นบรรทัดที่ 6 จะพิมพ์ค่าที่อยู่ในตัวแปร num ออกมาทาง จอภาพ แล้วโปรแกรมจะกลับไปท างานในบรรทัดที่ 4 อีกครั้ง ทั้งนี้เพราะเงื่อนไขใน while ยังเป็นจริงอยู่ การท างานจะท าซ ้าค าสั่งบรรทัดที่ 4  5  6 ไปเรื่อยๆ จนกว่าเงื่อนไขใน while จะเป็นเท็จ แต่ ส าหรับในกรณีนี้จะเป็นจริงตลอดไป แบบไม่มีวันจบ (Infinite loop) และค าสั่งในบรรทัดที่ 7 จะไม่ถูก 
 
@@ -4857,24 +4843,20 @@ While<br>condition<br>True False<br>Conditional<br>code<br><!-- End of picture t
 
 <u>ตัวอยางโปรแกรมท่ 6.11 ี่</u> 
 
-**<mark>`Program Example 6.11:`</mark>** **_<mark>`while with else`</mark>_** `1` _`# Testing else statement with while loop`_ <mark></mark> **<mark>`2`</mark>** `count = 0` <mark></mark> **<mark>`3`</mark>** `while count < 5:` <mark></mark> **<mark>`4`</mark>** `print(count, " is less than 5 (While Loop)") 5 count = count + 1` <mark></mark> **<mark>`6`</mark>** `else: 7 print(count," is not less than 5(Else after exit while loop)") 8` <u>`print("Good bye!")`</u> `0  is less than 5 (While Loop) 1  is less than 5 (While Loop)` **OUTPUT** `2  is less than 5 (While Loop) 3  is less than 5 (While Loop) 4  is less than 5 (While Loop) 5  is not less than 5 (Else after exit while loop) Good bye!` 
 
-จากตัวอย่างโปรแกรมที่ 6.11 บรรทัดที่ 2 ก าหนดค่าเริ่มต้นให้ตัวแปร count เท่ากับ 0 เพื่อใช้ ส าหรับท าการเปรียบเทียบก่อนเข้าท างานใน while loop ผลลัพธ์จากการเปรียบเทียบ (บรรทัดที่ 3) มี ค่าเป็นจริง เพราะ count < 5 โปรแกรมจะเข้าไปประมวลผลในบรรทัดที่ 4 โดยพิมพ์ข้อความว่า "X is <mark>less than 5 (While Loop)"</mark> โดย X คือค่าที่อยู่ในตัวแปร count ในบรรทัดที่ 5 โปรแกรมท าการเพิ่มค่า conunt อีก 1 จากนั้นโปรแกรมจะวนกลับมาตรวจสอบเงื่อนไขใน while อีก (เพราะเงื่อนไขยังไม่เป็น เท็จ) ซึ่งโปรแกรมจะท าค าสั่งซ ้าในบรรทัดที่ 3  4  5 เช่นนี้ไปเรื่อยๆ จนกว่า count >= 5 จึงท าให้ โปรแกรมยุติการท างานใน while loop ลง และมาประมวลผลค าสั่งในบรรทัดที่ 6 โดยพิมพ์ข้อความว่า " <mark>5  is not less than 5 (Else after exit while loop)</mark> " และตามด้วยข้อความ "Good bye!" ในบรรทัดที่ 8 ดังแสดงใน OUTPUT ของโปรแกรมด้านบน 
+**Program Example 6.11: while with else**
 
-หน้า 129 
-
-
-
-ส าหรับในกรณีที่ต้องการประมวลผลค าสั่งที่มีเพียงแค่ค าสั่งเดียวเท่านั้น ต่อจากค าสั่ง while (จะมี ลักษณะการท างานคล้ายกับ if ที่ปราศจาก else) คือ **ให้วาง 1 ค าสั่งที่ต้องการประมวลผลอยู่ใน บรรทัดเดียวกันกับ while** ดังตัวอย่างต่อไปนี้ 
-
-```
-flag = True
-```
-
-```
-while flag != False: flag = False# Single statement only
+```python
+# Testing else statement with while loop
+count = 0
+while count < 5:
+    print(count, " is less than 5 (While Loop)")
+    count = count + 1
+else:
+    print(count, " is not less than 5(Else after exit while loop)")
 print("Good bye!")
 ```
+
 
 เมื่อรันโปรแกรมผลลัพธ์ที่ได้คือ 
 
@@ -4907,7 +4889,24 @@ Start<br>Count = 1<br>Sum = 0.0<br>Read(Num)<br>Num =<br>float(Num)<br>False Num
 
 <u>ตัวอยางโปรแกรมท่ 6.12 ี่</u> โปรแกรมค านวณหาค่าเฉลี่ย n จ านวน 
 
-**<mark>`Program Example 6.12:`</mark>** **_<mark>`The average of n numbers`</mark>_** `1` _`# Calcuting the average for N numbers`_ <mark></mark> **<mark>`2`</mark>** `Count = 1 3 Sum = 0.0 4 print("To exit this program, please type 0 or 0.0 :")` <mark></mark> **<mark>`5`</mark>** `Num = float(input("Enter a number :"))` <mark></mark> **<mark>`6`</mark>** `while Num != 0 or Num != 0.0:` <mark></mark> **<mark>`7`</mark>** `Sum += Num 8 Avg = Sum / Count 9 Count += 1 10 print ("Average of number is : ", Avg)` <mark></mark> **<mark>`11`</mark>** `Num = float(input("Enter a number :"))` <mark></mark> **<mark>`12`</mark>** <u>`print("Good bye!")`</u> 
+
+**Program Example 6.12: The average of n  numbers**
+
+```python
+# Calcuting the average for N number s
+Count = 1
+Sum = 0.0
+print("To exit this program, please type 0 or 0.0 :")
+Num = float(input("Enter a number :"))
+while Num != 0 or Num != 0.0:
+    Sum += Num
+    Avg = Sum / Count
+    Count += 1
+    print ("Average of number is : ", Avg)
+    Num = float(input("Enter a number :"))
+print("Good bye!")
+```
+
 
 `To exit this program, please type 0 or 0.0 : Enter a number :` **`10.5` OUTPUT** `Average of number is : 10.5 Enter a number :` **`5`** `Average of number is : 7.75 Enter a number :` **`0`** `Good bye!` 
 
@@ -4968,7 +4967,33 @@ Decrypted string **: Hello!, how are you?**
 
 <u>ตัวอยางโปรแกรมท่ 6.14 ี่</u> 
 
-**<mark>`Program Example 6.14:`</mark>** **_<mark>`Encryption & Decryption`</mark>_** `1` _`# Encrypted/Decrypted program`_ `2` _`# These codes for encrypting message`_ `3 i = 0 4 encryptedMsg = []` <mark></mark> **<mark>`5`</mark>** `msg = input("Enter string message :")` <mark></mark> **<mark>`6`</mark>** `while i < len(msg):` <mark></mark> **<mark>`7`</mark>** `C = ord(msg[i])` <mark></mark> **<mark>`8`</mark>** `F = 32 + (((212 - 32)/100) * C)` <mark></mark> **<mark>`9`</mark>** `encryptedMsg.append(F)` <mark></mark> **<mark>`10`</mark>** `i += 1 11 print ("Encrypted message : ",encryptedMsg)` <mark></mark> **<mark>`12`</mark>** _`#These codes for decrypting message`_ <mark></mark> **<mark>`13`</mark>** `i = 0 14 decryptedMsg = ""` <mark></mark> **<mark>`15`</mark>** `while i < len(encryptedMsg):` <mark></mark> **<mark>`16`</mark>** `F = encryptedMsg[i]` <mark></mark> **<mark>`17`</mark>** `C = (F - 32) * (100/(212 - 32))` <mark></mark> **<mark>`18`</mark>** `temp = chr(int(C))` <mark></mark> **<mark>`19`</mark>** `decryptedMsg = decryptedMsg + str(temp) 20 i += 1` <mark></mark> **<mark>`21`</mark>** <u>`print ("Decrypted string : ",decryptedMsg)`</u> 
+
+**Program Example 6.14: Encryption & Decryption**
+
+```python
+# Encrypted/Decrypted program
+# These codes for encrypting message
+i = 0
+encryptedMsg = []
+msg = input("Enter string message :")
+while i < len(msg):
+    C = ord(msg[i])
+    F = 32 + (((212 - 32)/100) * C)
+    encryptedMsg.append(F)
+    i += 1
+print ("Encrypted message : ",encryptedMsg)
+#These codes for decrypting message
+i = 0
+decryptedMsg = ""
+while i < len(encryptedMsg):
+    F = encryptedMsg[i]
+    C = (F - 32) * (100/(212 - 32))
+    temp = chr(int(C))
+    decryptedMsg = decryptedMsg + str(temp)
+    i += 1
+print ("Decrypted string : ",decryptedMsg)
+```
+
 
 
 
@@ -5050,7 +5075,24 @@ While  False<br>condition<br>True<br>statement(s)<br>continue<br>statement(s)<br
 
 <u>ตัวอยางโปรแกรมท่ 6.16 ี่</u> 
 
-**<mark>`Program Example 6.16:`</mark>** **_<mark>`continue for while & while`</mark>_** `1` _`# Continue for while and for loop`_ <mark></mark> **<mark>`2`</mark>** `for letter in 'Python':` _`# First example for for loop`_ <mark></mark> **<mark>`3`</mark>** `if letter == 'h':` <mark></mark> **<mark>`4`</mark>** `continue` <mark></mark> **<mark>`5`</mark>** `print('Current Letter :', letter)` <mark></mark> **<mark>`6`</mark>** `var = 10` _`# Second example for while loop`_ <mark></mark> **<mark>`7`</mark>** `while var > 0:` <mark></mark> **<mark>`8`</mark>** `var = var -1` <mark></mark> **<mark>`9`</mark>** `if var == 5:` <mark></mark> **<mark>`10`</mark>** `continue` <mark></mark> **<mark>`11`</mark>** `print('Current variable value :', var)` <mark></mark> **<mark>`12`</mark>** <u>`print("Good bye!")`</u> 
+
+**Program Example 6.16: continue for while & while**
+
+```python
+# Continue for while and for loop
+for letter in 'Python':   # First example for for loop
+    if letter == 'h':
+        continue
+    print('Current Letter :', letter)
+var = 10   # Second example for while loop
+while var > 0:
+    var = var -1
+    if var == 5:
+        continue
+    print('Current variable value :', var)
+print("Good bye!")
+```
+
 
 `Current Letter : P Current Letter : y` **OUTPUT** `Current Letter : t Current Letter : o Current Letter : n Current variable value : 9 Current variable value : 8 Current variable value : 7 Current variable value : 6 Current variable value : 4 Current variable value : 3 Current variable value : 2` 
 
@@ -5078,25 +5120,19 @@ Good bye!
 
 <u>ตัวอยางโปรแกรมท่ 6.17 ี่</u> 
 
+
+**Program Example 6.17: pass**
+
+```python
+# Testing pass command
+for letter in 'Python':
+    if letter == 'h':
+        pass
+        print('This is pass block')
+    print('Current Letter :', letter)
+print("Good bye!")
 ```
-Program Example 6.17: pass
-```
 
-```
-1 # Testing pass command
-```
-
-```
-2 for letter in 'Python':
-```
-
-> <mark></mark> **<mark>`3`</mark>** `if letter == 'h':` 
-
-หน้า 139 
-
-
-
-<mark></mark> **<mark>`4`</mark>** `pass` <mark></mark> **<mark>`5`</mark>** `print('This is pass block') 6 print('Current Letter :', letter) 7` <u>`print("Good bye!")`</u> 
 
 <mark>`Current Letter : P`</mark> `Current Letter : y` **OUTPUT** `Current Letter : t This is pass block Current Letter : h Current Letter : o Current Letter : n Good bye!` 
 
@@ -5147,17 +5183,19 @@ statement(s)
 
 ### <u>ตัวอยางโปรแกรมท่ 6.18 ี่</u> 
 
+
+**Program Example 6.18: for**
+
+```python
+# Testing for loop
+for letter in 'Python':     # First Example
+    print('Current Letter :', letter)
+fruits = ['banana', 'apple',  'mango']
+for fruit in fruits:        # Second Example
+    print('Current fruit :', fruit)
+print("Good bye!")
 ```
-Program Example 6.18: for
-```
 
-`1` _`# Testing for loop`_ <mark></mark> **<mark>`2`</mark>** `for letter in 'Python':` _`# First Example`_ 
-
-หน้า 141 
-
-
-
-<mark></mark> **<mark>`3`</mark>** `print('Current Letter :', letter)` <mark></mark> **<mark>`4`</mark>** `fruits = ['banana', 'apple',  'mango']` <mark></mark> **<mark>`5`</mark>** `for fruit in fruits:` _`# Second Example`_ <mark></mark> **<mark>`6`</mark>** `print('Current fruit :', fruit) 7` <u>`print("Good bye!")`</u> 
 
 <mark>`Current Letter : P`</mark> `Current Letter : y` **OUTPUT** `Current Letter : t Current Letter : h Current Letter : o Current Letter : n Current fruit : banana Current fruit : apple Current fruit : mango Good bye!` 
 
@@ -5173,23 +5211,17 @@ Program Example 6.18: for
 
 <u>ตัวอยางโปรแกรมท่ 6.19 ี่</u> 
 
+
+**Program Example 6.19: for and range**
+
+```python
+# for loop and index
+fruits = ['banana', 'apple',  'mango']
+for index in range(len(fruits)):
+    print('Current fruit :', fruits[index])
+print("Good bye!")
 ```
-Program Example 6.19: for and range
-```
 
-```
-1 # for loop and index
-```
-
-หน้า 142 
-
-
-
-<mark></mark> **<mark>`2`</mark>** `fruits = ['banana', 'apple',  'mango']` 
-
-- **<mark>`3`</mark>** `for index in range(len(fruits)):` 
-
-<mark></mark> **<mark>`4`</mark>** `print('Current fruit :', fruits[index]) 5` <u>`print("Good bye!")`</u> 
 
 `Current fruit : banana Current fruit : apple` **OUTPUT** `Current fruit : mango Good bye!` 
 
@@ -5213,7 +5245,44 @@ range (y, x, -i) แบบที่  จะสร้างชุดของ�
 
 <u>ตัวอยางโปรแกรมท่ 6.20 ี่</u> 
 
-**<mark>`Program Example 6.20:`</mark>** **_<mark>`for and range examples`</mark>_** `1` _`# explain function range`_ <mark></mark> **<mark>`2`</mark>** `import sys, random` <mark></mark> **<mark>`3`</mark>** `sys.stdout.write("Show range (6) = ") 4 for i in range(6): 5 sys.stdout.write(str(i) + " ")` <mark></mark> **<mark>`6`</mark>** `print("\n" + "-" *70) 7 sys.stdout.write("Show range (1, 7) = ") 8 for j in range(1, 7): 9 sys.stdout.write(str(j) + " ") 10 print("\n" + "-" *70) 11 sys.stdout.write("Show range (1, 36, 2) = ") 12 for o in range(1, 36, 2): 13 sys.stdout.write(str(o) + " ") 14 print("\n" + "-" *70) 15 16 sys.stdout.write("Show range [1, 3,..., 36] =") 17 for r in [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]: 18 sys.stdout.write(str(r) + " ") 19 print("\n" + "-" *70) 20 sys.stdout.write("Show multiple range = ") 21 for d1 in range(2): 22 for d2 in range(2): 23 print (d1 + 1, "+", d2+1, '=', d1+d2+2) 24 print("\n" + "-" *70) 25 sys.stdout.write("Show range + random = ") 26 for i in range(5):` <mark></mark> **<mark>`27`</mark>** `d1= random.randrange(6)+1 28 d2= random.randrange(6)+1 29 print (d1+d2) 30 print("Show range backward")` <mark></mark> **<mark>`31`</mark>** `for i in range(5, 0, -1): 32` <u>`print(i)`</u> 
+
+**Program Example 6.20: for and range examples**
+
+```python
+# explain function range
+import sys, random
+sys.stdout.write("Show range (6) = ")
+for i in range(6):
+    sys.stdout.write(str(i)  + " ")
+print("\n" + "-" *70)
+sys.stdout.write("Show range (1, 7) = ")
+for j in range(1,  7):
+    sys.stdout.write(str(j)  + " ")
+print("\n" + "-" *70)
+sys.stdout.write("Show range (1,  36, 2) = ")
+for o in range(1,  36, 2):
+    sys.stdout.write(str(o)  + " ")
+print("\n" + "-" *70)
+
+sys.stdout.write("Show range [1, 3,..., 36] =")
+for r in [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]:
+    sys.stdout.write(str(r)  + " ")
+print("\n" + "-" *70)
+sys.stdout.write("Show multiple range = ")
+for d1 in range(2):
+    for d2 in range(2):
+        print (d1  + 1, "+", d2+1, '=', d1+d2+2)
+print("\n" + "-" *70)
+sys.stdout.write("Show range + random = ")
+for i in range(5):
+    d1= random.randrange(6)+1
+    d2= random.randrange(6)+1
+    print (d1+d2)
+print("Show range  backward")
+for i in range(5, 0, -1):
+    print(i)
+```
+
 
 `Show range (6) = 0 1 2 3 4 5 ----------------------------------------------------------------------` **OUTPUT** `Show range (1, 7) = 1 2 3 4 5 6 ---------------------------------------------------------------------Show range (1,36,2) = 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 ---------------------------------------------------------------------Show range [1, 3,..., 36] =1 3 5 7 9 12 14 16 18 19 21 23 25 27 30 32 34 36 ----------------------------------------------------------------------` 
 
@@ -5265,7 +5334,21 @@ Show range backward
 
 
 <!-- Start of picture text -->
-Program Example 6.21:  else with for & while<br>1  # Testing elase and for loop with prime number<br> 2  for num in range(10, 20):   #to iterate between 10 to 20<br> 3     for i in range(2, num):  #to iterate on the number<br> 4        if num % i == 0:      #to determine the first factor<br> 5           j = num / i        #to calculate the second factor<br> 6           print('%d equals %d * %d' % (num, i, j))<br> 7           break<br> 8     else:                  # else part of the loop<br> 9  print(num, 'is a prime number')<br>10 equals 2 * 5<br>11 is a prime number<br>OUTPUT 12 equals 2 * 6<br>13 is a prime number<br>14 equals 2 * 7<br>15 equals 3 * 5<br>16 equals 2 * 8<br>17 is a prime number<br>18 equals 2 * 9<br>19 is a prime number<br><!-- End of picture text -->
+
+**Program Example 6.21: else with for & while**
+
+```python
+# Testing elase and for loop with prime number
+for num in range(10, 20):  #to iterate between 10 to 20
+    for i in range(2, num): #to iterate on the number
+        if num % i == 0:     #to determine the first factor
+            j = num / i       #to calculate the second factor
+            print('%d equals %d * %d' % (num,  i, j))
+            break
+    else:                  # else part of the loop
+        print(num, 'is a prime number')
+```
+
 
 จากตัวอย่างโปรแกรมที่ 6.21 บรรทัดที่ 2 ค าสั่ง for เริ่มต้นอ่านข้อมูลจ านวนเต็มครั้งละ 1 ค่า จาก range (สร้างช่วงของเลขจ านวนเต็มบวกตั้งแต่ 10 ถึง 20) และเก็บไว้ในตัวแปร num ล าดับต่อมา ในบรรทัดที่ 3 เป็นค าสั่ง for ซ้อนอีกชั้นหนึ่ง โดยค าสั่ง for (ชั้นใน) จะน าค่าในตัวแปร num ที่รับมาจาก for ชั้นนอก มาสร้างเป็นช่วงข้อมูลด้วยค าสั่ง range(2, num) ให้กับ for ที่อยู่ชั้นใน ข้อมูลที่สร้างขึ้นจะ ถูกอ่านเข้ามาท างานทีละค่า โดยเก็บไว้ในตัวแปร i บรรทัดที่ 4 น าค่าข้อมูลที่อยู่ใน i % num ผลที่ได้จะ ถูกน าไปตรวจสอบด้วยค าสั่ง if ว่าเท่ากับ 0 หรือไม่ (เป็นการตรวจสอบตัวเลขที่ไม่ใช่ค่า prime number) ถ้าผลลัพธ์มีค่าเท่ากับ 0 แสดงว่าตัวเลขดังกล่าวสามารถหารด้วยตัวเลขใดๆ ลงตัว (ยกเว้นตัวเอง) แสดงว่าไม่ใช่จ านวนเฉพาะ (จ านวนเฉพาะจะหารด้วยตัวเองและ 1 ลงตัวเท่านั้น) ให้โปรแกรมท าการ พิมพ์ตัวเลขที่ไม่ใช่ค่า prime number ดังกล่าวออกทางจอภาพ (บรรทัดที่ 6) และหยุดการท างานของ for ในรอบนั้นๆ ทันที ด้วยค าสั่ง break (ในบรรทัดที่ 7) แต่ถ้าไม่มีค่า i ใดๆ ที่ได้จากชุดของข้อมูลที่ สร้างจาก range(2, num) % num ได้ลงตัวเลย ในแต่ละรอบการท างานของ for ชั้นใน แสดงว่าตัวเลข ดังกล่าวเป็นจ านวนเฉพาะ ดังนั้นโปรแกรมจะท างานหลังค าสั่ง else (บรรทัดที่ 9) โดยพิมพ์ข้อความว่า ' <mark>X is a prime number'</mark> (โดย X คือจ านวนเฉพาะ) โปรแกรมจะท างานวนซ ้าเพื่อค้นหาจ านวนเฉพาะ อย่างนี้ไปเรื่อยๆ จนกว่าค่า num ของ for ลูปนอกจะมีค่าเท่ากับ 20 โปรแกรมจึงจะยุติการท างาน 
 
@@ -5322,13 +5405,16 @@ Program Example 6.21:  else with for & while<br>1  # Testing elase and for loop 
 
 
 
-- **<mark>`Program Example 6.24:`</mark>** **_<mark>`string with for loop`</mark>_** 
+-
 
-- `1 string = "Hello World"` 
+**Program Example 6.24: string with for loop**
 
-- `2 for x in string:` 
+```python
+string = "Hello World"
+for x in string:
+    print (x)
+```
 
-- `3` <u>`print (x)`</u> 
 
 
 
@@ -5337,13 +5423,16 @@ H<br>e<br>OUTPUT l<br>l<br>o<br>W<br>o<br>r<br>l<br>d<br><!-- End of picture tex
 
 ### <u>ตัวอยางโปรแกรมท่ 6.25 ี่</u> โปรแกรม for loop กับลิสต์ 
 
-- **<mark>`Program Example 6.25:`</mark>** **_<mark>`list with for loop`</mark>_** 
+-
 
-- `1 collection = ['hey', 5, 'd']` 
+**Program Example 6.25: list with for loop**
 
-- `2 for x in collection:` 
+```python
+collection = ['hey', 5, 'd']
+for x in collection:
+    print (x)
+```
 
-- `3` <u>`print (x)`</u> 
 
 
 
@@ -5352,28 +5441,30 @@ hey<br>5<br>OUTPUT d<br><!-- End of picture text -->
 
 ### <u>ตัวอยางโปรแกรมท่ 6.26 ี่</u> โปรแกรม for loop กับลิสต์ซ้อนลิสต์ 
 
-###### **<mark>`Program Example 6.26:`</mark>** **_<mark>`list[list] with for loop`</mark>_** 
+######
 
-- `1 list_of_lists = [ [1, 2, 3], [4, 5, 6], [7, 8, 9]] 2 for list in list_of_lists:` 
+**Program Example 6.26: list[list] with for loop**
 
+```python
+list_of_lists = [ [1, 2, 3], [4, 5, 6], [7, 8, 9]]
+for list in list_of_lists:
+    for x in list:
+        print (x)
+```
 
-
-<!-- Start of picture text -->
-3      for x in list:<br>4  print (x)<br>1<br>2<br>OUTPUT 3<br>4<br>5<br>6<br>7<br>8<br>9<br><!-- End of picture text -->
 
 ### <u>ตัวอยางโปรแกรมท่ 6.27 ี่</u> โปรแกรม for loop กับดิกชันนารี่ 
 
-###### **<mark>`Program Example 6.27:`</mark>** **_<mark>`dictionary with for loop`</mark>_** 
+######
 
-- `1 knights = {'gallahad': 'the pure', 'robin': 'the brave'}` 
+**Program Example 6.27: dictionary with for loop**
 
-- `2 for k, v in knights.items():` 
-
-หน้า 149 
-
+```python
+knights = {'gallahad': 'the pure', 'robin': 'the brave'}
+for k, v in knights.items():
+    print ("key = %s and value = %s"%(k, v))
 ```
-3 print ("key = %s and value = %s"%(k, v))
-```
+
 
 
 
@@ -5471,7 +5562,19 @@ print("Good bye!")
 
 
 <!-- Start of picture text -->
-Program Example 6.29:<br>1  # combination of 2 lists<br>2  combs = []<br>3  for x in [1,2,3]:<br>4       for y in [3,1,4]:<br>5           if x != y:<br>6               combs.append((x, y))<br>7  print(combs)<br>[(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]<br>OUTPUT<br><!-- End of picture text -->
+
+**Program Example 6.29: **
+
+```python
+# combination of 2 lists
+combs = []
+for x in [1,2,3]:
+    for y in [3,1,4]:
+        if x != y:
+            combs.append((x, y))
+print(combs)
+```
+
 
 
 
@@ -5712,57 +5815,22 @@ Pass by reference<br>Argument Parameter<br>5 5<br>X: Address refer to Address<br
 
 <u>ตัวอยางโปรแกรมท่ 7.3 ี่</u> การส่งอาร์กิวเมนต์แบบ Pass by reference 
 
-###### **<mark>`Program Example 7.3:`</mark>** **_<u><mark>`pass by reference`</mark></u>_** 
+######
 
-- **<mark>`1`</mark>** `def changeme(mylist):` 
+**Program Example 7.3: pass by reference**
 
-- `2 "This changes a passed list into this function"` 
-
-- **<mark>`3`</mark>** `mylist.append([1,2,3,4]);` 
-
-- **<mark>`4`</mark>** `print ("Values inside the function: ", mylist)` 
-
-- **<mark>`5`</mark>** `return` 
-
-- `6` _`# Now you can call changeme function`_ 
-
-- **<mark>`7`</mark>** `mylist = [10,20,30];` 
-
-- **<mark>`8`</mark>** `changeme(mylist);` 
-
-- **<mark>`9`</mark>** <u>`print ("Values outside the function: ", mylist)`</u> 
-
-หน้า 158 
-
-
-
-```
-Values inside the function:  [10, 20, 30, [1, 2, 3, 4]]
-Values outside the function:  [10, 20, 30, [1, 2, 3, 4]]
+```python
+def changeme(mylist):
+    "This changes a passed list into this function"
+    mylist.append([1,2,3,4]);
+    print ("Values inside the function: ", mylist)
+    return
+# Now you can call changeme function
+mylist = [10,20,30];
+changeme(mylist);
+print ("Values outside the function: ", mylist)
 ```
 
-###### **`OUTPUT`** 
-
-จากตัวอย่างโปรแกรมที่ 7.3 บรรทัดที่ 1 ท าการประกาศฟังก์ชันชื่อ changeme ท าหน้าที่เชื่อม ข้อมูลในลิสต์ 2 ลิสต์เข้าด้วยกัน โดยมีพารามิเตอร์ 1 ตัวคือ mylist เพื่อรับค่าข้อมูลจากโปรแกรมที่ เรียกใช้งาน ซึ่งเป็นการส่งค่าตัวแปรชนิด pass by reference เมื่อรับค่าพารามิเตอร์มาแล้ว โปรแกรมจะ น าค่าในพารามิเตอร์ดังกล่าว ซึ่งเป็นชนิดลิสต์ มาเชื่อมกับรายการลิสต์ที่ฟังก์ชันก าหนดขึ้นคือ [1, 2, 3, 4] ด้วยเมธอด append (บรรทัดที่ 3) เมื่อเสร็จจากการเชื่อมต่อลิสต์แล้ว บรรทัดที่ 4 โปรแกรมจะท าการ พิมพ์ข้อมูลในลิสต์ที่เชื่อมต่อแล้วออกจอภาพ ในบรรทัดสุดท้ายของฟังก์ชัน (บรรทัดที่ 5) จะใช้ค าสั่ง return เพื่อบอกว่าเป็นการจบฟังก์ชันแล้ว โดยไม่มีการส่งค่าใดๆ กลับไปให้ผู้เรียก 
-
-ค าสั่งในบรรทัดที่ 7 โปรแกรมท าการประกาศตัวแปรชนิดลิสต์ชื่อ mylist มีค่าเท่ากับ [10, 20, 30] จากนั้นบรรทัดที่ 8 โปรแกรมท าการเรียกฟังก์ชัน changeme พร้อมส่งอาร์กิวเมนต์คือ mylist ไปให้ ฟังก์ชัน ผลลัพธ์ที่ได้คือ [10, 20, 30, [1, 2, 3, 4]] บรรทัดที่ 9 โปรแกรมท าการพิมพ์ข้อมูลใน mylist ใหม่อีกครั้ง ผลลัพธ์ที่ได้คือ [10, 20, 30, [1, 2, 3, 4]] ซึ่งเหมือนกับผลลัพธ์ที่ได้จากค าสั่งในบรรทัดที่ 8 แสดงให้เห็นว่าตัวแปร mylist ถูกอ้างอิงจากต าแหน่งที่อยู่เดียวกัน เป็นเพราะคุณสมบัติของการใช้ตัว แปรแบบ Pass by reference นั่นเอง 
-
-การแก้ไขข้อมูลของตัวแปรที่อ้างอิงแบบ Pass by reference จะมีผลกระทบทั้งในโปรแกรมที่ เรียกใช้และภายในฟังก์ชันที่ถูกเรียก แต่ในกรณีที่ผู้เขียนโปรแกรมท าการประกาศชื่อตัวแปรให้ เหมือนกันกับชื่อพารามิเตอร์ในฟังก์ชัน และก าหนดค่าใหม่ให้กับตัวแปรดังกล่าว ไพธอนจะมองว่าไม่ใช่ ตัวแปรเดียวกัน เรียกตัวแปรแบบนี้ว่าตัวแปรท้องถิ่น (Local vairable) 
-
-<u>ตัวอยางโปรแกรมท่ 7.4 ี่</u> ตัวแปรชนิดท้องถิ่น (local variable) 
-
-|**`Prog `**|**`ram Example 7.4:`****_`local variable`_**|
-|---|---|
-|`1`|_`# Function definition is here`_|
-|**`2`**|`def changeme(mylist):`|
-|`3`|`"This changes a passed list into this function"`|
-|**`4`**|`mylist = [1,2,3,4];`_`# Assign new reference in mylist`_|
-|**`5`**|`print ("Values inside the function: ", mylist)`|
-|`6`|`return`|
-|`7`|_`# Now you can call changeme function`_|
-|**`8`**|`mylist = [10,20,30];`|
-|**`9`**|`changeme(mylist);`|
-|**`10`**|`print ("Values outside the function: ", mylist)`|
 
 
 
@@ -5813,20 +5881,20 @@ myfunc(num) หรือ myfunc(mylist) หรือ myfunc() ดังตัว
 
 
 
-###### **<mark>`Program Example 7.5:`</mark>** **_<mark>`required argument`</mark>_** 
+######
 
-- `1` _`# Required arguments`_ <mark></mark> **<mark>`2`</mark>** `def printme(str): 3 "This prints a passed string into this function" 4 print (str); 5 return; 6` _`# Now you can call printme function`_ <mark></mark> **<mark>`7`</mark>** <u>`printme();`</u> 
+**Program Example 7.5: required argument**
 
+```python
+# Required arguments
+def printme(str):
+    "This prints a passed string into this function"
+    print (str);
+    return;
+# Now you can call printme function
+printme();
 ```
-Traceback (most recent call last):
-  File "C:/Python33/exam7_4.py", line 8, in <module>
-OUTPUT
-    printme();
-TypeError: printme() missing 1 required positional
-argument: 'str'
-```
 
-จากตัวอย่างโปรแกรมที่ 7.5 โปรแกรมจะเกิดข้อผิดพลาดเพราะว่าฟังก์ชัน printme ต้องการ พารามิเตอร์ 1 ตัว เป็นชนิดสตริง (บรรทัดที่ 2) แต่เมื่อเรียกใช้งานฟังก์ชันดังกล่าวในบรรทัดที่ 7 โปรแกรมไม่ได้ส่งค่าอาร์กิวเมนต์ตรงตามที่ฟังก์ชันก าหนดไว้ 
 
 **Keyword arguments** คือ อาร์กิวเมนต์ที่ก าหนดผ่านชื่อตัวแปร เช่น 
 
@@ -5838,14 +5906,20 @@ argument: 'str'
 
 <u>ตัวอยางโปรแกรมท่ 7.6 ี่</u> อาร์กิวเมนต์ชนิด keyword arguments 
 
-- **<mark>`Program Example 7.6:`</mark>** **_<mark>`keyword arguments`</mark>_** `1` _`# Required arguments`_ <mark></mark> **<mark>`2`</mark>** `def printme(str): 3 "This prints a passed string into this function" 4 print (str); 5 return; 6` _`# Now you can call printme function`_ <mark></mark> **<mark>`7`</mark>** <u>`printme(str = "My string");`</u> 
+-
 
-```
-My string
-OUTPUT
+**Program Example 7.6: keyword argument s**
+
+```python
+# Required arguments
+def printme(str):
+    "This prints a passed string into this function"
+    print (str);
+    return;
+# Now you can call printme function
+printme( str = "My string" );
 ```
 
-จากตัวอย่างโปรแกรมที่ 7.6 บรรทัดที่ 2 โปรแกรมประกาศฟังก์ชันชื่อ printme ท าหน้าที่พิมพ์ ข้อความออกจอภาพ โดยฟังก์ชันดังกล่าวมีพารามิเตอร์ 1 ตัวคือ str บรรทัดที่ 7 โปรแกรมเรียกฟังก์ชัน printme พร้อมกับส่งอาร์กิวเมนต์ str = "My string" (เป็นชนิด keyword argument) ให้กับฟังก์ชัน ผลลัพธ์ที่ได้คือ "My string" 
 
 การสลับต าแหน่งของอาร์กิวเมนต์ขณะเรียกใช้ฟังก์ชัน อาจเกิดจากความไม่ได้ตั้งใจของผู้เขียน โปรแกรม ไพธอนสามารถแก้ไขความผิดพลาดดังกล่าวได้ โดยการสลับต าแหน่งของตัวแปรเหล่านั้นให้ 
 
@@ -5857,7 +5931,20 @@ OUTPUT
 
 <u>ตัวอยางโปรแกรมท่ 7.7 ี่</u> การสลับต าแหน่งของอาร์กิวเมนต์ 
 
-**<mark>`Program Example 7.7:`</mark>** **_<mark>`swapping arguments`</mark>_** `1` _`# Keyword arguments(swap agrument)`_ <mark></mark> **<mark>`2`</mark>** `def printinfo(name, age): 3 "This prints a passed info into this function"` <mark></mark> <mark>`4`</mark> `print ("Name: ", name);` <mark></mark> <mark>`5`</mark> `print ("Age ", age); 6 return; 7` _`# Now you can call printinfo function`_ <mark></mark> **<mark>`8`</mark>** <u>`printinfo(age=50, name="miki")`</u> 
+
+**Program Example 7.7: swapping arguments**
+
+```python
+# Keyword arguments(swap agrument)
+def printinfo(name, age):
+    "This prints a passed info into this function"
+    print ("Name: ", name);
+    print ("Age ", age);
+    return;
+# Now you can call printinfo function
+printinfo(age=50, name="miki")
+```
+
 
 ```
 OUTPUT
@@ -5876,27 +5963,21 @@ Age  50
 
 <u>ตัวอยางโปรแกรมท่ 7.8 ี่</u> default arguments 
 
-```
-Program Example 7.8: default arguments
-```
 
-`1` _`# Default arguments`_ <mark></mark> **<mark>`2`</mark>** `def printinfo(name, age = 35): 3 "This prints a passed info into this function"` <mark></mark> **<mark>`4`</mark>** `print ("Name: ", name);` <mark></mark> **<mark>`5`</mark>** `print ("Age: ", age); 6 return; 7` _`# Now you can call printinfo function`_ <mark></mark> **<mark>`8`</mark>** `printinfo(age=50, name="miki");` <mark></mark> **<mark>`9`</mark>** <u>`printinfo(name="miki");`</u> 
+**Program Example 7.8: default arguments**
 
-หน้า 162 
-
-
-
-```
-Name:  miki
-Age:  50
-OUTPUT
-Name:  miki
-Age:  35
+```python
+# Default arguments
+def printinfo(name, age = 35):
+    "This prints a passed info into this function"
+    print ("Name: ", name);
+    print ("Age: ", age);
+    return;
+# Now you can call printinfo function
+printinfo(age=50, name="miki");
+printinfo(name="miki");
 ```
 
-จากโปรแกรมที่ 7.8 บรรทัดที่ 2 ท าการประกาศฟังก์ชันชื่อ printinfo ท าหน้าที่พิมพ์ชื่อและอายุ ออกทางจอภาพ โดยฟังก์ชันดังกล่าวมีพารามิเตอร์ 2 ตัวคือ name และ age ส าหรับพารามิเตอร์ age ถูกก าหนดค่าเริ่มไว้คือ age = 35 (เป็นค่า default) บรรทัดที่ 4 เป็นค าสั่งพิมพ์ชื่อและบรรทัดที่ 5 พิมพ์ อายุ 
-
-บรรทัดที่ 8 โปรแกรมหลักทดสอบเรียกฟังก์ชัน printinfo โดยส่งอาร์กิวเมนต์มาให้ฟังก์ชันครบ ตามจ านวน คือ age = 50 และ name ="miki" ผลลัพธ์ที่ได้คือ ฟังก์ชันจะสั่งพิมพ์ name = miki และ age = 50 บรรทัดที่ 9 โปรแกรมท าการทดสอบเรียกฟังก์ชัน printinfo อีกครั้ง โดยการส่งอาร์กิวเมนต์ให้ ฟังก์ชัน printinfo เพียงตัวเดียวคือ name ="miki" ผลลัพธ์ที่ได้คือ ฟังก์ชันจะพิมพ์ name = miki และ age = 35 (ซึ่ง age = 35 ถูกแทนที่ด้วยค่า default โดยอัตโนมัตินั่นเอง) 
 
 **Variable-length arguments** คือ อาร์กิวเมนต์ที่สามารถบรรจุข้อมูลไว้ได้แบบไม่จ ากัดจ านวน เพื่อใช้ในกรณีที่ผู้เขียนโปรแกรมไม่ทราบแน่ชัดว่าฟังก์ชันที่เขียนขึ้นจะต้องใช้ข้อมูลในการท างานกี่ตัว หรืออาจจะมีข้อมูลที่ไม่ได้คาดการณ์ไว้เกิดขึ้นในอนาคต ไพธอนจึงได้เตรียมอาร์กิวเมนต์ชนิดนี้ไว้ให้ ผู้เขียนโปรแกรมเพื่อความยืดหยุ่นในการท างาน ส าหรับรูปแบบอาร์กิวเมนต์แบบ Variable-length arguments ดังนี้คือ 
 
@@ -5910,26 +5991,22 @@ _"function_docstring" function_suite_ **_return_** _[expression]_
 
 <u>ตัวอยางโปรแกรมท่ 7.9 ี่</u> การใช้งาน Variable-length arguments 
 
+
+**Program Example 7.9: variable -length arguments**
+
+```python
+# Variable -length arguments
+def printinfo(arg1, *vartuple):
+    "This prints a variable passed arguments"
+    print ("Output of formal arg is : ",arg1)
+    for var in vartuple:
+        print ("Output of virtuple arg is : ",var)
+    return;
+# Now you can call printinfo function
+printinfo(10);
+printinfo(70, 60, 50);
 ```
-Program Example 7.9: variable-length arguments
-```
 
-|`1`|_`# Variable-length arguments`_|
-|---|---|
-|**`2`**|`def printinfo(arg1, *vartuple):`|
-|`3`|`"This prints a variable passed arguments"`|
-|**`4`**|`print ("Output of formal arg is : ",arg1)`|
-|**`5`**|`for var in vartuple:`|
-|`6`|`print ("Output of virtuple arg is : ",var)`|
-|`7`|`return;`|
-
-
-
-หน้า 163 
-
-
-
-`8` _`# Now you can call printinfo function`_ <mark></mark> **<mark>`9`</mark>** `printinfo(10);` <mark></mark> **<mark>`10`</mark>** <u>`printinfo(70, 60, 50);`</u> 
 
 ```
 Output of formal arg is :  10
@@ -6005,7 +6082,18 @@ print("Test calling lambda : ", **var(arg1, arg2,…,argn)** )
 
 
 
-**<mark>`Program Example 7.10:`</mark>** **_<mark>`lambda function`</mark>_** `1` _`# Lambda fuction`_ `2` _`# Function definition is here`_ <mark></mark> **<mark>`3`</mark>** `sum = lambda arg1, arg2: arg1 + arg2; 4` _`# Now you can call sum as a function`_ <mark></mark> **<mark>`5`</mark>** `print ("Value of total : ", sum(10, 20))` <mark></mark> **<mark>`6`</mark>** <u>`print ("Value of total : ", sum(20, 20))`</u> `Value of total :  30 Value of total :  40` **`OUTPUT`** 
+
+**Program Example 7.10: lambda function**
+
+```python
+# Lambda fuction
+# Function definition is here
+sum = lambda arg1, arg2: arg1 + arg2;
+# Now you can call sum as a function
+print ("Value of total : ", sum(10, 20))
+print ("Value of total : ", sum(20, 20))
+```
+
 
 จากตัวอย่างโปรแกรมที่ 7.10 บรรทัดที่ 3 โปรแกรมท าการสร้างฟังก์ชัน lambda ท าหน้าที่รวม ค่า 2 จ านวนเข้าด้วยกัน โดยมีพารามิเตอร์ 2 ตัวคือ arg1 และ arg2 ผลลัพธ์จากการประมวลผลของ ฟังก์ชัน lambda จะเก็บไว้ในตัวแปรชื่อ sum 
 
@@ -6013,7 +6101,19 @@ print("Test calling lambda : ", **var(arg1, arg2,…,argn)** )
 
 ### <u>ตัวอยางโปรแกรมท่ 7.11 ี่</u> 
 
-**<mark>`Program Example 7.11:`</mark>** **_<mark>`lambda vs normal function`</mark>_** `1` _`# Lambda vs normal function in same name`_ <mark></mark> **<mark>`2`</mark>** `def f(x, y, z): return x + y + z` <mark></mark> **<mark>`3`</mark>** `f = lambda x, y, z: x - y - z 4` _`#Calling normal function`_ <mark></mark> **<mark>`5`</mark>** `print("Calling lambda function :", f(2, 2, 2)) 6` _`#calling lambda function`_ <mark></mark> **<mark>`7`</mark>** <u>`print("Calling normal function :", f(2, 3, 4))`</u> 
+
+**Program Example 7.11: lambda vs normal function**
+
+```python
+# Lambda vs normal function in same name
+def f(x, y, z): return x + y + z
+f = lambda  x, y, z: x - y - z
+#Calling normal function
+print("Calling lambda function :",  f(2, 2, 2))
+#calling lambda function
+print("Calling normal function :",  f(2, 3, 4))
+```
+
 
 ```
 OUTPUT
@@ -6036,9 +6136,21 @@ Calling normal function : -5
 
 
 
-###### **<mark>`Program Example 7.12:`</mark>** **_<mark>`lambda vs default value`</mark>_** 
+######
 
-`1` _`# Default value in Lambda function`_ <mark></mark> **<mark>`2`</mark>** `mz = (lambda a = 'A', b = 'B', c = 'C':"["+ a + b + c + "]") 3` _`#calling lambda function`_ <mark></mark> **<mark>`4`</mark>** `print(mz('A'))` <mark></mark> **<mark>`5`</mark>** `print(mz('A', ' B')) 6 print(mz('A', ' B', ' C'))` <mark></mark> **<mark>`7`</mark>** `print(mz('A', ' X', ' Y'))` <mark></mark> **<mark>`8`</mark>** <u>`print(mz('X', ' Y', ' Z'))`</u> <mark>`[A B C]`</mark> `[A B C]` **`OUTPUT`** `[A B C] [A X Y] [X Y Z]` 
+**Program Example 7.12: lambda vs default value**
+
+```python
+# Default value in Lambda function
+mz = (lambda a = 'A', b = 'B', c = 'C':"[" + a + b + c + "]")
+#calling lambda function
+print(mz('A'))
+print(mz('A', ' B'))
+print(mz('A', ' B', ' C'))
+print(mz('A', ' X', ' Y'))
+print(mz('X', ' Y', ' Z'))
+```
+
 
 จากโปรแกรมตัวอย่างที่ 7.12 บรรทัดที่ 2 โปรแกรมท าการประกาศฟังก์ชัน lambda ท าหน้าที่ เชื่อมข้อมูลในพารามิเตอร์ a, b และ c เข้าไว้ด้วยกันภายในเครื่องหมาย […] โดยพารามิเตอร์แต่ละตัว จะถูกก าหนดค่าเริ่มต้น (default value) ไว้คือ a = 'A', b = 'B' และ  c = 'C' ตามล าดับ ผลลัพธ์ที่ได้จาก การค านวณในฟังก์ชัน lambda จะเก็บไว้ในตัวแปรชื่อ mz 
 
@@ -6053,7 +6165,19 @@ Calling normal function : -5
 
 
 <!-- Start of picture text -->
-ตัวอยางโปรแกรมท่  7.13 ี่ แสดงการฝัง lambda เข้าไปในตัวแปรชนิดลิสต์<br>Program Example 7.13:  lambda in list<br>1  # Define lambda in list<br> 2  L = [lambda x: x ** 2, lambda x: x ** 3, lambda x: x ** 4]<br>3<br> 4  for f in L:<br> 5  print(f(3))<br> 6  print(L[0](11))<br>9<br>27<br>OUTPUT<br>81<br>121<br><!-- End of picture text -->
+ตัวอยางโปรแกรมท่  7.13 ี่ แสดงการฝัง lambda เข้าไปในตัวแปรชนิดลิสต์<b
+
+**Program Example 7.13: lambda in list**
+
+```python
+# Define lambda in list
+L = [lambda x: x ** 2, lambda x: x ** 3, lambda x: x ** 4]
+
+for f in L:
+    print(f(3))
+print(L[0](11))
+```
+
 
 โปรแกรมตัวอย่างที่ 7.13 บรรทัดที่ 2 ประกาศฟังก์ชัน lambda ท าหน้าที่ค านวณค่าให้กับ สมาชิกแต่ละตัวในตัวแปรชนิดลิสต์ L (ฝังฟังก์ชัน lambda เข้าไปในสมาชิกของตัวแปรชนิดลิสต์) โดย ฟังก์ชัน lambda มีพารามิเตอร์ 1 ตัว คือ x จากตัวอย่าง สมาชิกในช่องที่ 1 ของลิสต์ L คือ [lambda x: x ** 2] เป็นการหาค่าเลขยกก าลังสองของ x, สมาชิกช่องที่ 2 คือ [lambda x: x ** 3] เป็นการหาค่าเลข ยกก าลังสามของ x และสมาชิกช่องที่ 3 คือ [lambda x: x ** 4] คือ การหาค่าเลขการยกก าลังสี่ของ x ตามล าดับ 
 
@@ -6468,57 +6592,35 @@ OUTPUT
 
 <u>ตัวอยางโปรแกรมท่ 8.1 ี่</u> โมดูล CalAreaRectangle 
 
-###### **<mark>`Program Example 8.1:`</mark>** **_<mark>`Module`</mark>_** 
+######
 
-- `1` _`# Calculating area of any rectangles`_ 
+**Program Example 8.1: Module**
 
-- `2` _`# This module named CalAreaRectangle.py`_ 
+```python
+# Calculating area of any rectangles
+# This module named CalAreaRectangle.py
+def rectangle(width, height):
+    return width * height
 
-- `3 def rectangle(width, height):` 
+def squre(width1, width2):
+    return width1 * width2
 
-- `4 return width * height` 
+def parallelogram(height, base):
+    return height * base
 
-- `5` 
+def trapezoid(sumofpararell, height):
+    return 0.5 * sumofpararell * height
 
-- `6 def squre(width1, width2):` 
+def rhomboid(mulofdiagonal):
+    return 0.5 * mulofdiagonal
 
-- `7 return width1 * width2` 
+def RectangularKite(mulofdiagonal):
+    return 0.5 * mulofdiagonal
 
-- `8` 
-
-- `9 def parallelogram(height, base):` 
-
-- `10    return height * base` 
-
-- `11` 
-
-- `12 def trapezoid(sumofpararell, height):` 
-
-หน้า 181 
-
-
-
-```
-13    return 0.5 * sumofpararell * height
+def AnyRectangular(diagonal, sumofbranch):
+    return 0.5 * diagonal * sumofbranch
 ```
 
-```
-14
-```
-
-- `15 def rhomboid(mulofdiagonal):` 
-
-- `16    return 0.5 * mulofdiagonal` 
-
-- `17` 
-
-- `18 def RectangularKite(mulofdiagonal):` 
-
-- `19    return 0.5 * mulofdiagonal` 
-
-- `20` 
-
-- `21 def AnyRectangular(diagonal, sumofbranch): 22    return 0.5 * diagonal * sumofbranch` 
 
 ### **2. การเรียกใช้งานโมดูล** 
 
@@ -6808,13 +6910,25 @@ reload(module_name)
 
 <u>ตัวอยางโปรแกรมท่ 8.4 ี่</u> โมดูล CalAreaTriangle 
 
-```
-Program Example 8.4: CalAreaTriangle module
+
+**Program Example 8.4: CalAreaTriangle module**
+
+```python
+# Calculating Triangles Area
+# This module named CalAreaTriangle.py
+def triangle(height, base):
+    return 1/2 * height * base
+
+def equilateral(width):
+    return 3**(1/2) * width * width
+
+def isosceles(base, sidebase):
+    return base/4 * 4 * (((sidebase*sidebase) - (base*base)))**(1/2)
+
+def pythagorean(perpendicular):
+    return 0.5 * perpendicular * perpendicular
 ```
 
-- `1` _`# Calculating Triangles Area`_ `2` _`# This module named CalAreaTriangle.py`_ `3 def triangle(height, base): 4 return 1/2 * height * base 5 6 def equilateral(width): 7 return 3**(1/2) * width * width 8 9 def isosceles(base, sidebase): 10 return base/4 * 4 * (((sidebase*sidebase) - (base*base)))**(1/2)` 
-
-- `11 12 def pythagorean(perpendicular): 13 return 0.5 * perpendicular * perpendicular` ขั้นตอนต่อไป ให้ผู้เขียนโปรแกรมสร้างแฟ้มชื่อ __init__.py เพื่อใช้ส าหรับเก็บค่าคอนฟิกเริ่มต้น 
 
 - ส าหรับเรียกใช้งานแพ็คเกจ CalArea และเก็บไว้ในไดเรคทรอรีชื่อ CalArea ร่วมกันกับแฟ้ม CalAreaRectangle.py และ CalAreaTriangle.py จากนั้นท าการก าหนดค่าให้กับแฟ้ม __init__.py ดังนี้ 
 
@@ -6840,21 +6954,19 @@ pythagorean
 
 ### <u>ตัวอยางโปรแกรมท่ 8.5 ี่</u> import CalArea 
 
-###### **<mark>`Program Example 8.5:`</mark>** **_<mark>`calling CalArea Area`</mark>_** 
+######
 
+**Program Example 8.5: calling CalArea Area**
+
+```python
+# Calling package CalArea
+import CalArea   # import package CalArea
+print("Area of squre :",CalArea.squre(2.5, 2.5))
+print("Area of rectangle :",CalArea.rectangle(2.5, 3.5))
+print("Area of triangle :",CalArea.triangle(3, 2.5))
+print("Area of equilateral :",CalArea.equilateral(2.5))
 ```
-1 # Calling package CalArea
-```
 
-- **<mark>`2`</mark>** `import CalArea` _`# import package CalArea`_ 
-
-- **<mark>`3`</mark>** `print("Area of squre :",CalArea.squre(2.5, 2.5))` 
-
-- **<mark>`4`</mark>** `print("Area of rectangle :",CalArea.rectangle(2.5, 3.5))` 
-
-- **<mark>`5`</mark>** `print("Area of triangle :",CalArea.triangle(3, 2.5))` 
-
-<mark></mark> **<mark>`6`</mark>** <u>`print("Area of equilateral :",CalArea.equilateral(2.5))`</u> 
 
 ```
 Area of squre : 6.25
@@ -6940,19 +7052,21 @@ try:<br>   normal statement(s)<br>except  Exception 1 :<br>   exception statemen
 
 <u>ตัวอยางโปรแกรมท่ 9.1 ี่</u> แสดงตัวอย่างการท างานของ try…except 
 
-**<mark>`Program Example 9.1:`</mark>** **_<mark>`try...except`</mark>_** `1` _`# Try...except first program`_ <mark></mark> **<mark>`2`</mark>** `try:` 
 
-หน้า 191 
+**Program Example 9.1: try...except**
 
+```python
+# Try...except first program
+try:
+    fh = open("myfile", "w")
+    fh.write("This is my file for exception handling!!")
+except IOError:
+    print ("Error: can \'t find file or read data")
+else:
+    print ("Written content in the file successfully")
+    fh.close()
+```
 
-
-<mark></mark> **<mark>`3`</mark>** `fh = open("myfile", "w")` 
-
-<mark></mark> **<mark>`4`</mark>** `fh.write("This is my file for exception handling!!")` 
-
-<mark></mark> **<mark>`5`</mark>** `except IOError: 6 print ("Error: can\'t find file or read data")` <mark></mark> **<mark>`7`</mark>** `else:` 
-
-`8 print ("Written content in the file successfully")` <mark></mark> **<mark>`9`</mark>** `fh.close()` 
 
 ```
 Written content in the file successfully
@@ -6999,22 +7113,20 @@ ValueError: invalid literal for int() with base 10: '23.5'
 
 <u>ตัวอยางโปรแกรมท่ 9.2 ี่</u> แสดงการใช้ try…except กับการจัดการข้อผิดพลาดจากแป้นพิมพ์ 
 
-**<mark>`Program Example 9.2:`</mark>** **_<mark>`try...except with keyboard`</mark>_** `1` _`# Try...except with keyboard`_ <mark></mark> **<mark>`2`</mark>** `while True:` <mark></mark> **<mark>`3`</mark>** `try:` <mark></mark> **<mark>`4`</mark>** `n = int(input("Please enter an integer: "))` <mark></mark> **<mark>`5`</mark>** `break 6 except ValueError:` <mark></mark> **<mark>`7`</mark>** `print("No valid integer! Please try again ...") 8` <u>`print("Great, you successfully entered an integer!")`</u> 
 
-หน้า 193 
+**Program Example 9.2: try...except   with keyboard**
 
-
-
-###### **`OUTPUT`** 
-
+```python
+# Try...except with keyboard
+while True:
+    try:
+        n = int(input("Please enter an integer: "))
+        break
+    except ValueError:
+        print("No valid integer! Please try again ...")
+print("Great, you successfully entered an integer!")
 ```
-Please enter an integer: 5.6
-No valid integer! Please try again ...
-Please enter an integer: 4
-Great, you successfully entered an integer!
-```
 
-จากตัวอย่างโปรแกรมที่ 9.2 บรรทัดที่ 2 โปรแกรมท าการวนลูปแบบไม่รู้จบ เพราะเงื่อนไขที่ while ตรวจสอบเป็นจริงเสมอ บรรทัดที่ 3 โปรแกรมท าการตรวจจับความผิดพลาดที่อาจจะเกิดขึ้นกับ การป้อนข้อมูลจากแป้นพิมพ์โดยใช้ค าสั่ง try บรรทัดทัดที่ 4 โปรแกรมรับข้อมูลผ่านแป้นพิมพ์เป็นสตริง จากนั้นท าการแปลงเป็นเลขจ านวนเต็มด้วยค าสั่ง int ถ้าผู้ใช้งานป้อนข้อมูลเป็นเลขจ านวนเต็มโปรแกรม จะหยุดการท างานของค าสั่ง while ด้วยค าสั่ง break (บรรทัดที่ 5) และกระโดดไปท างานต่อในบรรทัดที่ 8 เพื่อพิมพ์ข้อความว่า “Great, you successfully entered an integer!” พร้อมกับจบการท างาน แต่ถ้า ผู้ใช้ป้อนข้อมูลชนิดอื่นๆ เช่น จ านวนจริง ตัวอักษร เป็นต้น โปรแกรมจะเกิดข้อผิดพลาดขึ้น ส่งผลให้ โปรแกรมกระโดดไปท างานหลังค าสั่ง except (บรรทัดที่ 6) ซึ่งประกาศไว้ว่าเป็นความผิดพลาดชนิด ValueError (ข้อมูลผิดประเภท) โปรแกรมจะสั่งพิมพ์ข้อความว่า “No valid integer! Please try again ...” (บรรทัดที่ 7) จากนั้นโปรแกรมจะกลับไปรับข้อมูลจากแป้นพิมพ์ใหม่ไปเรื่อยๆ จนกว่าผู้ใช้งานจะ ป้อนข้อมูลให้ถูกต้อง (เลขจ านวนเต็มเท่านั้น) 
 
 
 
@@ -7028,75 +7140,22 @@ Great, you successfully entered an integer!
 
 <u>ตัวอยางโปรแกรมท่ 9.3 ี่</u> แสดงการตรวจจับข้อผิดพลาดที่ไม่ก าหนด Exception 
 
-###### **<mark>`Program Example 9.3:`</mark>** **_<mark>`undefined exception`</mark>_** 
+######
 
-- `1` _`# Try...except with no any exceptions`_ 
+**Program Example 9.3: undefined exception**
 
-- `2 try: 3 fh = open("myfile", "w")` 
-
-- `4 fh.write("This is my file for exception handling!!")` 
-
-- **<mark>`5`</mark>** `except:` 
-
-- `6 print ("IO Error with File")` 
-
-- `7 else:` 
-
-หน้า 194 
-
-
-
-- `8 print ("Written content in the file successfully") 9 fh.close()` 
-
-```
-IO Error with File
+```python
+# Try...except with no any exceptions
+try:
+    fh = open("myfile", "w")
+    fh.write("This is my file for exception handling!!")
+except:
+    print ("IO Error with File")
+else:
+    print ("Written content in the file successfully")
+    fh.close()
 ```
 
-###### **`OUTPUT`** 
-
-จากโปรแกรมที่ 9.3 เป็นโปรแกรมที่ท าหน้าที่เปิดแฟ้มเพื่อเขียนข้อมูล โดยก าหนดให้มีการ ตรวจจับข้อผิดพลาดที่อาจจะเกิดขึ้นจากการเปิดแฟ้มด้วยค าสั่ง try…except แต่ไม่ก าหนดชนิดความ ผิดพลาดอันใดอันหนึ่งไว้หลังค าสั่ง except (บรรทัดที่ 5) เมื่อโปรแกรมเกิดความผิดพลาดขึ้น โปรแกรม สั่งพิมพ์ข้อความ “IO Error with File” ออกมาเท่านั้น ซึ่งการเขียนโปรแกรมที่ดีไม่ควรกระท าในลักษณะ เช่นนี้ เพราะเมื่อโปรแกรมท างานผิดพลาด ผู้เขียนโปรแกรมจะค้นหาสาเหตุของความผิดพลาดได้ยาก เพราะโปรแกรมแสดงข้อความแบบทั่วๆ ไปไม่ได้เจาะจงหรือเชื่อมโยงกับปัญหาจริงที่เกิดขึ้น 
-
-### **การตรวจจับความผิดพลาดแบบหลาย Exceptions (Multiple exceptions)** 
-
-Try…except อนุญาตให้ผู้เขียนโปรแกรมสามารถก าหนดเงื่อนไขการเกิดข้อผิดพลาดได้ มากกว่า 1 ชนิดได้ภายใน try ค าสั่งเดียวกัน แต่ขณะใดขณะหนึ่งจะมี exception เพียงอันเดียวเท่านั้นที่ จะได้ถูกประมวลผล ซึ่งมี 2 รูปแบบดังนี้ 
-
-**แบบที่ 1** ก าหนด Exception แยกจากกัน 
-
-
-
-<!-- Start of picture text -->
-try:<br>   normal statement(s)<br>except  Exception 1 :<br>   exception statement(s)<br>except  Exception 2 :<br>   exception statement(s)<br>   ...........<br>except  Exception n:<br><!-- End of picture text -->
-
-**แบบที่ 2** ก าหนด Exception อยู่ภายใต้ค าสั่ง except เดียวกัน 
-
-**_try:_** _normal statement(s)_ **_except_** _(Exception1[, Exception2[,...ExceptionN]]])_ **_:_** _exception statement(s)_ <u>ตัวอยางโปรแกรมท่ 9.4 ี่</u> แสดงการใช้งาน Multiple exceptions ทั้ง 2 แบบ 
-
-หน้า 195 
-
-
-
-|**`Prog `**|**`ram Example 9.4:`****_`multiple exceptions`_**|
-|---|---|
-|`1`<br>`2`|_`# Try...except with multiple exceptions`_<br>`import sys`|
-|`3`|_`#This code for separating errors`_|
-|`4`|`try:`|
-|`5`|`f = open('integers.txt')`|
-|`6`|`s = f.readline()`|
-|`7`|`i = int(s.strip())`|
-|**`8`**|`except IOError:`|
-|`9`|`print("I/O error")`|
-|**`10`**|`except ValueError:`|
-|`11`|`print("No valid integer in line.")`|
-|**`12`**|`except:`|
-|`13`<br>`14`|`print("Unexpected error")`|
-|`15`|_`#This code for combining errors`_|
-|`16`|`try:`|
-|`17`|`fh = open("testfile", "w")`|
-|`18`|`fh.write("This is my file for exception handling!!")`|
-|**`19`**|`except(IOError, ValueError, SystemError):`|
-|`20`|`print("Error: can\'t find file or read data")`|
-|`21`|`else:`|
-|`22`<br>`23`|`print("Written content in the file successfully")`<br>`fh.close()`|
 ||**`OUTPUT`**<br>`No valid integer in line.`<br>`Written content in the file successfully`|
 
 
@@ -7196,15 +7255,22 @@ This file is closed completely
 
 <u>ตัวอยางโปรแกรมท่ 9.6 ี่</u> แสดงตัวอย่างการใช้งาน try…except ที่ดี 
 
-**<mark>`Program Example 9.6:`</mark>** **_<u><mark>`good try...except`</mark></u>_** `1` _`# How to use good try...except`_ <mark></mark> **<mark>`2`</mark>** `try:` <mark></mark> **<mark>`3`</mark>** `fh = open("myfile", "w")` <mark></mark> **<mark>`4`</mark>** `try: 5 fh.write("This is my test file for exception handling!!")` <mark></mark> **<mark>`6`</mark>** `finally: 7 print("Going to close the file") 8 fh.close()` <mark></mark> **<mark>`9`</mark>** `except IOError: 10` <u>`print("Error: can\'t find file or read data")`</u> 
 
-```
-Going to close the file
-Error: can't find file or read data
-OUTPUT
+**Program Example 9.6: good try...except**
+
+```python
+# How to use good try...except
+try:
+    fh = open("myfile", "w")
+    try:
+        fh.write("This is my test file for exception handling!!")
+    finally:
+        print("Going to close the file")
+        fh.close()
+except IOError:
+    print("Error: can \'t find file or read data")
 ```
 
-จากโปรแกรมตัวอย่างที่ 9.6 แสดงการใช้ try ซ้อน try โดยค าสั่ง try ล าดับที่ 1 (บรรทัดที่ 2) จะ ตรวจสอบการเปิดแฟ้มเพื่ออ่านเขียน ถ้าการเปิดแฟ้มเกิดข้อผิดพลาดขึ้น (บรรทัดที่ 3) โปแกรมจะไป ท างานที่หลังค าสั่ง except IOError (บรรทัดที่ 9) โดยพิมพ์ข้อความว่า “Error: can\'t find file or read data” แต่ถ้าโปรแกรมท างานเป็นปกติ จะท างานในค าสั่งล าดับถัดไป (บรรทัดที่ 5) คือการเขียนข้อความ 
 
 หน้า 199 
 
@@ -7233,14 +7299,21 @@ except ExceptionType as Args:
 
 <u>ตัวอยางโปรแกรมท่ 9.7 ี่</u> แสดงตัวอย่างการใช้งานอาร์กิวเมนต์ของ exception 
 
+
+**Program Example 9.7: except arguments**
+
+```python
+# Argument of Exception
+# Define a function here.
+def temp_convert(var):
+    try:
+        return int(var)
+    except ValueError as Args:
+        print ("Argument doesn’t contain numbers \n", Args.args)
+# Call above function here.
+temp_convert("xyz");
 ```
-Program Example 9.7: except arguments
-```
 
-
-
-<!-- Start of picture text -->
-1  # Argument of Exception<br>2  # Define a function here.<br> 3  def temp_convert(var):<br> 4     try:<br> 5        return int(var)<br> 6     except ValueError as Args:<br> 7        print ("Argument doesn’t contain numbers\n", Args.args)<br>8  # Call above function here.<br> 9  temp_convert("xyz");<br><!-- End of picture text -->
 
 ```
 Argument does not contain numbers
@@ -7369,17 +7442,23 @@ occurred:
 
 <u>ตัวอยางโปรแกรมท่ 9.10 ี่</u> แสดงการตรวจจับความผิดพลาดที่เกิดจากจ านวนเต็มที่น้อยกว่า 0 
 
-> **<mark>`Program Example 9.10:`</mark>** **_<mark>`detecting zero number`</mark>_** 
 
-> `1` _`# Raising exception example 3`_ 
+**Program Example 9.10: detecting zero number**
 
-> `2 def f(x):` 
+```python
+# Raising exception example 3
+def f(x):
+    return g(x) + 1
+def g(x):
+    if x < 0: raise (ValueError, ("I can't settle with a negative number."))
+    else: return 5
+try:
+    print (f(3))
+    print (f( -5))
+except ValueError:
+    print ("That value was invalid.")
+```
 
-หน้า 204 
-
-
-
-`3 return g(x) + 1 4 def g(x):`  **`5`** `if x < 0:` **`raise`** `(ValueError, ("I can't settle with a negative number.")) 6 else: return 5 7 try: 8 print (f(3)) 9 print (f(-5)) 10 except ValueError: 11` <u>`print ("That value was invalid.")`</u> 
 
 ```
 6
@@ -7502,13 +7581,18 @@ _assert_ คือ ค าสั่งที่ใช้ตรวจสอบส
 
 <u>ตัวอยางโปรแกรมท่ 9.11 ี่</u> การวาง assert preconditions ไว้ในฟังชัน เพื่อตรวจสอบอินพุตพารามิเตอร์ 
 
-**<mark>`Program Example 9.11:`</mark>** **_<mark>`assert preconditions`</mark>_** `1` _`# Assert preconditions`_ <mark></mark> **<mark>`2`</mark>** `def DIV(x, y):` <mark></mark> **<mark>`3`</mark>** `assert (y != 0), "Cann't divide by zero!!!"` <mark></mark> **<mark>`4`</mark>** `return x / y` <mark></mark> **<mark>`5`</mark>** `print (DIV(5, 3))` <mark></mark> **<mark>`6`</mark>** `print (DIV(5, 0))` 
 
+**Program Example 9.11: assert preconditions**
+
+```python
+# Assert preconditions
+def DIV(x, y):
+    assert (y != 0), "Cann't divide by zero!!!"
+    return x / y
+print (DIV(5, 3))
+print (DIV(5, 0))
 ```
-1.6666666666666667
-Traceback (most recent call last):
-OUTPUT  File "C:/Python34/exam9_11.py", line 7, in <module>
-    print (DIV(5, 0))
+
   File "C:/Python34/exam9_11.py", line 3, in DIV
 assert (y != 0), "Cann't divide by zero!!!"
 AssertionError: Cann't divide by zero!!!
@@ -7522,17 +7606,18 @@ AssertionError: Cann't divide by zero!!!
 
 <u>ตัวอยางโปรแกรมท่ 9.12 ี่</u> การวาง assert postconditions ไว้หลังจากการเรียกฟังชัน เพื่อตรวจสอบเอา พุตที่ส่งกลับ 
 
-**<mark>`Program Example 9.12:`</mark>** **_<mark>`assert postconditions`</mark>_** `1` _`# Assert postconditions`_ `2 def DIV(x, y): 3 return x / y` <mark></mark> **<mark>`4`</mark>** `result = DIV(5, 6)` <mark></mark> **<mark>`5`</mark>** `assert result > 1, "Result less than zero"` 
-
-หน้า 208 
-
-
-
 ```
-Traceback (most recent call last):
-  File "C:/Python34/exam9_12.py", line 6, in <module>
-OUTPUT
-    assert result > 1, "Result less than zero"
+
+**Program Example 9.12: assert postconditions**
+
+```python
+# Assert postconditions
+def DIV(x, y):
+    return x / y
+result = DIV(5, 6)
+assert result > 1, "Result less than zero"
+```
+
 AssertionError: Result less than zero
 ```
 
@@ -7540,43 +7625,48 @@ AssertionError: Result less than zero
 
 <u>ตัวอยางโปรแกรมท่ 9.13 ี่</u> เป็นการใช้ assert ในกรณีต่างๆ 
 
-**<mark>`Program Example 9.13:`</mark>** **_<mark>`other assert`</mark>_** `1` _`# Assert for any conditions`_ <mark></mark> **<mark>`2`</mark>** `x = 0` <mark></mark> **<mark>`3`</mark>** **`assert`** `x == 0, "X must be 0 only" 4` <mark></mark> **<mark>`5`</mark>** `f = lambda x: x*x` <mark></mark> **<mark>`6`</mark>** **`assert`** `f(2) == 4` <mark></mark> **<mark>`7`</mark>** **`assert`** `f(3) == 9 8` <mark></mark> **<mark>`9`</mark>** `y = 5` <mark></mark> **<mark>`10`</mark>** `value = 0 11 if y < 5: 12 value = -1 13 elif y > 5: 14 value = 1 15 else: 16 value = 0` <mark></mark> **<mark>`17`</mark>** **`assert`** `value == 0` 
+```
 
+**Program Example 9.13: other assert**
 
+```python
+# Assert for any conditions
+x = 0
+assert x == 0, "X must be 0 only"
 
-จากโปรแกรมตัวอย่างที่ 9.13 แสดงการใช้งาน assert ในการตรวจสอบสมมติฐานในกรณีต่างๆ โดยเริ่มจากบรรทัดที่ 3 เป็นการตรวจสอบว่าค่าในตัวแปร x ที่ก าหนดไว้ (บรรทัดที่ 2) ยังคงเป็น 0 อยู่ หรือไม่ เมื่อโปรแกรมท างานต่อไปเรื่อยๆ แล้วสมมติว่ามีการเปลี่ยนแปลงค่าในตัวแปร x ให้มีค่าไม่ เท่ากับ 0 โปรแกรมจะพิมพ์ข้อความว่า “X must be 0 only” 
+f = lambda x: x*x
+assert f(2) == 4
+assert f(3) == 9
 
-บรรทัดที่ 5 โปรแกรมท าการสร้างฟังชัน lambda ซึ่งท าหน้าที่ยกก าลังสองของ x โปรแกรมท า การวาง assert ไว้ด้านหน้าฟังชัน lambda (บรรทัดที่ 6 และ 7) เมื่อเรียกใช้ฟังชัน lambda พร้อมกับ ค่าคงที่เป็นอากิวเมนต์เท่ากับ 2 ผลลัพธ์ที่ได้จะต้องเป็น 4 เท่านั้น (ถ้าไม่เท่ากับ 4 โปรแกรมจะแสดง ข้อผิดพลาดจาก assert) เช่นเดียวกับบรรทัดที่ 7 เมื่อเรียกฟังชัน lambda พร้อมกับค่าคงที่เป็นอากิว เมนต์เท่ากับ 3 ผลลัพธ์ที่ได้จะต้องเป็น 9 เท่านั้น 
+y = 5
+value = 0
+if y < 5:
+    value = -1
+elif y > 5:
+    value = 1
+else:
+    value = 0
+assert value == 0
+```
 
-บรรทัดที่ 9 โปรแกรมท าการก าหนดค่าให้ตัวแปร y = 5 และ value = 0 เมื่อตรวจสอบเงื่อนใน ค าสั่ง if ในบรรทัดที่ 11 จะได้ผลลัพธ์เป็นเท็จ (เพราะ y มากกว่า 0) โปรแกรมจึงเลื่อนมาตรวจสอบ เงื่อนไขต่อที่ค าสั่ง elif ในบรรทัดที่ 13 จะได้ผลลัพธ์เป็นเท็จ (เพราะ y เท่ากับ 5) โปรแกรมจึงเลื่อนไป 
-
-หน้า 209 
-
-
-
-ท างานต่อที่ค าสั่ง else ในบรรทัดที่ 15 โดยก าหนดค่าให้กับตัวแปร value = 0 เมื่อเสร็จจากค าสั่ง else แล้ว โปรแกรมจะตรวจสอบค่าใน value ด้วย assert โดยก าหนดไว้ว่าค่าในตัวแปร value ต้องเป็น 0 เท่านั้น ถ้า value เป็นค่าอื่นๆ ที่ไม่เท่ากับ 0 assert จะแจ้งความผิดพลาดทันที 
 
 <u>ตัวอยางโปรแกรมท่ 9.14 ี่</u> เป็นโปรแกรมแปลงค่าอุณหภูมิจาก Kalvin เป็น Fahrenheit 
 
-###### **<mark>`Program Example 9.14:`</mark>** **_<mark>`Kalvin to Fahrenheit`</mark>_** 
+######
 
-- `1` _`# Convert Kelvin to Fahrenheit`_ 
+**Program Example 9.14: Kalvin to Fahrenheit**
 
-- `2 def KelvinToFahrenheit(Temperature):` <mark></mark> **<mark>`3`</mark>** `assert(Temperature >= 0),"Colder than absolute zero!" 4 return((Temperature - 273) * 1.8) + 32` 
+```python
+# Convert Kelvin to Fahrenheit
+def KelvinToFahrenheit(Temperature):
+    assert(Temperature >= 0),"Colder than absolute zero!"
+    return((Temperature  - 273) * 1.8) + 32
 
-- `5` 
-
-- `6 print(KelvinToFahrenheit(273)) 7 print(int(KelvinToFahrenheit(505.78))) 8` <u>`print(KelvinToFahrenheit(-5))`</u> 
-
-
-
+print(KelvinToFahrenheit(273))
+print(int(KelvinToFahrenheit(505.78)))
+print(KelvinToFahrenheit( -5))
 ```
-32.0
-451
-OUTPUT
-Traceback (most recent call last):
-  File "C:/Python34/exam9_14.py", line 8, in <module>
-    print (KelvinToFahrenheit(-5))
+
   File "C:/Python34/exam9_14.py", line 3, in
 KelvinToFahrenheit
 assert (Temperature >= 0),"Colder than absolute zero!"
@@ -7718,12 +7808,18 @@ file.closed ฟังชันส่งค่ากลับเป็นจร�
 ### <u>ตัวอยางโปรแกรมท่ 10.1 ี่</u> แสดงคุณสมบัติของแฟ้มข้อมูลที่ถูกเปิดใช้งานอยู่ 
 
 ```
-Program Example 10.1: file attributes
+
+**Program Example 10.1: file attributes**
+
+```python
+# Show information about file
+# Open a file
+f = open("MyFile.txt", "w")
+print ("Name of the file: ", f.name)
+print ("Closed or not : ", f.closed)
+print ("Opening mode : ", f.mode)
 ```
 
-- `1` _`# Show information about file`_ `2` _`# Open a file`_ 
-
-<mark></mark> **<mark>`3`</mark>** `f = open("MyFile.txt", "w")` <mark></mark> **<mark>`4`</mark>** `print ("Name of the file: ", f.name)` <mark></mark> **<mark>`5`</mark>** `print ("Closed or not : ", f.closed)` <mark></mark> **<mark>`6`</mark>** <u>`print ("Opening mode : ", f.mode)`</u> 
 
 ```
 Name of the file:  MyFile.txt
@@ -7756,7 +7852,27 @@ fileObject คือ อ็อปเจ็กของแฟ้มที่ต�
 
 <u>ตัวอยางโปรแกรมท่ 10.2 ี่</u> 
 
-**<mark>`Program Example 10.2:`</mark>** **_<mark>`close file`</mark>_** `1` _`# Show Opening and Closing files`_ <mark></mark> **<mark>`2`</mark>** `FilePath = "C:\\Python34\\` ทดสอบอ่านไทย `.txt"` <mark></mark> **<mark>`3`</mark>** `try:` <mark></mark> **<mark>`4`</mark>** `f = open(FilePath, "rU")` <mark></mark> **<mark>`5`</mark>** `if f:` <mark></mark> **<mark>`6`</mark>** `print("` สามารถเปิดแฟ้ม `:",FilePath, "` ได้แล้ว `") 7 print ("Name of the file: ", f.name) 8 print ("Opening mode : ", f.mode) 9 str = f.readline() 10 print("` ข้อความในแฟ้มคือ `",str)` <mark></mark> **<mark>`11`</mark>** `except IOError as err: 12 print("` ไม่สามารถเปิดแฟ้มได้เพราะ `:",err.args)` <mark></mark> **<mark>`13`</mark>** `else: 14 print("` ปิดแฟ้มเรียบร้อยแล้ว `") 15 f.close()` 
+
+**Program Example 10.2: close file**
+
+```python
+# Show Opening and Closing files
+FilePath = "C: \\Python34 \\ ท ดส อ บ อ ่ านไท ย.txt"
+try:
+    f = open(FilePath, "rU")
+    if f:
+        print(" ส าม าร ถเป ิ ดแ ฟ ้ ม  :",FilePath, " ได ้ แล ้ ว")
+        print ("Name of the file: ", f.name)
+        print ("Opening mode : ", f.mode)
+        str = f.readline()
+        print(" ข ้ อ ค ว า มในแ ฟ ้ มค ื อ  ",str)
+except IOError as err:
+    print(" ไม ่ ส าม าร ถเ ป ิ ดแ ฟ ้ มได ้ เ พ ร าะ  :",err.args)
+else:
+    print(" ป ิ ดแ ฟ ้ มเ ร ี ย บ ร ้ อ ย แล ้ ว ")
+    f.close()
+```
+
 
 แฟ้มข้อมูลอินพุตที่ใช้ทดสอบ 
 
@@ -7819,7 +7935,35 @@ _<mark>`f.`</mark>_ **_<mark>`readlines`</mark>_** _<mark>`([sizehint])`</mark>_
 
 <u>ตัวอยางโปรแกรมท่ 10.3 ี่</u> แสดงการใช้ค าสั่ง read, readline และ readlines 
 
-**<mark>`Program Example 10.3:`</mark>** **_<mark>`read, readline, readlines`</mark>_** `1` _`# Testing read, readline(s) mothod`_ <mark></mark> **<mark>`2`</mark>** `FilePath = "C:\Python34\README.txt" 3 try:` <mark></mark> **<mark>`4`</mark>** `f = open(FilePath) 5` _`#Testing read method`_ <mark></mark> **<mark>`6`</mark>** `str = f.read()` <mark></mark> **<mark>`7`</mark>** `print(str) 8` _`#Testing readlines method`_ <mark></mark> **<mark>`9`</mark>** `f = open(FilePath)` <mark></mark> **<mark>`10`</mark>** `str = f.readlines(15) 11 print(str) 12` _`#Testing readline method`_ <mark></mark> **<mark>`13`</mark>** `f = open(FilePath)` <mark></mark> **<mark>`14`</mark>** `while 1:` <mark></mark> **<mark>`15`</mark>** `line = f.readline()` <mark></mark> **<mark>`16`</mark>** `if len(line): 17 print(line)` <mark></mark> **<mark>`18`</mark>** `else: break` <mark></mark> **<mark>`19`</mark>** `except IOError as err: 20 print("Cann't open file because :",err.args)` <mark></mark> **<mark>`21`</mark>** `else: 22 print("This file was closed!") 23 f.close()` ผลลัพธ์ของการทดสอบค าสั่ง read 
+
+**Program Example 10.3: read, readline, readlines**
+
+```python
+# Testing read, readline(s) mothod
+FilePath = "C: \Python34 \README.txt"
+try:
+        f = open(FilePath)
+        #Testing read method
+        str = f.read()
+        print(str)
+        #Testing readlines method
+        f = open(FilePath)
+        str = f.readlines(15)
+        print(str)
+        #Testing readline method
+        f = open(FilePath)
+        while 1:
+            line = f.readline()
+            if len(line):
+                print(line)
+            else: break
+except IOError as err:
+    print("Cann't open file because :",err.args)
+else:
+        print("This file was closed!")
+        f.close()
+```
+
 
 `This is Python version` 3.4.0 `beta` 1 **`OUTPUT`** =================================== `Copyright (c)` 2001 `,` 2002 `,` 2003 `,` 2004 `,` 2005 `,…` …… 
 
@@ -7881,7 +8025,18 @@ linecache.getline(file_name, line_no)
 
 <u>ตัวอยางโปรแกรมท่ 10.4 ี่</u> แสดงการใช้ค าสั่ง getline 
 
-**<mark>`Program Example 10.4:`</mark>** **_<mark>`linecache.getline`</mark>_** `1` _`# read file in line by line`_ <mark></mark> **<mark>`2`</mark>** `import linecache` <mark></mark> **<mark>`3`</mark>** `FilePath = "C:\Python34\README.txt"` <mark></mark> **<mark>`4`</mark>** `for line in range(5):` <mark></mark> **<mark>`5`</mark>** `print(linecache.getline(FilePath, line))` <mark></mark> **<mark>`6`</mark>** `linecache.clearcache()` 
+
+**Program Example 10.4: linecache.getline**
+
+```python
+# read file in line by line
+import linecache
+FilePath = "C: \Python34 \README.txt"
+for line in range(5):
+    print(linecache.getline(FilePath, line))
+linecache.clearcache()
+```
+
 
 ```
 This is Python version 3.4.0 beta 1
@@ -7959,13 +8114,39 @@ This is Python version 3.4.0
 
 <u>ตัวอยางโปรแกรมท่ 10.6 ี่</u> แสดงการใช้ค าสั่ง tell และ seek 
 
-**<mark>`Program Example 10.6:`</mark>** **_<mark>`tell and seek`</mark>_** `1` _`# tell and seek method`_ <mark></mark> **<mark>`2`</mark>** `file = open("TEST.txt", "r+")` <mark></mark> **<mark>`3`</mark>** `str = file.read(10);` <mark></mark> **<mark>`4`</mark>** `print ("Read String is : ", str) 5` _`# Check current position`_ <mark></mark> **<mark>`6`</mark>** `position = file.tell(); 7 print ("1.Current file position after read 1:", position) 8` _`# Reposition pointer at the beginning once again`_ <mark></mark> **<mark>`9`</mark>** `position = file.seek(5, 0);` <mark></mark> **<mark>`10`</mark>** `print ("2.Current file position after seek 1:", position)` <mark></mark> **<mark>`11`</mark>** `str = file.read(10);` <mark></mark> **<mark>`12`</mark>** `print ("Again read String is : ", str)` <mark></mark> **<mark>`13`</mark>** `print ("2.Current file position after read 2:", file.tell()) 14` _`# Reposition pointer at the current position`_ <mark></mark> **<mark>`15`</mark>** `position = file.seek(0, 1);` <mark></mark> **<mark>`16`</mark>** `print ("3.Current file position after seek 2:", position)` <mark></mark> **<mark>`17`</mark>** `str = file.read(10);` <mark></mark> **<mark>`18`</mark>** `print ("3.Again read String is : ", str)` <mark></mark> **<mark>`19`</mark>** `print ("3.Current file position after read 3: ", position) 20` _`# Reposition pointer at the end of file`_ <mark></mark> **<mark>`21`</mark>** `position = file.seek(0, 2);` <mark></mark> **<mark>`22`</mark>** `print ("4.Current file position after seek 3:", position)` <mark></mark> **<mark>`23`</mark>** `str = file.read(10);` 
 
-หน้า 221 
+**Program Example 10.6: tell and  seek**
 
+```python
+# tell and  seek method
+file = open("TEST.txt", "r+")
+str = file.read(10);
+print ("Read String is : ", str)
+# Check current position
+position = file.tell();
+print ("1.Current file position after read 1:", position)
+# Reposition pointer at the  beginning once again
+position = file.seek(5, 0);
+print ("2.Current file position after seek 1:", position)
+str = file.read(10);
+print ("Again read String is : ", str)
+print ("2.Current file position after read 2:", file.tell())
+# Reposition pointer at the current position
+position = file.seek(0, 1);
+print ("3.Current file position after seek 2:", position)
+str = file.read(10);
+print ("3.Again read String is : ", str)
+print ("3.Current file position after  read 3: ", position)
+# Reposition pointer at the end of file
+position = file.seek(0, 2);
+print ("4.Current file position after seek 3:", position)
+str = file.read(10);
+print ("4.Again read String is : ", str)
+print ("4.Current  file position after read 4: ", position)
+# Close opend file
+file.close()
+```
 
-
-<mark></mark> **<mark>`24`</mark>** `print ("4.Again read String is : ", str)` <mark></mark> **<mark>`25`</mark>** `print ("4.Current file position after read 4: ", position) 26` _`# Close opend file`_ <mark></mark> **<mark>`27`</mark>** `file.close()` 
 
 ```
 1.Read String is : This is Py
@@ -8051,15 +8232,22 @@ f.writelines(sequence)
 
 <u>ตัวอยางโปรแกรมท่ 10.7 ี่</u> แสดงการใช้ค าสั่ง write และ writelines 
 
-- **<mark>`Program Example 10.7:`</mark>** **_<mark>`write vs writelines`</mark>_** `1` _`# write, writelines`_ <mark></mark> **<mark>`2`</mark>** `string1 = "hello world in the new file\n"` <mark></mark> **<mark>`3`</mark>** `string2 = "and another line\n"` 
+-
 
-- **`4`** `sequence = ["Sequence string line 1\n", "Sequence string line 2"]` 
+**Program Example 10.7: write vs writelines**
 
-- **<mark>`5`</mark>** `file = open("newfile.txt", "w")` 
+```python
+# write, writelines
+string1 = "hello world in the new file \n"
+string2 = "and another line \n"
+sequence = ["Sequence string line 1 \n", "Sequence string line 2"]
+file = open("newfile.txt", "w")
+file.write(string1)
+file.write(string2)
+file.writelines(sequence)
+file.close()
+```
 
-- **<mark>`6`</mark>** `file.write(string1)` 
-
-<mark></mark> **<mark>`7`</mark>** `file.write(string2)` <mark></mark> **<mark>`8`</mark>** `file.writelines(sequence)` <mark></mark> **<mark>`9`</mark>** `file.close()` 
 
 ###### **`OUTPUT: myfile.txt`** 
 
@@ -8661,11 +8849,34 @@ Employee Class<br>Attributes<br>empCount = 2<br>name<br>Salary<br>Methods<br>__i
 
 ### **11.7** แสดงการสร้างอินสแตนซ์พนักงานส าหรับ John และ Lisa 
 
-```
-Program Example 11.3: creating employee class
+
+**Program Example 11.3: creating employee class**
+
+```python
+# Creating instance objects of Employee class
+class Employee:
+    'To declear super class Employee for all employee'
+    empCount = 0
+
+    def __init__(self, name, salary):
+            self.name = name
+            self.salary = salary
+            Employee.empCount += 1
+
+    def displayCount(self):
+        print ("Total Employee =%d" % Employee.empCount)
+
+    def displayEmployee(self):
+            print ("Name : ", self.name,  ", Salary: ", self.salary)
+
+#Creating instance objects
+employee1 = Employee("John", 25000)
+employee2 = Employee("Lisa", 20000)
+employee1.displayEmployee()
+employee2.displayEmployee()
+employee1.displayCount()
 ```
 
-`1` _`# Creating instance objects of Employee class`_ <mark></mark> **<mark>`2`</mark>** `class Employee:` <mark></mark> **<mark>`3`</mark>** _`'To declear super class Employee for all employee'`_ <mark></mark> **<mark>`4`</mark>** `empCount = 0 5` <mark></mark> **<mark>`6`</mark>** `def __init__(self, name, salary): 7 self.name = name 8 self.salary = salary 9 Employee.empCount += 1 10` <mark></mark> **<mark>`11`</mark>** `def displayCount(self): 12 print ("Total Employee =%d" % Employee.empCount) 13` <mark></mark> **<mark>`14`</mark>** `def displayEmployee(self): 15 print ("Name : ", self.name,  ", Salary: ", self.salary) 16 17` _`#Creating instance objects`_ <mark></mark> **<mark>`18`</mark>** `employee1 = Employee("John", 25000) 19 employee2 = Employee("Lisa", 20000) 20 employee1.displayEmployee() 21 employee2.displayEmployee() 22 employee1.displayCount()` 
 
 ```
 Name :  John , Salary:  25000
@@ -8696,21 +8907,25 @@ Total Employee = 2
 
 
 
-###### **<mark>`Program Example 11.4:`</mark>** **_<mark>`creating instances of Object`</mark>_** 
+######
 
-|`1`|_`#Creating instance objects`_|
-|---|---|
-|**`2`**|`employee1 = Employee("John", 25000)`|
-|**`3`**|`employee2 = Employee("Lisa", 20000)`|
-|**`4`**|`employee1.displayEmployee()`|
-|**`5`**|`employee2.displayEmployee()`|
-|**`6`**|`employee1.displayCount()`|
-|**`7`**|`employee1.empCount = 5`|
-|**`8`**|`employee1.salary = 30000`|
-|**`9`**|`employee2.salary = 28000`|
-|**`10`**|`employee1.displayEmployee()`|
-|**`11`**|`employee2.displayEmployee()`|
-|**`12`**|`employee2.displayCount()`|
+**Program Example 11.4: creating instances of Object**
+
+```python
+#Creating instance objects
+employee1 = Employee("John", 25000)
+employee2 = Employee("Lisa", 20000)
+employee1.displayEmployee()
+employee2.displayEmployee()
+employee1.displayCount()
+employee1.empCount = 5
+employee1.salary = 30000
+employee2.salary = 28000
+employee1.displayEmployee()
+employee2.displayEmployee()
+employee2.displayCount()
+```
+
 
 
 
@@ -8822,11 +9037,36 @@ __module__ เป็นแอตทริบิวต์ที่ใช้เก
 
 __bases__ (ไม่มีในไพธอนเวอร์ชัน 3.0) แต่มีในเวอร์ชันที่ต ่ากว่า ท าหน้าที่เก็บรายชื่อของ คลาสพื้นฐานต่างๆ ส าหรับตัวอย่างการใช้งานแอตทริบิวต์แบบ built-in แสดงในโปรแกรมที่ 11.5 
 
-```
-Program Example 11.5:built-in class attributes
+
+**Program Example 11.5: built-in class attributes**
+
+```python
+# Testing built -in attributes
+class Employee:
+    'To declear super class Employee for all employee'
+    empCount = 0
+
+    def __init__(self, name, salary):
+            self.name = name
+            self.salary = salary
+            Employee.empCount += 1
+
+    def displayCount(self):
+        print ("Total Employee = %d" % Employee.empCount)
+
+    def displayEmployee(self):
+            print ("Name : ", self.name,  ", Salary: ", self.salary)
+
+    def setEmpCount(self, x):
+            Employee.empCount = x
+
+#To access built-in attributes
+print("Employee.__name__: ",Employee.__name__)
+print("Employee.__doc__: ",Employee.__doc__)
+print("Employee.__module__: ",Employee.__module__)
+print("Employee.__dict__: ",Employee.__dict__)
 ```
 
-`1` _`# Testing built-in attributes`_ `2 class Employee: 3` _`'To declear super class Employee for all employee'`_ `4 empCount = 0 5 6 def __init__(self, name, salary): 7 self.name = name 8 self.salary = salary 9 Employee.empCount += 1 10 11 def displayCount(self): 12 print ("Total Employee = %d" % Employee.empCount) 13 14 def displayEmployee(self): 15 print ("Name : ", self.name,  ", Salary: ", self.salary) 16 17 def setEmpCount(self, x): 18 Employee.empCount = x 19 20` _`#To access built-in attributes`_ <mark></mark> **<mark>`21`</mark>** `print("Employee.__name__: ",Employee.__name__)` <mark></mark> **<mark>`22`</mark>** `print("Employee.__doc__: ",Employee.__doc__)` <mark></mark> **<mark>`23`</mark>** `print("Employee.__module__: ",Employee.__module__)` <mark></mark> **<mark>`24`</mark>** <u>`print("Employee.__dict__: ",Employee.__dict__)`</u> 
 
 <mark>`Employee.__name__:`</mark> **<mark>`Employee`</mark>** `Employee.__doc__:` **`To declear super class Employee for all OUTPUT employee`** `Employee.__module__:` **`__main__`** `Employee.__dict__:` **`{'empCount': 0, '__dict__': <attribute '__dict__' of 'Employee' objects>, '__module__': '__main__', 'setEmpCount': <function Employee.setEmpCount at 0x0000000003EF52F0>, '__doc__': 'To declear super class Employee for all employee', 'displayCount': <function Employee.displayCount at 0x0000000003EF51E0>, 'displayEmployee': <function Employee.displayEmployee at 0x0000000003EF5268>, '__init__': <function Employee.__init__ at 0x000000000112D7B8>, '__weakref__': <attribute '__weakref__' of 'Employee' objects>}`** จากตัวอย่างโปรแกรมที่ 11.5 แสดงการเรียกใช้งานแอตทริบิวต์ชนิด built-in ในคลาส 
 
@@ -9247,11 +9487,49 @@ Z<br>A(x=2,y=3,z=4)<br>Y<br>X B(x=4,y=3,z=0)<br><!-- End of picture text -->
 
 = 4.47 
 
-```
-Program Example 11.10:calculating distance between A and B point
+
+**Program Example 11.10: calculating distance between A and B point**
+
+```python
+# Overloading overators
+import math
+class Vector:
+    x = y = z = 0
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    # Overloading function print()
+    def __str__(self):
+        return ' -->(' + str(self.x) + ',' + str(self.y) + ',' + str(self.z) + ')'
+
+    # Overloading operator +
+    def __add__(self, obj):
+        return Vector(self.x + obj.x, self.y + obj.y , self.z + obj.z)
+
+    # Overloading operator -
+    def __sub__(self, obj):
+        return Vector(self.x - obj.x, self.y - obj.y , self.z - obj.z)
+
+    # Overloading operator **
+    def __pow__(self, obj):
+        return Vector(self.x ** obj.x, self.y ** obj.y , self.z ** obj.z)
+
+    def squreRoot(self):
+        return math.sqrt(self.x + self.y + self.z)
+
+A = Vector(2, 3, 4)
+B = Vector(4, 3, 0)
+C = B - A
+print (C)
+D = Vector(2, 2, 2)
+E = C ** D
+print (E)
+Y = E.squreRoot()
+print (Y)
 ```
 
-`1` _`# Overloading overators`_ `2 import math` <mark></mark> **<mark>`3`</mark>** `class Vector: 4 x = y = z = 0` <mark></mark> **<mark>`5`</mark>** `def __init__(self, x, y, z): 6 self.x = x 7 self.y = y 8 self.z = z 9 10` _`# Overloading function print()`_ <mark></mark> **<mark>`11`</mark>** `def __str__(self): 12 return '-->(' + str(self.x) + ',' + str(self.y) + ',' + str(self.z) + ')' 13 14` _`# Overloading operator +`_ <mark></mark> **<mark>`15`</mark>** `def __add__(self, obj): 16 return Vector(self.x + obj.x, self.y + obj.y , self.z + obj.z) 17 18` _`# Overloading operator -`_ <mark></mark> **<mark>`19`</mark>** `def __sub__(self, obj): 20 return Vector(self.x - obj.x, self.y - obj.y , self.z - obj.z) 21 22` _`# Overloading operator **`_ <mark></mark> **<mark>`23`</mark>** `def __pow__(self, obj): 24 return Vector(self.x ** obj.x, self.y ** obj.y , self.z ** obj.z) 25` <mark></mark> **<mark>`26`</mark>** `def squreRoot(self): 27 return math.sqrt(self.x + self.y + self.z) 28` <mark></mark> **<mark>`29`</mark>** `A = Vector(2, 3, 4) 30 B = Vector(4, 3, 0) 31 C = B - A 32 print (C) 33 D = Vector(2, 2, 2) 34 E = C ** D 35 print (E) 36 Y = E.squreRoot()` <mark></mark> **<mark>`37`</mark>** <u>`print (Y)`</u> 
 
 หน้า 264 
 
@@ -9284,7 +9562,38 @@ OUTPUT
 
 การห่อหุ้มหรือการซ่อนข้อมูล เป็นกลไกลอีกอย่างหนึ่งที่ส าคัญในการออกแบบโปรแกรมเชิง วัตถุ โดยมีเป้าหมายเพื่อต้องการรักษาความปลอดภัยหรือป้องกันการเข้าถึงข้อมูลจากภายนอกคลาส ในภาษาไพธอนสามารถท าได้โดยใส่เครื่องหมาย __ ( 2 underscore) ไว้ที่ด้านหน้าตัวแปร เช่น __color ส าหรับตัวอย่างการห่อหุ้มข้อมูลพิจารณาในโปรแกรมที่ 11.11 
 
-**<mark>`Program Example 11.11:`</mark>** **_<mark>`Data hinding`</mark>_** `1` _`# Encapsulation/Data hinding`_ `2 class Car:` <mark></mark> **<mark>`3`</mark>** `__color = 'red'` <mark></mark> **<mark>`4`</mark>** `register_count = 0 5` <mark></mark> **<mark>`6`</mark>** `def getColor(self): 7 print("Color is:",self.__color) 8` <mark></mark> **<mark>`9`</mark>** `def setColor(self, color): 10 self.__color = color 11 print("Color is:",self.__color) 12` <mark></mark> **<mark>`13`</mark>** `def regCount(self): 14 self.register_count += 1 15 print("Register count is:",self.register_count) 16 17 car1 = Car()` <mark></mark> **<mark>`18`</mark>** `car1.getColor()` <mark></mark> **<mark>`19`</mark>** `car1.setColor("yellow")` <mark></mark> **<mark>`20`</mark>** `car1.regCount()` <mark></mark> **<mark>`21`</mark>** `car1.__color = 'green'` <mark></mark> **<mark>`22`</mark>** `car1.getColor()` <mark></mark> **<mark>`23`</mark>** `car1.register_count = 5` <mark></mark> **<mark>`24`</mark>** `print(car1.register_count)` <mark></mark> **<mark>`25`</mark>** `car1._Car__color = 'pink'` <mark></mark> **<mark>`26`</mark>** `car1.getColor()` 
+
+**Program Example 11.11: Data hinding**
+
+```python
+# Encapsulation/Data hinding
+class Car:
+    __color = 'red'
+    register_count = 0
+
+    def getColor(self):
+        print("Color is:",self.__color)
+
+    def setColor(self, color):
+        self.__color = color
+        print("Color is:",self.__color)
+
+    def regCount(self):
+        self.register_count += 1
+        print("Register count is:",self.register_count)
+
+car1 = Car()
+car1.getColor()
+car1.setColor("yellow")
+car1.regCount()
+car1.__color = 'green'
+car1.getColor()
+car1.register_count = 5
+print(car1.register_count)
+car1._Car__color = 'pink'
+car1.getColor()
+```
+
 
 ```
 Color is: red
@@ -9616,23 +9925,18 @@ The Simpsons, 742 Evergreen Terrace 555-0113
 Toby Muntz 555-9972
 ```
 
+
+**Program Example 12.1: searching phone number by using regex**
+
+```python
+import re
+f = open(" phone_book.txt")
+for line in f:
+    if re.search(r"J.*Neu", line):
+        print(line.rstrip())
+f.close()
 ```
-Program Example 12.1: searchingphone number by using regex
-```
 
-<mark></mark> **<mark>`1`</mark>** `import re` 
-
-<mark></mark> **<mark>`2`</mark>** `f = open("phone_book.txt")` 
-
-<mark></mark> **<mark>`3`</mark>** `for line in f:` 
-
-<mark></mark> **<mark>`4`</mark>** `if re.search(r"J.*Neu", line):` 
-
-หน้า 277 
-
-
-
-<mark></mark> **<mark>`5`</mark>** `print(line.rstrip())` <mark></mark> **<mark>`6`</mark>** `f.close()` 
 
 ```
 Jack Neu 555-7666
@@ -10447,20 +10751,24 @@ _<mark>re.</mark>_ **_<mark>search</mark>_** _<mark>(pattern, string, flags=0)</
 
 ผู้   นโ       า า ถ ู า         า ๆ     ๊       ท     บ าโ   ช้  ธ   group(), span(), start()     end()   น 
 
+
+**Program Example 12.2: re.search() method   and other**
+
+```python
+#More details about re.search() method
+import re
+regex = "[0 -9]+"
+text = "Customer number: 232454, Date: February 12, 2011"
+matchObj = re.search(regex, text)
+print(matchObj)
+print("group->",matchObj.group())
+print("span->",matchObj.span())
+print("start->",matchObj.start())
+print("end->",matchObj.end())
+print("span[0]->",matchObj.span()[0])
+print("span[1]->",matchObj.span()[1])
 ```
-Program Example 12.2: re.search() method and other
-```
 
-```
-1 #More details about re.search() method
-2 import re
-```
-
-หน้า 291 
-
-
-
-<mark></mark> **<mark>`3`</mark>** `regex = "[0-9]+"` <mark></mark> **<mark>`4`</mark>** `text = "Customer number: 232454, Date: February 12, 2011"` <mark></mark> **<mark>`5`</mark>** `matchObj = re.search(regex, text)` <mark></mark> **<mark>`6`</mark>** `print(matchObj)` <mark></mark> **<mark>`7`</mark>** `print("group->",matchObj.group())` <mark></mark> **<mark>`8`</mark>** `print("span->",matchObj.span())` <mark></mark> **<mark>`9`</mark>** `print("start->",matchObj.start())` <mark></mark> **<mark>`10`</mark>** `print("end->",matchObj.end())` <mark></mark> **<mark>`11`</mark>** `print("span[0]->",matchObj.span()[0])` <mark></mark> **<mark>`12`</mark>** <u>`print("span[1]->",matchObj.span()[1])`</u> 
 
 ```
 <_sre.SRE_Match object; span=(17, 23), match='232454'>
@@ -10493,7 +10801,23 @@ span()[1]     า หน   ท้า      า ซึ   า       า    ห้�
 
 าท     บ า   ธ   group()      น     ชน ท     ซึ    า  า า ถ   บ  าท ้น บ  ้ า    า 1   า ผู้   นโ       า า ถ      าท ้นหา  ้โ   ช้ ู  บบ  า     group([subgroup1, subgroup2, …, subgroup])   โ           า ท 12.3 
 
-**<mark>`Program Example 12.3:`</mark>** **_<mark>`re.group([subgroup_id]) method`</mark>_** `1` _`#More details about re.group() method`_ <mark>`2`</mark> `import re` <mark></mark> **<mark>`3`</mark>** `regex = "([0-9]+).*: (.*)"` <mark></mark> **<mark>`4`</mark>** `text = "Customer number: 232454, Date: February 12, 2011"` <mark></mark> **<mark>`5`</mark>** `matchObj = re.search(regex, text)` <mark></mark> **<mark>`6`</mark>** `print(matchObj)` <mark></mark> **<mark>`7`</mark>** `print(matchObj.group())` <mark></mark> **<mark>`8`</mark>** `print(matchObj.group(0))` <mark></mark> **<mark>`9`</mark>** `print(matchObj.group(1))` <mark></mark> **<mark>`10`</mark>** `print(matchObj.group(2))` <mark></mark> **<mark>`11`</mark>** <u>`print(matchObj.group(1,2))`</u> 
+
+**Program Example 12.3: re.group( [subgroup_id] ) method**
+
+```python
+#More details about re.group( ) method
+import re
+regex = "([0 -9]+).*: (.*)"
+text = "Customer number: 232454, Date: February 12, 2011"
+matchObj = re.search(regex, text)
+print(matchObj)
+print(matchObj.group())
+print(matchObj.group( 0))
+print(matchObj.group(1))
+print(matchObj.group(2))
+print(matchObj.group(1,2))
+```
+
 
 ```
 <_sre.SRE_Match object; span=(17, 48), match='232454, Date:
@@ -10566,9 +10890,20 @@ Input File: tags.xml
 
 
 
-###### **<mark>`Program Example 12.5:`</mark>** **_<mark>`applied regex for XML`</mark>_** 
+######
 
-`1` _`#XML example`_ <mark>`2`</mark> `import re` <mark></mark> **<mark>`3`</mark>** `f = open("tags.xml")` <mark></mark> **<mark>`4`</mark>** `for i in f:` <mark></mark> **<mark>`5`</mark>** `res = re.search(r"<([a-z]+)>(.*)</\1>",i)` <mark></mark> **<mark>`6`</mark>** `print(res.group(1) + ": " + res.group(2))` <mark></mark> **<mark>`7`</mark>** `f.close()` 
+**Program Example 12.5: applied regex for XML**
+
+```python
+#XML example
+import re
+f = open("tags.xml")
+for i in f:
+    res = re.search(r"<([a -z]+)>(.*)</ \1>",i)
+    print(res.group(1) + ": " + res.group(2))
+f.close()
+```
+
 
 ```
 title: Programming Fundamentals and Python
@@ -10591,11 +10926,18 @@ city: Pennsylvania, USA
 
 า ท 12.6          า  า  ้นหาห า    โท   ท า    โท   ท 
 
-```
-Program Example 12.6: applied regex with phone book
+
+**Program Example 12.6: applied regex with phone book**
+
+```python
+#Phone book
+import re
+phone_list = ["555 -8396 Neu, Allison", "Burns, C. Montgomery", "555 -5299 Putz, Lionel", "555 -7334 Simpson, Homer Jay"]
+for i in phone_list:
+    res = re.search(r"([0 -9-]*)\s*([A-Za-z]+),\s+(.*)", i)
+    print(res.group(3) + " " + res.group(2) + " " + res.group(1))
 ```
 
-`1` _`#Phone book`_ <mark>`2`</mark> `import re`  **`3`** `phone_list = ["555-8396 Neu, Allison", "Burns, C. Montgomery", "555-5299 Putz, Lionel", "555-7334 Simpson, Homer Jay"]` <mark></mark> **<mark>`4`</mark>** `for i in phone_list:` <mark></mark> **<mark>`5`</mark>** `res = re.search(r"([0-9-]*)\s*([A-Za-z]+),\s+(.*)", i)`  **`6`** `print(res.group(3) + " " + res.group(2) + " " + res.group(1))` 
 
 ```
 Allison Neu 555-8396
@@ -10650,7 +10992,18 @@ OUTPUT
 
 โ   pattern    น  น    ห   regex ท ช้  าห  บ      บ, string     ้   า ห      ท ถู       บ ซึ      า  ช้ าน       า โ      ท 12.8 
 
-**<mark>`Program Example 12.8:`</mark>** **_<mark>`re.findall()`</mark>_** `1` _`# re.findall() testing`_ <mark>`2`</mark> `import re` <mark></mark> **<mark>`3`</mark>** `value = "abc 123 def 456 dot map pat"` _`# Find all words starting with d or p.`_ <mark></mark> **<mark>`4`</mark>** `list = re.findall("[dp]\w+", value)` <mark>`5`</mark> _`# Print result.`_ <mark></mark> **<mark>`6`</mark>** <u>`print(list)`</u> 
+
+**Program Example 12.8: re.findall()**
+
+```python
+# re.findall() testing
+import re
+value = "abc 123 def 456 dot map pat" # Find all words starting with d or p.
+list = re. findall("[dp]\w+", value)
+# Print result.
+print(list)
+```
+
 
 ```
 ['def', 'dot', 'pat']
@@ -10665,17 +11018,23 @@ OUTPUT
 
 email_list = 'Sophia Emma@google.com, Isabella Olivia Ava@abc.com Emily Abigail' 
 
-###### **<mark>`Program Example 12.9:`</mark>** **_<mark>`finding email address`</mark>_** 
+######
 
-|`1`<br>`2`|_`# To find email address`_<br>`import re`|
-|---|---|
-|**`3`**|`email_list = 'Sophia Emma@google.com, Isabella Olivia`<br>`Ava@abc.com Emily Abigail'`|
-|`4`|_`# re.findall() returns a list of all the found email strings`_|
-|`5`|_`# ['Emma@google.com', 'Ava@abc.com']`_|
-|**`6`**<br>`7`|`emails = re.findall(r'[\w\.-]+@[\w\.-]+', email_list)`|
-|<br>**`8`**|`for email in emails:`|
-|`9`|_`# do something with each found email string`_|
-|**`10`**|`print (email)`|
+**Program Example 12.9: finding email address**
+
+```python
+# To find email address
+import re
+email_list = 'Sophia Emma@google.com, Isabella Olivia Ava@abc.com Emily Abigail'
+# re.findall() returns a list of all the found email strings
+# ['Emma@google.com', 'Ava@abc.com']
+emails = re.findall(r'[ \w\.-]+@[\w\.-]+', email_list)
+
+for email in emails:
+    # do something with each found email string
+    print (email)
+```
+
 
 
 
@@ -10701,9 +11060,22 @@ _<mark>re.</mark>_ **_<mark>match</mark>_** _<mark>(pattern, string, flags=0)</m
 
 โ   pattern    น  น    ห   regex ท ช้  าห  บ      บ, string     ้   า ห      ท ถู       บ     flags    น ๊  ช น     ช้  าหน    น             น า     บ ท บ า า ท 12.1 ( า า ถ ช้ าน  ้ า    า 1  ๊  ช น โ   ช้    า น น า  OR ห   '|'  ช น re.M|re.I) ซึ      า  ช้ าน       า โ      ท 12.10 
 
-###### **<mark>`Program Example 12.10:`</mark>** **_<mark>`re.match() example`</mark>_** 
+######
 
-`1 import re` <mark>`2`</mark> _`# Sample strings`_ <mark></mark> **<mark>`3`</mark>** `list = ["dog dot", "do don't", "dumb-dumb", "no match"]` _`# Loop`_ <mark></mark> **<mark>`4`</mark>** `for element in list:` <mark>`5`</mark> _`# Match if two words starting with letter d`_ <mark></mark> **<mark>`6`</mark>** `m = re.match("(d\w+)\W(d\w+)", element)` <mark>`7`</mark> _`# See if success`_ <mark></mark> **<mark>`8`</mark>** `if m:` <mark>`9`</mark> <u>`print(m.groups())`</u> 
+**Program Example 12.10: re.match() example**
+
+```python
+import re
+# Sample strings
+list = ["dog dot", "do don't", "dumb -dumb", "no match"] # Loop
+for element in list:
+    # Match if t wo words starting with letter d
+    m = re.match("(d \w+)\W(d\w+)", element)
+    # See if success
+    if m:
+        print(m.groups())
+```
+
 
 ```
 ('dog', 'dot')
@@ -10789,7 +11161,22 @@ OUTPUT
 
 ผู้   นโ       า า ถ     ูผ   ธ โ      ช  FIRST     LAST  ทน (บ  ท ท 7 8)        า  ้า บน น   า  า  ช้ Named group   ้    ธ น         ธ   groupdict() าน    า       ห้  บผู้   นโ       า า ถ     ูผ   ธ ท    ึ น า  า      ช้ าน regex ้          า โ      ท 12.13 
 
-**<mark>`Program Example 12.13:`</mark>** **_<u><mark>`groupdict() example`</mark></u>_** `1 import re` <mark>`2`</mark> `name = "Clyde Griffiths"` <mark>`3`</mark> _`# Match names`_ `m = re.match("(?P<first>\w+)\W+(?P<last>\w+)", name)` <mark>`4`</mark> `if m:` <mark>`5`</mark> _`# Get dict`_ <mark></mark> **<mark>`6`</mark>** `d = m.groupdict()` <mark>`7`</mark> _`# Loop over dictionary with for-loop`_ <mark></mark> **<mark>`8`</mark>** `for t in d:` <mark></mark> **<mark>`9`</mark>** `print("  key:", t)` <mark></mark> **<mark>`10`</mark>** <u>`print("value:", d[t])`</u> 
+
+**Program Example 12.13: groupdict() example**
+
+```python
+import re
+name = " Clyde Griffiths "
+# Match names m = re.match("(?P<first> \w+)\W+(?P<last> \w+)", name)
+if m:
+    # Get dict
+    d = m.groupdict()
+    # Loop over dictionary with for -loop
+    for t in d:
+        print("  key:", t)
+        print("value:", d[t])
+```
+
 
 
 
@@ -11006,20 +11393,33 @@ db.close()
 
 ตาราง หรือระเบียนด้วยเมธอด execute() ได้ทันที ดังโปรแกรมตัวอย่างที่ 13.2 
 
+
+**Program Example 13.2: Creating database and use it**
+
+```python
+import MySQLdb
+# Connect database
+db = MySQLdb.connect("localhost","root","abc123")
+cursor = db.cursor()
+
+# Create and use database
+cursor.execute("CREATE DATABASE DBTest")
+cursor.execute("USE DBTest")
+
+# Create table Employee
+sql = """CREATE TABLE EMPLOYEE ( FIRST_NAME CHAR(20)  NOT NULL, LAST_NAME CHAR(20), AGE INT, SEX CHAR(1), INCOME FLOAT )"""
+
+cursor.execute(sql)
+
+# Shows table Employee
+cursor.exceute("SHOW TABLES")
+data = cursor.fetchall()
+print(data)
+
+# disconnect from server
+db.close()
 ```
-Program Example 13.2: Creating database and use it
-```
 
-<mark></mark> **<mark>`1`</mark>** `import MySQLdb` <mark>`2`</mark> _`# Connect database`_ <mark></mark> **<mark>`3`</mark>** `db = MySQLdb.connect("localhost","root","abc123")` <mark></mark> **<mark>`4`</mark>** `cursor = db.cursor()` <mark>`5 6`</mark> _`# Create and use database`_ <mark></mark> **<mark>`7`</mark>** `cursor.execute("CREATE DATABASE DBTest")` <mark></mark> **<mark>`8`</mark>** `cursor.execute("USE DBTest")` <mark>`9 10`</mark> _`# Create table Employee`_ <mark></mark> **<mark>`11`</mark>** `sql = """CREATE TABLE EMPLOYEE( FIRST_NAME CHAR(20) NOT NULL, LAST_NAME CHAR(20), AGE INT, SEX CHAR(1),` 
-
-หน้า 309 
-
-
-
-
-
-<!-- Start of picture text -->
-         INCOME FLOAT)"""<br>12<br> 13  cursor.execute(sql)<br>14<br>15  # Shows table Employee<br> 16  cursor.exceute("SHOW TABLES")<br> 17  data = cursor.fetchall()<br> 18  print(data)<br>19<br>20  # disconnect from server<br> 21  db.close()<br><!-- End of picture text -->
 
 
 
@@ -11050,7 +11450,25 @@ mysql> show databases;<br>+--------------------+<br>OUTPUT<br>| Database        
 
 โปรแกรมตัวอย่างที่ 13.3 แสดงการใช้งานค าสั่ง Insert ซึ่งมีรายละเอียดดังนี้ 
 
-**<mark>`Program Example 13.3:`</mark>** **_<mark>`Insert Operation`</mark>_** <mark>`1`</mark> `import MySQLdb` <mark>`2` </mark> **<mark>`3`</mark>** `db = MySQLdb.connect("127.0.0.1","root","abc123","DBTest" )` <mark>`4`</mark> `cursor = db.cursor()` <mark></mark> **<mark>`5`</mark>** `sql = """INSERT INTO EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES ('John', 'Carter', 20, 'M', 2000)"""` <mark></mark> **<mark>`6`</mark>** `try:` <mark></mark> **<mark>`7`</mark>** `cursor.execute(sql)` <mark>`8`</mark> _`# Commit your changes in the database`_ <mark></mark> **<mark>`9`</mark>** `db.commit()` <mark></mark> **<mark>`10`</mark>** `except:` <mark>`11`</mark> _`# Rollback in case there is any error`_ <mark></mark> **<mark>`12`</mark>** `db.rollback()` <mark>`13`</mark> `db.close()` ทดสอบผลลัพธ์โดยสั่งงานผ่าน MySQL Command line client ดังนี้คือ 
+
+**Program Example 13.3: Insert Operation**
+
+```python
+import MySQLdb
+
+db = MySQLdb.connect("127.0.0.1","root","abc123","DBTest" )
+cursor = db.cursor()
+sql = """INSERT INTO EMPLOYEE(FIRST_NAME, LAST_NAME, AGE, SEX, INCOME) VALUES (' John', 'Carter', 20, 'M', 2000)"""
+try:
+    cursor.execute(sql)
+    # Commit your changes in the database
+    db.commit()
+except:
+    # Rollback in case there is any error
+    db.rollback()
+db.close()
+```
+
 
 ```
 mysql> use DBTest;
@@ -11159,67 +11577,23 @@ OUTPUT
 
 ค าสั่งลบระเบียนข้อมูลจะใช้เมื่อผู้เขียนโปรแกรมต้องการลบระเบียนออกจากฐานข้อมูล โดยใช้งานผ่านเมธอด execute() เช่นเดียวกัน ดังตัวอย่างที่ 13.6 
 
-**<mark>`Program Example 13.6:`</mark>** **_<mark>`Delete Operation`</mark>_** <mark>`1`</mark> `import MySQLdb` <mark>`2`</mark> `db = MySQLdb.connect("127.0.0.1","root","abc123","DBTest" )` <mark>`3`</mark> `cursor = db.cursor() 4` _`# Prepare SQL query to DELETE required records`_ <mark></mark> **<mark>`5`</mark>** `sql = "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)` <mark>`6`</mark> `try:` <mark>`7`</mark> `cursor.execute(sql) 8 db.commit() 9 except: 10 db.rollback() 11 db.close()` 
 
-แสดงผลลัพธ์ด้วยค าสั่ง select * from employee; ใน MySQL Command Line Client ดังนี้ 
+**Program Example 13.6: Delete Operation**
 
+```python
+import MySQLdb
+db = MySQLdb.connect("127.0.0.1","root","abc123","DBTest" )
+cursor = db.cursor()
+# Prepare SQL query to DELETE required records
+sql = "DELETE  FROM EMPLOYEE WHERE AGE > '%d'" % (20)
+try:
+    cursor.execute(sql)
+    db.commit()
+except:
+    db.rollback()
+db.close()
 ```
-mysql> select * from employee;
-1Empty set (0.00 sec)
-OUTPUT
-```
 
-จากตัวอย่างโปรแกรมที่ 13.6 แสดงการลบระเบียนข้อมูลของผู้ที่มีอายุมากกว่า 20 ปีขึ้นไป ออกจาก ฐานข้อมูล ด้วยค าสั่ง SQL เท่ากับ "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20) โดยสัญลักษณ์ '%d' % (20) หมายถึง %d จะถูกแทนที่ด้วย 20 จากซึ่งเกิดจาก (20) ดังรูปด้านล่าง 
-
-```
-"DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)
-```
-
-หน้า 314 
-
-
-
-5. การยืนยันและยกเลิกค าสั่งการด าเนินการ (Commit and Rollback Operation) 
-
-การด าเนินการกับระบบฐานข้อมูลมีชื่อเรียกอีกอย่างคือ Transaction หมายถึง  กลุ่ม ค าสั่งที่ด าเนินการต่อข้อมูลบนฐานข้อมูล ซึ่งจะถูกมองเป็นหน่วยการท างานเพียงหนึ่งหน่วยซึ่ง ไม่สามารถที่จะแบ่งแยกย่อยได้ เพื่อเป็นการยืนยันความถูกต้องของข้อมูล ประกอบไปด้วย 4 ข้อคือ 
-
-- 1) Atomicity (แบ่งแยกไม่ได้) Transaction จะต้องเสร็จสิ้นอย่างสมบูรณ์ หรือ ไม่เช่นนั้นก็จะไม่เกิดขึ้นเลย เช่น A ต้องการโอนเงินให้ B เป็นจ านวนเงิน 500 บาท ค าสั่งที่ต้องการในการด าเนินการคือ ถอนเงินจากบัญชีของ A 500 บาทแล้วฝาก เงินเข้าไปในบัญชีของ B เท่ากับ 500 บาท แต่ถ้ามีการด าเนินการเพียงหนึ่งค าสั่ง คือถอนเงินออกจากบัญชีของ A แต่ไม่มีการฝากเงินเข้าไปในบัญชีของ B ก็จะท า ให้ฐานข้อมูลอยู่ในสภาวะที่ไม่ถูกต้อง เนื่องจากเงินในบัญชีของ A ได้หายไปแล้ว 500 บาท แต่เงินในบัญชีของ B ไม่ได้เพิ่มขึ้น 500 บาท อย่างที่ควรจะเป็น ดังนั้น ถ้าหากมีการด าเนินการเพียงหนึ่งค าสั่งและระบบเกิดหยุดชะงักไม่ว่าด้วยสาเหตุ ใดๆ ก็ตาม Transaction นั้นจะต้องถูกท าให้ย้อนกลับไป (roll back) ณ จุดที่ไม่เคย มีการกระท าใดๆ ตาม Transaction นั้นเกิดขึ้นมาก่อน 
-
-- 2) Consistency (ความสอดคล้องถูกต้อง) หมายถึงฐานข้อมูลจะต้องคงอยู่ในสถานะที่ ถูกต้องเสมอ ไม่ว่าก่อนที่จะเกิด Transaction หรือหลังจากที่มีการด าเนินการตาม Transaction แล้ว การด าเนินการของ Transaction จะต้องไม่มีผลท าให้ฐานข้อมูล สูญเสียความถูกต้องและความสอดคล้องของข้อมูล 
-
-
-
-- 3) Isolation (การไม่ถูกรบกวน) โดยทั่วไปในระบบฐานข้อมูลนั้น มักจะมี Transaction ที่ด าเนินการพร้อมๆ กัน จ านวนหลาย Transaction โดยที่ Transaction เหล่านั้น ในบางครั้งก็ใช้ข้อมูลชุดเดียวกัน ซึ่งการใช้ข้อมูลร่วมกันของ Transaction เหล่านั้น ก็อาจจะท าให้การท างานของ Transaction ได้ผลลัพธ์ที่ไม่ถูกต้องได้ ดังนั้นในการ ท างานของแต่ละ Transaction จะต้องถูกจัดล าดับการท างานให้ไม่มีการรบกวนกัน โดยให้แต่ละ Transaction สามารถท างานโดยเสมือนว่ามีเพียง Transaction เดียว เท่านั้น ที่ก าลังท างานอยู่ 
-
-- 4) Durability (ความคงทน) เมื่อ Transaction ได้ด าเนินการเสร็จสมบูรณ์แล้ว ผลลัพธ์ ที่เกิดจาก Transaction นั้นบนฐานข้อมูล จะต้องคงอยู่ตลอดไป ไม่ว่าจะเกิดปัญหา ระบบหยุดชะงัก (System crash) หรือระบบล้มเหลวในการท างาน (System 
-
-หน้า 315 
-
-
-
-failure)  ข้อมูลที่เป็นผลลัพธ์ที่เกิดจาก Transaction ที่ท างานอย่างถูกต้องนั้น จะต้องคงอยู่ตลอดไปเสมอ หลังจากที่ระบบได้รับการกู้ให้กลับมาท างาน (Recovery) อีกครั้ง 
-
-จากที่ได้กล่าวมาแล้วเบื้องต้น ฐานข้อมูลจ าเป็นต้องมีการยืนยันและยกเลิก Transaction ซึ่งไพ ธอนเตรียมค าสั่งไว้เพื่อให้ผู้เขียนโปรแกรมเรียกใช้งานได้คือ Commit และ Rollback ซึ่งมี รูปแบบค าสั่งคือ 
-
-
-
-ค าสั่งยืนยันการด าเนินการ (Commit) 
-
-### _<mark>db.commit()</mark>_ 
-
-ค าสั่งยกเลิกการด าเนินการ (Rollback) 
-
-_<mark>db.rollback()</mark>_ 
-
-ส าหรับตัวอย่างการใช้งานทั้ง 2 ค าสั่ง ผู้เขียนได้แสดงไว้แล้วในตัวอย่างต่างๆ ที่ผ่านมา โดยมี หลักการใช้งานคือ ถ้าการประมวลผลค าสั่ง SQL ไม่มีความผิดพลาดใดๆ เกิดขึ้นในขณะท า Transaction ให้เรียกใช้เมธอด commit() เพื่อยืนยันว่าค าสั่งที่สั่งงานไปแล้วนั้นสมบูรณ์ แต่ถ้ามี ความผิดพลาดเกิดขึ้นในขณะท า Transaction ให้เรียกใช้เมธอด rollback() เพื่อยกเลิกค าสั่งที่ ท างานไปแล้วกลับคืนมา โดยต้องท างานร่วมกับค าสั่ง try…except เสมอ (ถ้าผู้อ่านไม่มีความรู้ พื้นฐานเกี่ยวกับค าสั่งดังกล่าว สามารถอ่านเพิ่มเติมได้ในบทที่ 9) 
-
-
-
-6. ค าสั่งยกเลิกการเชื่อมต่อกับฐานข้อมูล (Disconnect) 
-
-หลังจากที่มีการใช้งานแฟ้มใดๆ ก็ตาม ขั้นตอนสุดท้ายคือการปิดแฟ้ม เพื่อบอกให้ ระบบปฏิบัติการทราบว่าไม่ต้องการใช้งานแฟ้มดังกล่าวแล้ว ระบบปฏิบัติการก็จะคืน หน่วยความจ าที่ใช้จัดเก็บแฟ้มดังกล่าวคืนกลับสู่ระบบต่อไป ในการใช้งานฐานข้อมูลก็มีลักษณะ เดียวกันคือ จ าเป็นต้องยุติการเชื่อมต่อฐานข้อมูลเมื่อไม่มีการใช้งานใดๆ กับฐานข้อมูลแล้ว โดย ใช้เมธอด close() ซึ่งมีรูปแบบค าสั่งดังนี้ 
-
-### _<mark>db.close()</mark>_ 
 
 ส าหรับตัวอย่างการใช้งานเมธอด close() ผู้เขียนได้แสดงไว้แล้ว จากตัวอย่าง 13.1 – 13.6 ที่ อยู่ด้านบน 
 
@@ -12114,7 +12488,28 @@ www.goole.com เรียกได้ว่าเป็น 1 โพรเซส
 
 ไพธอนได้จัดเตรียมโมดูลส าหรับบริหารจัดการกับเธรดชื่อว่า threading ผู้เขียนโปรแกรมจะต้อง ขยาย (extend) คลาสชื่อว่า Thread เข้ามาท างาน ดังตัวอย่างโปรแกรมที่ 15.1 
 
-**<mark>`Program Example 15.1:`</mark>** **_<mark>`Thread class`</mark>_** <mark></mark> **<mark>`1`</mark>** `from threading import Thread` <mark>`2` </mark> **<mark>`3`</mark>** `class myThread(Thread):` <mark></mark> **<mark>`4`</mark>** `def __init__(self, name):` <mark></mark> **<mark>`5`</mark>** `Thread.__init__(self)` <mark></mark> **<mark>`6`</mark>** `self.name = name` <mark>`7` </mark> **<mark>`8`</mark>** `def run(self): 9 print("Hello, my name is %s\n" %self.getName())` <mark>`10` </mark> **<mark>`11`</mark>** `process1 = myThread("Thread 1")` <mark>`12`</mark> `process2 = myThread("Thread 2")` <mark>`13`</mark> `process3 = myThread("Thread 3")` <mark></mark> **<mark>`14`</mark>** `process1.start()` <mark>`15`</mark> `process2.start()` <mark>`16`</mark> <u>`process3.start()`</u> 
+
+**Program Example 15.1: Thread class**
+
+```python
+from threading import Thread
+
+class myThread(Thread):
+    def __init__(self, name):
+        Thread.__init__(self)
+        self.name = name
+
+    def run(self):
+        print("Hello, my name is %s \n" %self.getName())
+
+process1 = myThread(" Thread 1")
+process2 = myThread(" Thread 2")
+process3 =  myThread(" Thread 3")
+process1.start()
+process2.start()
+process3.start()
+```
+
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -12181,121 +12576,42 @@ _"Please writing your code in here!"_
 
 ท างานโดยการเรียกผ่านเมธอด start() ซึ่งจะส่งผลให้โปรแกรมเข้าไปท างานในเมธอด run() ทันที จาก โปรแกรมตัวอย่างที่ 15.2 แสดงการสร้างเธรดจากโมดูล threading เพิ่มเติมจากตัวอย่างที่ 15.1 
 
-**<mark>`Program Example 15.2:`</mark>** **_<mark>`Thread and sleep`</mark>_** <mark></mark> **<mark>`1`</mark>** `from threading import Thread` <mark></mark> **<mark>`2`</mark>** `import time` <mark>`3` </mark> **<mark>`4`</mark>** `class myThread (Thread):` _`#Extending Thread class`_ <mark></mark> **<mark>`5`</mark>** `def __init__(self, threadID, name, counter):` <mark></mark> **<mark>`6`</mark>** `Thread.__init__(self)` _`#Overriding __init__ method`_ <mark></mark> **<mark>`7`</mark>** `self.threadID = threadID` <mark></mark> **<mark>`8`</mark>** `self.name = name` <mark></mark> **<mark>`9`</mark>** `self.counter = counter` <mark>`10` </mark> **<mark>`11`</mark>** `def printTime(self, threadName, delay, counter):` <mark>`12`</mark> `while counter:` <mark></mark> **<mark>`13`</mark>** `time.sleep(delay)` <mark></mark> **<mark>`14`</mark>** `print ("%s: %s" % (threadName, time.ctime(time.time())))` <mark>`15`</mark> `counter -= 1` <mark>`16` </mark> **<mark>`17`</mark>** `def run(self):` _`#Overriding run method`_ <mark>`18`</mark> `print ("Starting " + self.name)` <mark></mark> **<mark>`19`</mark>** `self.printTime(self.name, self.counter, 5)` <mark>`20`</mark> `print ("Exiting " + self.name)` <mark>`21 22`</mark> _`# Create new threads`_ <mark></mark> **<mark>`23`</mark>** `thread1 = myThread(1, "Thread-1", 1)` <mark></mark> **<mark>`24`</mark>** `thread2 = myThread(2, "Thread-2", 2)` <mark>`25 26`</mark> `# Start new Threads` <mark></mark> **<mark>`27`</mark>** `thread1.start()` <mark></mark> **<mark>`28`</mark>** `thread2.start()` <mark>`29`</mark> 
 
-หน้า 347 
+**Program Example 15.2: Thread and sleep**
 
+```python
+from threading import Thread
+import time
 
+class myThread (Thread): #Extending Thread class
+    def __init__(self, threadID, name, counter):
+        Thread.__init__(self) #Overriding __init__ method
+        self.threadID = threadID
+        self.name = name
+        self.counter = counter
 
-<mark></mark> **<mark>`30`</mark>** <u>`print ("Exiting Main Thread")`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
+    def printTime(self, threadName, delay, counter):
+        while counter:
+            time.sleep(delay)
+            print ("%s: %s" % (threadName, time.ctime(time.time())))
+            counter -= 1
 
+    def run(self): #Overriding run method
+        print ("Starting " + self.name)
+        self.printTime(self.name, self.counter, 5)
+        print ("Exiting " + self.name)
+
+# Create new threads
+thread1 = myThread(1, "Thread -1", 1)
+thread2 = myThread(2, "Thread -2", 2)
+
+# Start new Threads
+thread1.start()
+thread2.start()
+
+print ("Exiting Main Thread")
 ```
-Starting Thread-1
-Starting Thread-2
-OUTPUT
-Exiting Main Thread
-Thread-1: Thu Mar 13 15:49:07 2014
-Thread-2: Thu Mar 13 15:49:08 2014
-Thread-1: Thu Mar 13 15:49:08 2014
-Thread-1: Thu Mar 13 15:49:09 2014
-Thread-2: Thu Mar 13 15:49:10 2014
-Thread-1: Thu Mar 13 15:49:10 2014
-Thread-1: Thu Mar 13 15:49:11 2014
-Exiting Thread-1
-Thread-2: Thu Mar 13 15:49:12 2014
-Thread-2: Thu Mar 13 15:49:14 2014
-Thread-2: Thu Mar 13 15:49:16 2014
-Exiting Thread-2
-```
 
-
-
-ตัวอย่างโปรแกรมที่ 15.2 แสดงการสร้างและใช้งานเธรดอีกรูปแบบหนึ่ง โดยเริ่มจากบรรทัดที่ 1 ท าการ น าเข้าโมดูล threading เข้ามาใช้งาน บรรทัดที่ 2 น าเข้าโมดูลที่จัดการด้านเวลา (Time) มาท างาน บรรทัดที่ 4 สร้างคลาสใหม่ชื่อ myThread โดยได้รับการสืบทอดคุณสมบัติเกี่ยวกับเธรดมาจากคลาสแม่ ชื่อ Thread บรรทัดที่ 5 สร้างเมธอดคอนสตรักเตอร์ชื่อ __init__() ของคลาส myThread ซึ่งมีคุณสมบัติ ในการก าหนดค่าเริ่มต้นให้กับคลาส myThread เริ่มต้นจากการโอเวอร์ไรด์ดิ้งเมธอด __init__ ของคลาส Thread (บรรทัดที่ 6) ต่อจากนั้นก าหนดค่าให้กับแอตทริบิว threadID, name และ counter ในบรรทัดที่ 7, 8 และ 9 ตามล าดับ 
-
-บรรทัดที่ 11 สร้างเมธอดชื่อว่า printTime() ท าหน้าที่พิมพ์ชื่อและเวลาของแต่ละเธรดที่ก าลัง ท างาน โดยมีพารามิเตอร์ 3 ตัวคือ threadName, delay และ counter ตามล าดับ (ส่วนพารามิเตอร์ self นั้นหมายถึงการอ้างคลาสของตัวเอง ถ้าไม่ใส่ใว้โปรแกรมจะเข้าใจว่าเป็นการเรียกเมธอดในคลาสแม่ แทน จะท าให้โปรแกรมเกิดความผิดพลาด) เมธอด printTime() จะท าการหน่วงเวลาการพิมพ์โดย เรียกใช้เมธอด time.sleep() ซึ่งเวลาที่ใช้หน่วงมีหน่วยเป็นวินาที (บรรทัดที่ 13) ค าสั่งลูป while ใน โปรแกรมจะท างานไปเรื่อยๆ จนกว่าค่าในตัวแปร counter จะมีค่าเท่ากับ 0 บรรทัดที่ 14 โปรแกรม เรียกใช้เมธอด time.ctime(time.time()) ซึ่งจะส่งผลให้เวลาที่แสดงมีรูปแบบเป็น เดือน วัน วันที่ เวลา ปี เช่น Thu Mar 13 15:49:12 2014 บรรทัดที่ 17 โอเวอร์ไรด์ดิ้งเมธอด run() ภายในเมธอดดังกล่าว โปรแกรมจะสั่งพิมพ์ข้อความว่า "Starting " และตามด้วยชื่อของเธรด เมื่อพิมพ์ข้อความเรียบร้อยแล้ว จะเรียกใช้เมธอด printTime() ซึ่งต้องส่งอาร์กิวเมนต์ไปด้วย 3 ค่าคือ ชื่อ (name), เวลาที่ใช้หน่วงการ ท างาน (delay) และตัวนับ (counter) การเรียกเมธอดดังกล่าวจะต้องขึ้นต้นด้วย keyword ค าว่า self เสมอ เมื่อโปรแกรมกลับมาจากการท างานในเมธอด prinTime() แล้วจะพิมพ์ข้อความว่า "Exiting" และ ตามด้วยชื่อของเธรดนั่นๆ (บรรทัดที่ 20) 
-
-หน้า 348 
-
-
-
-บรรทัดที่ 23 และ 24 โปรแกรมสร้างอินสแตนซ์ของคลาส myThread ชื่อว่า thread1 และ thread2 โดยส่งอาร์กิวเมนต์ให้กับคลาส myThread 3 ตัวคือ threadID, name และ counter เมื่อสร้าง อินสแตนซ์แล้ว โปรแกรมสั่งให้เธรดท างานโดยเรียกใช้งานผ่านเมธอด start() ซึ่งจะท าให้เมธอด run() ในคลาส myThread ท างานทันที ผลลัพธ์ที่ได้แสดงให้เห็นว่าโปรแกรมจะพิมพ์ข้อความสลับกันระหว่าง เธรด 1 และเธรด 2 ไปเรื่อยๆ จนกว่าเธรดจะเสร็จสิ้นการท างาน 
-
-
-
-**Note** : การสร้างอินสแตนซ์จะส่งผลให้ เมธอด __init__() ในคลาสท างานทันที ซึ่งจะถูกใช้ใน การเตรียมสภาพแวดล้อมให้พร้อมก่อนโปรแกรมท างาน 
-
-**Tips:** การเรียกใช้ตัวแปร (แอตทริบิว) และเมธอด ใน OOP จะใช้ค าน าหน้าด้วย self เสมอ มิ เช่นนั้นแล้ว โปรแกรมจะเข้าใจว่าเป็นการเรียกใช้แอตทริบิวหรือเมธอดจากคลาสแม่ 
-
-
-
-### **2. ซิงโครไนซ์เธรด (Threads Synchronization)** 
-
-จากที่กล่าวมาแล้วข้างต้นว่าโพรเซสสามารถสร้างเธรดได้มากกว่า 1 เธรด ซึ่งเธรดต่างๆ เหล่านั้นมีความสามารถในการท างานได้พร้อมๆ กัน หากเธรดเหล่านั้นท างานที่เป็นอิสระไม่ขึ้นต่อกัน โดยสิ้นเชิง จะไม่เกิดปัญหาใดๆ แต่ในความเป็นจริงเธรดเหล่านั้นต้องใช้ทรัพยากรร่วมกันไม่มากก็น้อย ดังนั้นการท างานของเธรดใดเธรดหนึ่ง อาจมีผลกระทบทางอ้อมกับเธรดอื่นๆ โดยผ่านทางทรัพยากรที่ ใช้งานร่วมกัน เพื่อมิให้ส่งผลกระทบและเกิดความเสียหายต่อระบบ จึงเป็นหน้าที่ของระบบปฏิบัติการที่ จะต้องควบคุมหรือหลีกเลี่ยงการท างานของแต่ละเธรดที่มาเกี่ยวข้องกัน (Interaction) หน้าที่นี้เรียกว่า การเข้าจังหวะกันของเธรด หรือการซิงโครไนซ์เธรด (Threads Synchronization) 
-
-โมดูล threading ได้จัดเตรียมกลไกส าหรับจัดการเรื่องซิงโครไนซ์เธรดให้กับผู้เขียนโปรแกรมไว้ ดังนี้คือ 
-
-
-
-- เมธอด threading.Lock() ท าหน้าที่ล็อคทรัพยากรที่ต้องการใช้งานร่วมกัน อ็อปเจ็กต์ที่ คืนจากเมธอดดังกล่าวจะถูกใช้ในการควบคุมทรัพยากร 
-
-- acquire([blocking]) เป็นเมธอดที่ท างานร่วมกับอ็อปเจ็กต์ที่สร้างจากเมธอด Lock() ท า หน้าที่บังคับให้เธรดท างานในโหมดซิงโครไนซ์ โดยมีพารามิเตอร์ 1 ตัวคือ blocking ซึ่ง เป็นอ๊อปชัน (option) ถ้าก าหนดให้ blocking = 0 เมธอด acquire() จะคืนค่าเป็น 0 ทันทีเมื่อไม่สามารถล็อคทรัพยากรได้ และคืนค่าเป็น 1 เมื่อสามารถล็อคทรัพยากรได้ เมื่อ blocking ถูกก าหนดเป็น 1 โปรแกรมจะหยุดการร้องขอทรัพยากรที่ต้องการล็อค จากเธรดอื่นๆ ไว้ และจะรอจนกว่าทรัพยากรที่ต้องการจะถูกปลดปล่อยเพื่อท าการล็อค สรุปสั้นๆ คือ ถ้าก าหนด blocking เป็น 1 โปรแกรมจะรอจนกว่าจะล็อคทรัพยากรได้ 
-
-หน้า 349 
-
-
-
- เมธอด release() ท าหน้าที่ปลดปล่อยทรัพยากรที่โปรแกรมล็อคหรือครอบครองอยู่ 
-
-การใช้งานซิงโครไนซ์เธรดแสดงในตัวอย่างโปรแกรมที่ 15.3 
-
-|**`Prog `**|**`ram Example 15.3:`****_`Threads Syncronization`_**|
-|---|---|
-|`1`|`from threading import Thread`|
-|`2`|`import threading`|
-|`3`|`import time`|
-|`4`||
-|**`5`**|`class myThread (Thread):`|
-|`6`|`def __init__(self, threadID, name, counter):`|
-|`7`|`Thread.__init__(self)`|
-|`8`|`self.threadID = threadID`|
-|`9`|`self.name = name`|
-|`10`|`self.counter = counter`|
-|`11`||
-|**`12`**|`def printTime(self, threadName, delay, counter):`|
-|`13`|`while counter:`|
-|`14`|`time.sleep(delay)`|
-|`15`|`print ("%s: %s" % (threadName,`<br>|
-||`time.ctime(time.time())))`|
-|`16`|`counter -= 1`|
-|`17`||
-|**`18`**|`def run(self):`|
-|`19`|`print ("Starting " + self.name)`|
-|`20`|_`# Get lock to synchronize threads`_|
-|**`21`**|`threadLock.acquire()`|
-|`22`|`self.printTime(self.name, self.counter, 3)`|
-|`23`|_`# Free lock to release next thread`_|
-|**`24`**|`threadLock.release()`|
-|`25`||
-|**`26`**|`threadLock = threading.Lock()`|
-|**`27`**|`threads = []`|
-|`28`||
-|`29`|_`# Create new threads`_|
-|**`30`**|`thread1 = myThread(1, "Thread-1", 1)`|
-|`31`|`thread2 = myThread(2, "Thread-2", 2)`|
-|`32`||
-|`33`|_`# Start new Threads`_|
-|**`34`**|`thread1.start()`|
-|`35`|`thread2.start()`|
-|`36`||
-|`37`|_`# Add threads to thread list`_|
-|**`38`**|`threads.append(thread1)`|
-|`39`|`threads.append(thread2)`|
-|`40`||
-|`41`|_`# Wait for all threads to complete`_|
-|**`42`**|<br> `for t in threads:`|
-|`43`|`t.join()`|
-|`44`||
-|`45`<br>ั์ี่ิึ้ััี้|`print("Exiting Main Thread")`<br>ั์ี่ิึ้ััี้|
 |ผลลัพธ์ี่ิึ้ััี้|ั์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้|
 
 
@@ -12539,37 +12855,26 @@ Server<br>(Host)<br>Port Buffer<br>(5000)<br>Socket<br>Socket Socket<br>Port<br>
 
 ส าหรับตัวอย่างโปรแกรมฝั่งไคลเอ็นต์แสดงได้ดังนี้ 
 
+
+**Program Example 15.5: Easy Client Script (receive day/time)**
+
+```python
+''' Client for obtaining the day and time from localhost.'''
+from socket import *
+
+HOST = 'localhost '
+PORT = 5000
+BUFFER_SIZE = 1024
+ADDRESS = (HOST, PORT) #(127.0.0.1, 5000)
+
+server = socket(AF_INET, SOCK_STREAM)  #Create a socket
+server.connect(ADDRESS)  #Connect it to a host
+data_bytes  = server.recv(BUFFER_SIZE)  #Read a string from it
+dayAndTime = bytes.decode(data_bytes)
+print(dayAndTime)
+server.close()  #Close the connection
 ```
-Program Example 15.5: EasyClient Script (receive day/time)
-```
 
-<mark>`1`</mark> _`''' Client for obtaining the day and time from localhost.'''`_ <mark></mark> **<mark>`2`</mark>** `from socket import *` 
-
-หน้า 358 
-
-
-
-```
-3
-```
-
-<mark></mark> **<mark>`4`</mark>** `HOST = 'localhost'` <mark></mark> **<mark>`5`</mark>** `PORT = 5000` <mark></mark> **<mark>`6`</mark>** `BUFFER_SIZE = 1024` 
-
-- **<mark>`7`</mark>** `ADDRESS = (HOST, PORT)` _`#(127.0.0.1, 5000)`_ 
-
-- `8` 
-
-- **<mark>`9`</mark>** `server = socket(AF_INET, SOCK_STREAM)` _`#Create a socket`_ 
-
-- **<mark>`10`</mark>** `server.connect(ADDRESS)` _`#Connect it to a host`_ 
-
-- **<mark>`11`</mark>** `data_bytes = server.recv(BUFFER_SIZE)` _`#Read a string from it`_ 
-
-- **<mark>`12`</mark>** `dayAndTime = bytes.decode(data_bytes)` 
-
-- **<mark>`13`</mark>** `print(dayAndTime)` 
-
-- **<mark>`14`</mark>** `server.close()` _`#Close the connection`_ 
 
 จากตัวอย่างโปรแกรมที่ 15.5 แสดงโปรแกรมฝั่งไคลเอ็นต์ ท าหน้าที่ร้องขอวันและเวลาบนเครื่อง เซิร์ฟเวอร์มาแสดงผล บรรทัดที่ 2 น าเข้าโมดูล Socket โดยเลือกคลาส, เมธอดทั้งหมด (*) ที่อยู่ในโมดูล ดังกล่าวเข้ามาท างาน บรรทัดที่ 4 ก าหนดค่าให้กับตัวแปร HOST เท่ากับ 'localhost' (127.0.0.1) บรรทัดที่ 5 ก าหนดค่าหมายเลขพอร์ต (PORT) เท่ากับ 5000 ซึ่งหมายเลขพอร์ตดังกล่าวอยู่บนฝั่ง เซิร์ฟเวอร์ บรรทัดที่ 6 ก าหนดขนาดของบัฟเฟอร์เท่ากับ 1024 โดยมีหน่วยเป็นไบต์ (Bytes) บรรทัดที่ 7 ก าหนดค่าให้กับตัวแปร ADDRESS มีค่าไอพีเท่ากับ 127.0.0.1 และหมายเลขพอร์ตเท่ากับ 5000 (ใน ตัวอย่างนี้ เซิร์ฟเวอร์และไคลเอ็นต์จะท างานอยู่ในเครื่องเดียวกัน) บรรทัดที่ 9 สร้างซ็อกเก็ตคอนเน็คชัน ด้วยคลาส socket โดยคลาสดังกล่าวต้องการพารามิเตอร์ 2 ตัวคือ AF_INET ซึ่งเป็นมาตรฐานการ เชื่อมต่อของโพรโทรคอล TCP/IP และ SOCK_STREAM คือการเชื่อมต่อเหมือนกับการสร้างท่อจ าลอง (Pipe) ข้อมูลที่รับและส่ง โดยข้อมูลจะไหลในท่อดังกล่าวอย่างต่อเนื่อง บรรทัดที่ 10 สั่งให้เกิดการ เชื่อมต่อระหว่างไคลเอ็นต์และเซิร์ฟเวอร์ด้วยหมายเลขไอพีแอดเดรสและพอร์ตที่ก าหนดไว้ใน ADDRESS บรรทัดที่ 11 ไคลเอ็นต์ร้องขอข้อมูลจากเซิร์ฟเวอร์ด้วยเมธอด server.recv(BUFFER_SIZE) โดย BUFFER_SIZE คือขนาดของบัฟเฟอร์ที่ฝั่งไคลเอ็นต์จะรับข้อมูลได้ สูงสุดในแต่ละรอบ ค่าที่ส่งกลับมาจากเซิร์ฟเวอร์คือวันและเวลาเก็บไว้ในตัวแปรชื่อ data_bytes แต่ เนื่องจากข้อมูลที่ส่งและรับของ Socket ในไพธอน 3.0 ขึ้นไปจะใช้ข้อมูลชนิด byte แทนสตริง ดังนั้นจึง จ าเป็นต้องท าการแปลงจาก byte เป็นสตริงเสียก่อนโดยใช้เมธอด bytes.decode() ดังแสดงในบรรทัดที่ 12 ข้อมูลที่แปลงแล้วจะเก็บไว้ในตัวแปรชื่อ dayAndTime ต่อจากนั้นบรรทัดที่ 13 พิมพ์ข้อมูลที่อยู่ในตัว แปร dayAndTime บรรทัดที่ 14 สั่งให้โปรแกรมฝั่งไคลเอ็นต์ยุติการเชื่อมต่อ ส่งผลให้เซิร์ฟเวอร์ปิดช่อง ทางการเชื่อมต่อจากเครื่องไคลเอ็นต์ดังกล่าว เมื่อเขียนโปรแกรมเสร็จแล้วทดสอบสั่งรันโปรแกรมจะเกิด ข้อผิดพลาดขึ้นคือ 
 
@@ -12693,7 +12998,39 @@ because the target machine actively refused it
 
 ตัวอย่างโปรแกรม Chat ในฝั่งเซิร์ฟเวอร์แสดงได้ดังนี้ 
 
-**<mark>`Program Example 15.7:`</mark>** **_<mark>`Chat Server Script`</mark>_** <mark>`1`</mark> _`'''Chat Server Script'''`_ <mark>`2`</mark> `from socket import *` <mark>`3 4`</mark> `HOST = 'localhost'` <mark>`5`</mark> `PORT = 5000` <mark>`6`</mark> `BUFFER_SIZE = 1024` <mark>`7`</mark> `ADDRESS = (HOST, PORT)` _`#(127.0.0.1, 5000)`_ <mark>`8 9`</mark> `server = socket(AF_INET, SOCK_STREAM)` <mark>`10`</mark> `server.bind(ADDRESS)` <mark>`11`</mark> `server.listen(5)` <mark>`12` </mark> **<mark>`13`</mark>** `while True:` <mark></mark> **<mark>`14`</mark>** `print('waiting for connection...')` <mark></mark> **<mark>`15`</mark>** `client, address = server.accept()` <mark></mark> **<mark>`16`</mark>** `print('connected from: ', address)` <mark></mark> **<mark>`17`</mark>** `client.send(str.encode('Welcome to my Chat room!')) 18` <mark></mark> **<mark>`19`</mark>** `while True:` <mark></mark> **<mark>`20`</mark>** `message = bytes.decode(client.recv(BUFFER_SIZE))` <mark></mark> **<mark>`21`</mark>** `if not message:` <mark></mark> **<mark>`22`</mark>** `print("Client diconnected")` <mark></mark> **<mark>`23`</mark>** `client.close()` <mark></mark> **<mark>`24`</mark>** `break` <mark></mark> **<mark>`25`</mark>** `else:` <mark></mark> **<mark>`26`</mark>** `print(message)` <mark></mark> **<mark>`27`</mark>** `client.send(str.encode(input('> ')))` 
+
+**Program Example 15.7: Chat Server Script**
+
+```python
+'''Chat Server Script'''
+from socket import *
+
+HOST = 'localhost'
+PORT = 5000
+BUFFER_SIZE = 1024
+ADDRESS = (HOST, PORT) #(127.0.0.1, 5000)
+
+server = socket(AF_INET, SOCK_STREAM)
+server.bind(ADDRESS)
+server.listen(5)
+
+while True:
+    print('waiting for connection...')
+    client, address = server.accept()
+    print('connected from: ', address)
+    client.send(str.encode('Welcome to my Chat room!'))
+
+    while True:
+        message = bytes.decode(client.recv(BUFFER_SIZE))
+        if not message:
+            print("Client diconnected")
+            client.close()
+            break
+        else:
+            print(message)
+            client.send(str.encode(input('> ')))
+```
+
 
 เมื่อสั่งรันโปรแกรม Chat เซิร์ฟเวอร์จะได้ผลลัพธ์ดังนี้ 
 
@@ -12711,17 +13048,36 @@ because the target machine actively refused it
 
 ตัวอย่างโปรแกรม Chat ในฝั่งไคลเอ็นต์แสดงได้ดังนี้ 
 
+
+**Program Example 15.8: Chat Client Script**
+
+```python
+'''Chat Client Script'''
+from socket import *
+
+HOST = 'localhost'
+PORT = 5000
+BUFFER_SIZE = 1024
+ADDRESS = (HOST, PORT) #(127.0.0.1, 5000)
+
+server = socket(AF_INET, SOCK_STREAM)
+server.connect(ADDRESS)
+messageFromServer =  bytes.decode(server.recv(BUFFER_SIZE))
+print(messageFromServer)
+
+while True:
+    message = input('> ')
+    if not message:
+        break
+    server.send(str.encode(message))
+    reply = bytes.decode(server.recv(BUFFER_SIZE))
+    if not reply:
+        print('Server disconnected')
+        break
+    print(reply)
+server.close()
 ```
-Program Example 15.8: ChatClient Script
-```
 
-<mark>`1`</mark> `'''Chat Client Script'''` <mark>`2`</mark> `from socket import *` <mark>`3 4`</mark> `HOST = 'localhost'` <mark>`5`</mark> `PORT = 5000` <mark>`6`</mark> `BUFFER_SIZE = 1024` <mark>`7`</mark> `ADDRESS = (HOST, PORT)` _`#(127.0.0.1, 5000)`_ <mark>`8 9`</mark> `server = socket(AF_INET, SOCK_STREAM)` <mark>`10`</mark> `server.connect(ADDRESS)` <mark>`11`</mark> `messageFromServer =  bytes.decode(server.recv(BUFFER_SIZE))` <mark>`12`</mark> `print(messageFromServer)` <mark>`13` </mark> **<mark>`14`</mark>** `while True:` <mark></mark> **<mark>`15`</mark>** `message = input('> ')` <mark></mark> **<mark>`16`</mark>** `if not message:` <mark></mark> **<mark>`17`</mark>** `break` <mark></mark> **<mark>`18`</mark>** `server.send(str.encode(message))` <mark></mark> **<mark>`19`</mark>** `reply = bytes.decode(server.recv(BUFFER_SIZE))` <mark></mark> **<mark>`20`</mark>** `if not reply:` <mark></mark> **<mark>`21`</mark>** `print('Server disconnected')` <mark></mark> **<mark>`22`</mark>** `break` <mark></mark> **<mark>`23`</mark>** `print(reply)` 
-
-หน้า 365 
-
-
-
-- **<mark>`24`</mark>** `server.close()` 
 
 เมื่อสั่งรันโปรแกรม Chat ไคลเอ็นต์บน MS-DOS จะได้ผลลัพธ์ดังนี้ 
 
@@ -14452,13 +14808,23 @@ OUTPUT
 
 
 
-```
-Program Example 17.4: Counting memory
+
+**Program Example 17.4: Counting memory**
+
+```python
+import psutil
+import os
+
+def memory_usage_psutil():
+    # return the memory usage in MB
+    process = psutil.Process(os.getpid())
+    mem = process.get_memory_info()[0] / float(2 ** 20)
+    return mem
+
+mem = memory_usage_psutil()
+print(str(mem) + " MB")
 ```
 
-<mark></mark> **<mark>`1`</mark>** `import psutil` <mark></mark> **<mark>`2`</mark>** `import os` <mark>`3`</mark> 
-
-<mark></mark> **<mark>`4`</mark>** `def memory_usage_psutil():` <mark>`5`</mark> _`# return the memory usage in MB`_ <mark></mark> **<mark>`6`</mark>** `process = psutil.Process(os.getpid())` <mark></mark> **<mark>`7`</mark>** `mem = process.get_memory_info()[0] / float(2 ** 20)` <mark>`8`</mark> `return mem` <mark>`9 10`</mark> `mem = memory_usage_psutil()` <mark>`11`</mark> <u>`print(str(mem) + " MB")`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
 ```
 20.38 MB
@@ -14793,7 +15159,25 @@ Sorting หมายถึง การจัดเรียงข้อมู�
 
 
 <!-- Start of picture text -->
-Program Example 17.5:  Insertion Sort<br>1  def insertion(data):<br>2      for i in range(1, len(data)):<br>3          temp = data[i]<br>4          j = i<br>5          while (temp < data[j-1] and j>0):<br>6              data[j] = data[j-1]<br>7              j -= 1<br>8          data[j] = temp<br>9<br>10  data = [6, 1, 7, 9, 2, 8, 5, 4, 3]<br>11  print("The data before sorting = ", data)<br>12  insertion(data)<br>13  print("The data after sorting = ", data)<br><!-- End of picture text -->
+
+**Program Example 17.5: Insertion Sort**
+
+```python
+def insertion(data):
+    for i in range(1, len(data)):
+        temp = data[i]
+        j = i
+        while (temp < data[j -1] and j>0):
+            data[j] = data[j -1]
+            j -= 1
+        data[j] = temp
+
+data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
+print("The data before sorting = ", data)
+insertion(data)
+print("The dat a after sorting  = ", data)
+```
+
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -14855,7 +15239,26 @@ The data after sorting =  [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 ### จากรูปด้านบนแสดงการท างานของ Selection Sort ซึ่งสามารถเขียนโปรแกรมได้ดังนี้ 
 
-**<mark>`Program Example 17.6:`</mark>** **_<mark>`Selection Sort`</mark>_** `1 def selection(data): 2 for i in range(0, len(data)-1): 3 indexOfMin = i 4 for j in range(i+1, len(data)): 5 if (data[j] < data[indexOfMin]): 6 indexOfMin = j 7 temp = data[i]` <mark>`8`</mark> `data[i] = data[indexOfMin]` <mark>`9`</mark> `data[indexOfMin] = temp` <mark>`10 11`</mark> `data = [6, 1, 7, 9, 2, 8, 5, 4, 3]` <mark>`12`</mark> `print("The data before sorting = ", data)` <mark>`13`</mark> `selection(data)` <mark>`14`</mark> <u>`print("The data after sorting = ", data)`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ `The data before sorting =  [6, 1, 7, 9, 2, 8, 5, 4, 3] The data after sorting =  [1, 2, 3, 4, 5, 6, 7, 8, 9]` **`OUTPUT`** ในกรณีที่มีข้อมูล N ตัว การเรียงล าดับข้อมูลแบบ Selection Sort จะมีการค้นหาทั้งหมด N - 1 ครั้ง และ มีการสลับที่กันจริงไม่เกิน N - 1 ครั้ง โดยในแต่ละรอบจะมีการเปรียบเทียบข้อมูลดังนี้ 
+
+**Program Example 17.6: Selection  Sort**
+
+```python
+def selection(data):
+    for i in range(0, len(data) -1):
+        indexOfMin = i
+        for j in range(i+1, len(data)):
+            if (data[j] < data[indexOfMin]):
+                indexOfMin = j
+        temp = data[i]
+        data[i] = data[indexOfMin]
+        data[indexOfMin] = temp
+
+data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
+print("The data before sorting  = ", data)
+selection(data)
+print("The data after sorting = ", data)
+```
+
 
 1. กรณีดีที่สุด (Base-case) มีค่า BigO = O(n<sup>2</sup> ) 
 
@@ -14893,7 +15296,24 @@ The data after sorting =  [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
 
-**<mark>`Program Example 17.7:`</mark>** **_<mark>`Bubble Sort`</mark>_** `1 def bubble(data): 2 for i in range(0, len(data)-1): 3 for j in range(len(data)-1, i, -1): 4 if (data[j] < data[j-1]): 5 temp = data[j] 6 data[j] = data[j-1] 7 data[j-1] = temp` <mark>`8 9`</mark> `data = [6, 1, 7, 9, 2, 8, 5, 4, 3]` <mark>`10`</mark> `print("The data before sorting = ", data)` <mark>`11`</mark> `bubble(data)` <mark>`12`</mark> <u>`print("The data after sorting = ", data)`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
+
+**Program Example 17.7: Bubble Sort**
+
+```python
+def bubble(data):
+    for i in range(0, len(data) -1):
+        for j in range(len(data) -1, i, -1):
+            if (data[j] <  data[j-1]):
+                temp = data[j]
+                data[j] = data[j -1]
+                data[j-1] = temp
+
+data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
+print("The data before sorting = ", data)
+bubble(data)
+print("The data after sorting = ", data)
+```
+
 
 ```
 The data before sorting =  [6, 1, 7, 9, 2, 8, 5, 4, 3]
@@ -14936,19 +15356,35 @@ OUTPUT
 
 
 <!-- Start of picture text -->
-Program Example 17.8:  Merge Sort<br>1  def mergeSort(data):<br>2      if len(data) < 2: return data<br>3      m = len(data) // 2<br>4      return merge(mergeSort(data[:m]), mergeSort(data[m:]))<br>5<br>6  def merge(l, r):<br>7      result = []<br>8      i = j = 0<br>9      while i < len(l) and j < len(r):<br>10          if l[i] < r[j]:<br>11              result.append(l[i])<br>12              i += 1<br>13          else:<br>14              result.append(r[j])<br>15              j += 1<br>16      result.extend(l[i:])<br>17      result.extend(r[j:])<br>18      return result<br><!-- End of picture text -->
 
-หน้า 428 
+**Program Example 17.8: Merge Sort**
 
+```python
+def mergeSort(data):
+    if len(data) < 2: return data
+    m = len(data) // 2
+    return merge(mergeSort(data[:m]), mergeSort(data[m:]))
 
+def merge(l, r):
+    result = []
+    i = j = 0
+    while i < len(l) and j < len(r):
+        if l[i] < r[j]:
+            result.append(l[i])
+            i += 1
+        else:
+            result.append(r[j])
+            j += 1
+    result.extend(l[i:])
+    result.extend(r[j:])
+    return result
 
+data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
+print("The data before sorting = ", data)
+data = mergeSort(data)
+print("The data after sorting = ", data)
 ```
-19
-20 data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
-21 print("The data before sorting = ", data)
-22 data = mergeSort(data)
-23 print("The data after sorting = ", data)
-```
+
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -14999,7 +15435,24 @@ The data after sorting =  [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 จากรูปด้านบนแสดงการท างานของ Sequential Search ซึ่งสามารถเขียนโปรแกรมได้ดังนี้ 
 
-- **<mark>`Program Example 17.9:`</mark>** **_<mark>`Sequential Search`</mark>_** `1 def sequentialSearch(data, key): 2 for i in range(len(data)): 3 if key == data[i]: 4 return i 5 return -1 6 7 data = [6, 1, 7, 9, 2, 8, 5, 4, 3]` <mark>`8`</mark> `print("Data source = ", data)` <mark>`9`</mark> `print("Would like to search the 8 number.")` <mark>`10`</mark> `position = sequentialSearch(data, 8)` <mark>`11`</mark> <u>`print("The position of the 8 number is ", position)`</u> 
+-
+
+**Program Example 17.9: Sequential Search**
+
+```python
+def sequentialSearch(data, key):
+    for i in range(len(data)):
+        if key == data[i]:
+            return i
+    return -1
+
+data = [6, 1, 7, 9, 2, 8, 5, 4, 3]
+print("Data source = ", data)
+print("Would like to search the 8 number.")
+position = sequentialSearch(data, 8)
+print("The position of the 8 number is ", position)
+```
+
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -15037,13 +15490,33 @@ The position of the 8 number is  5
 
 ### จากรูปด้านบน แสดงการท างานของ Binary Search ซึ่งสามารถเขียนโปรแกรมได้ดังนี้ 
 
-- **<mark>`Program Example 17.10:`</mark>** **_<mark>`Binary Search`</mark>_** `1 def binarySearch(data, key): 2 min = 0 3 max = len(data) - 1 4 5 while True:` 
+-
 
-หน้า 431 
+**Program Example 17.10: Binary Search**
 
+```python
+def binarySearch(data, key):
+    min = 0
+    max = len(data) - 1
 
+    while True:
+        if max < min:
+            return -1
+        m = (min + max) // 2
+        if data[m] < key:
+            min = m + 1
+        elif data[m] > key:
+            max = m - 1
+        else:
+            return m + 1
 
-`6 if max < min: 7 return -1` <mark>`8`</mark> `m = (min + max) // 2` <mark>`9`</mark> `if data[m] < key:` <mark>`10`</mark> `min = m + 1` <mark>`11`</mark> `elif data[m] > key:` <mark>`12`</mark> `max = m - 1` <mark>`13`</mark> `else:` <mark>`14`</mark> `return m + 1` <mark>`15 16`</mark> `data = [1, 2, 3, 4, 5, 6, 7, 8, 9]` <mark>`17`</mark> `print("Data source = ", data)` <mark>`18`</mark> `print("Would like to search the 8 number.")` <mark>`19`</mark> `position = binarySearch(data, 8)` <mark>`20`</mark> <u>`print("The position of the 8 number is ", position)`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+print("Data source = ", data)
+print("Would like to search the 8 number.")
+position = binarySearch(data, 8)
+print("The position of the 8 number is ", position)
+```
+
 
 
 
@@ -15134,11 +15607,18 @@ OUTPUT
 
 ส าหรับโมดูล time มีเมธอดที่ส าคัญเช่น time.localtime() ส าหรับแสดงข้อมูลวันเวลาปัจจุบันในรูปแบบ ทัพเพิล, เมธอด time.asctime() แสดงวันเวลาที่ผู้ใช้งานสามารถอ่านได้ง่ายๆ ดังตัวอย่างโปรแกรมที่ 18.2 
 
-```
-Program Example 18.2: localtime(), asctime() method
+
+**Program Example 18.2: localtime(), asctime() method**
+
+```python
+import time;
+
+localtime = time.localtime(time.time())
+print ("Local current time :", localtime)
+localtime = time.asctime(time.localtime(time.time()))
+print ("Local current time :", localtime)
 ```
 
-<mark>`1 import time; 2` </mark> **<mark>`3`</mark>** `localtime = time.localtime(time.time())` <mark>`4`</mark> `print ("Local current time :", localtime)` <mark></mark> **<mark>`5`</mark>** `localtime = time.asctime(time.localtime(time.time()))` <mark>`6`</mark> <u>`print ("Local current time :", localtime)`</u> 
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -15158,7 +15638,20 @@ Local current time : Sun Mar 23 12:30:58 2014
 
 ในโมดูล time มีเมธอดที่ถูกใช้งานบ่อยครั้งได้แก่ time.ctime() ท าหน้าที่แปลงวันเวลาที่เป็น ทศนิยมเป็นสตริงของวันเวลาปัจจุบัน, time.clock() คืนค่าเป็นวินาทีที่ได้จากนาฬิกาของเครื่อง คอมพิวเตอร์ และ time.sleep(t) ท าหน้าที่สั่งให้โพรเซสหยุดการประมวลผล โดยค่า t มีค่าเท่ากับวินาที 
 
-**<mark>`Program Example 18.3:`</mark>** **_<mark>`ctime(), clock(), sleep() method`</mark>_** <mark>`1 import time 2` </mark> **<mark>`3`</mark>** `t0 = time.clock()` <mark></mark> **<mark>`4`</mark>** `print("Start : %s" % time.ctime())` <mark></mark> **<mark>`5`</mark>** `print("Start Processing time (seconds) = ", t0)` <mark></mark> **<mark>`6`</mark>** `time.sleep(5)`  **`7`** `print("Stop Processing time (Start - Current time) =", time.time() - t0)` <mark></mark> **<mark>`8`</mark>** <u>`print("End : %s" % time.ctime())`</u> 
+
+**Program Example 18.3: ctime(), clock(), sleep() method**
+
+```python
+import time
+
+t0 = time.clock()
+print("Start : %s" % time.ctime())
+print("Start Processing time (seconds) = ", t0)
+time.sleep(5)
+print("Stop Processing time (Start - Current time) =", time.time() - t0)
+print("End : %s" % time.ctime())
+```
+
 
 ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ 
 
@@ -15193,19 +15686,25 @@ _<mark>smtpObj =</mark>_ **_<mark>smtplib.SMTP</mark>_** _<mark>( [host [, port 
 
 เมื่อโปรแกรมสร้างอินสแตนซ์ของคลาส SMTP แล้ว ไพธอนได้เตรียมเมธอดส าหรับส่งข้อความติด มากับอินสแตนซ์ดังกล่าวด้วยทันที เรียกว่าเมธอด sendmail() โดยมีพารามิเตอร์ 3 ตัวคือ ชื่อผู้ส่ง อีเมล์ (sender), รายชื่อผู้รับอีเมล์ (receviers) สามารถก าหนดได้มากกว่า 1 คน และข้อความที่ ต้องการส่ง (message) แสดงในตัวอย่างที่ 18.4 
 
+
+**Program Example 18.4: sendmail() method**
+
+```python
+import smtplib
+
+sender = 'webmaster@homework.com'
+receivers = ['abc@gmail.com', 'xyz@hotmail.com']
+
+message = """From: webmaster < webmaster@homework.com> To: To every persons <abc@gmail.com>,<xyz@hotmail.com> Subject: SMTP e -mail test This is a test e -mail message. """
+
+try:
+    smtpObj = smtplib.SMTP('localhost')
+    smtpObj.sendmail(sender, receivers, message)
+    print ("Successfully sent email")
+except SMTPException:
+    print ("Error: unable to send email")
 ```
-Program Example 18.4: sendmail() method
-```
 
-<mark></mark> **<mark>`1`</mark>** <mark>`import smtplib 2` </mark> **<mark>`3`</mark>** `sender = 'webmaster@homework.com'` <mark></mark> **<mark>`4`</mark>** `receivers = ['abc@gmail.com', 'xyz@hotmail.com']` <mark>`5` </mark> **<mark>`6`</mark>** `message = """From: webmaster <webmaster@homework.com> To: To every persons <abc@gmail.com>,<xyz@hotmail.com> Subject: SMTP e-mail test This is a test e-mail message."""` <mark>`7 8`</mark> `try:` <mark></mark> **<mark>`9`</mark>** `smtpObj = smtplib.SMTP('localhost')` <mark></mark> **<mark>`10`</mark>** `smtpObj.sendmail(sender, receivers, message)` <mark></mark> **<mark>`11`</mark>** `print ("Successfully sent email")` <mark>`12`</mark> `except SMTPException:` <mark></mark> **<mark>`13`</mark>** <u>`print ("Error: unable to send email")`</u> ผลลัพธ์ที่เกิดขึ้นจากการรันโปรแกรมดังนี้ `Successfully sent email` **`OUTPUT`** 
-
-จากตัวอย่างโปรแกรมที่ 18.4 แสดงวิธีส่งเมล์โดยใช้เมธอด sendmail() เริ่มต้นโปรแกรมน าเข้าโมดูล smtplib ท าหน้าที่เชื่อมต่อกับเมล์เซิร์ฟเวอร์ บรรทัดที่ 3 ก าหนดชื่อผู้ส่ง ในที่นี้ทดสอบก าหนดเป็น 'webmaster@homework.com' ซึ่งชื่อดังกล่าวต้องเป็นสมาชิกของผู้ให้บริการเมล์เซิร์ฟเวอร์ด้วย ในการ ทดสอบนี้ผู้เขียนได้ท าการติดตั้งเมล์เซิร์ฟเวอร์ชื่อ hMailServer บนเครื่อง localhost (ปัจจุบันเมล์ เซิร์ฟเวอร์สาธารณะที่ให้บริการเมล์ทั่วๆ ไป เช่น gmail, hotmail ไม่เปิดให้เชื่อมต่อเข้าไปได้โดยตรง) บรรทัดที่ 4 ก าหนดรายชื่อผู้รับอีเมล์ซึ่งสามารถมีได้มากกว่า 1 ชื่อ โดยก าหนดไว้ในตัวแปลชนิดลิสต์ บรรทัดที่ 6 สร้างข้อความที่ต้องการส่งอีเมล์ บรรทัดที่ 9 โปรแกรมสร้างอินสแตนซ์ของคลาส SMTP พร้อมกับพารามิเตอร์ 1 ตัวคือ ชื่อของเซิร์ฟเวอร์ที่ให้บริการส่งเมล์ (ในที่นี้ใช้เมล์ที่ติดตั้งอยู่ใน localhost) อ็อปเจ็กต์ที่สร้างขึ้นชื่อ smtpObj จะถูกน าไปอ้างถึงเมธอด senmail() เพื่อส่งจดหมาย (บรรทัดที่ 10) โดยเมธอดดังกล่าวต้องการพารามิเตอร์ 3 ตัวคือ ชื่อผู้ส่ง (sender) รายชื่อผู้รับจดหมาย 
-
-หน้า 436 
-
-
-
-(receivers) และข้อความที่ต้องการส่ง (message) ถ้าการส่งอีเมล์ท าได้ส าเร็จโปรแกรมจะพิมพ์ข้อความ ว่า "Successfully sent email" แต่ถ้าเกิดข้อผิดพลาดใดๆ เกิดขึ้นในขณะท าการส่งเมล์โปรแกรมจะพิมพ์ ข้อความว่า "Error: unable to  send email" ดังตัวอย่าง OUTPUT ด้านบน 
 
 ### **3. การประยุกต์ใช้ฟังก์ชัน map, filter, reduce, lambda กับข้อมูลแบบล าดับ** 
 
@@ -15416,7 +15915,25 @@ OUTPUT
 
 จากตัวอย่างโปรแกรมข้างบน โปรแกรมสร้างฟังก์ชันชื่อ increment() ท าหน้าที่เพิ่มค่าข้อมูลขึ้นครั้งละ 1 เมื่อเรียกใช้งานฟังก์ชันดังกล่าว การเรียกใช้ค าสั่ง y  = increment() จะส่งผลให้ค่าที่คืนกลับมาจาก ฟังก์ชันดังกล่าวคือ ที่อยู่ของอ็อปเจ็กต์ Generator (<generator object increment at 0x0000000004008828>) ซึ่งไม่ใช่ข้อมูลที่สร้างมาจากฟังก์ชันดังกล่าว ผู้ใช้งานจ าเป็นต้องใช้ฟังก์ชัน next(y) เพื่อช่วยดึงข้อมูลจากฟังก์ชัน increment() มาแสดงผลทีละค่า แต่ถ้าต้องการเรียกใช้งานข้อมูล ทั้งหมดอย่างต่อเนื่องสามารถใช้งานร่วมกับค าสั่งลูป for ได้ เช่น 
 
-**<mark>`Program Example 18.5:`</mark>** **_<u><mark>`yield, next`</mark></u>_** <mark></mark> **<mark>`1`</mark>** <mark>`def increment(): 2`</mark> `x = 0 3 while True:` <mark></mark> **<mark>`4`</mark>** `yield x` <mark></mark> **<mark>`5`</mark>** `x += 1` <mark>`6` </mark> **<mark>`7`</mark>** `def pow(n):` <mark>`8`</mark> `for i in range(n):` <mark>`9`</mark> `yield i**2` <mark>`10 11`</mark> `y = increment()` <mark></mark> **<mark>`12`</mark>** `for j in pow(6):` <mark></mark> **<mark>`13`</mark>** <u>`print("The power of %d = %d" %(next(y), j))`</u> ผลลัพธ์ที่ได้จากโปรแกรมคือ 
+
+**Program Example 18.5: yield, next**
+
+```python
+def increment():
+    x = 0
+    while True:
+        yield x
+        x += 1
+
+def pow(n):
+    for i in range(n):
+            yield i**2
+
+y = increment()
+for j in pow(6):
+    print("The power of %d = %d" %(next(y), j))
+```
+
 
 `The power of 0 = 0 The power of 1 = 1` **`OUTPUT`** `The power of 2 = 4 The power of 3 = 9 The power of 4 = 16 The power of 5 = 25` จากการท างานของโปรแกรมที่ 18.5 บรรทัดที่ 4 ในฟังก์ชัน increment() สังเกตุว่า ค าสั่ง yield แตกต่าง จากค าสั่ง return เพราะถ้าใช้ค าสั่ง return แทน yield แล้ว ค าสั่ง x += 1 จะไม่ถูกท างานเลย (เพราะจะ กลับไปยังโปรแกรมที่เรียกใช้งานทันที) แต่ส าหรับค าสั่ง yield ค าสัง x += 1 จะสามารถท างานได้ 
 
@@ -16674,7 +17191,16 @@ Widgets มีค าสั่ง "command" ซึ่งมาพร้อมก
 
 
 <!-- Start of picture text -->
-Program Example 19.3:  Step of creating GUI by Tk<br> 1  import tkinter<br> 2  root = tkinter.Tk()<br> 3  # Code to add widgets will go here...<br> 4  root.mainloop()<br>ผลลัพธ์แสดงดังรูปที่ 19.9<br><!-- End of picture text -->
+
+**Program Example 19.3: Step of creating GUI by Tk**
+
+```python
+import tkinter
+root = tkinter.Tk()
+# Code to add widgets will go here...
+root.mainloop()
+```
+
 
 
 
@@ -16720,9 +17246,31 @@ pack_options มี 3 รูปแบบคือ expand, fill และ side
 
 ### ส าหรับตัวอย่างการใช้งานเมธอด pack() ดังนี้ 
 
-- **<mark>`Program Example 19.4:`</mark>** **_<u><mark>`pack() method`</mark></u>_** <mark>`1`</mark> `from tkinter import * 2 3 root = Tk()` <mark></mark> **<mark>`4`</mark>** `frame = Frame(root, bd="3", relief=GROOVE, padx=10, pady=10)` <mark></mark> **<mark>`5`</mark>** `frame.pack()` <mark></mark> **<mark>`6`</mark>** `redbutton = Button(frame, text="Red", fg="red")` <mark></mark> **<mark>`7`</mark>** `redbutton.pack(side = LEFT)` <mark></mark> **<mark>`8`</mark>** `greenbutton = Button(frame, text="Brown", fg="brown")` <mark></mark> **<mark>`9`</mark>** `greenbutton.pack(side = RIGHT)` <mark></mark> **<mark>`10`</mark>** `bluebutton = Button(frame, text="Blue", fg="blue")` <mark></mark> **<mark>`11`</mark>** `bluebutton.pack(side = BOTTOM) 12`  **`13`** `bottomframe = Frame(root, bd="3",  relief=GROOVE, padx=10, pady=10)` 
+-
 
-- **<mark>`14`</mark>** `bottomframe.pack(side = BOTTOM)` <mark></mark> **<mark>`15`</mark>** `blackbutton = Button(bottomframe, text="Black", fg="black")` <mark></mark> **<mark>`16`</mark>** `blackbutton.pack(side = BOTTOM) 17 18 root.mainloop()` 
+**Program Example 19.4: pack() method**
+
+```python
+from tkinter import  *
+
+root = Tk()
+frame = Frame( root, bd="3", relief=GROOVE, padx=10, pady=10 )
+frame.pack()
+redbutton = Button( frame, text="Red", fg="red" )
+redbutton.pack(side = LEFT)
+greenbutton = Button(frame, text="Brown", fg="brown")
+greenbutton.pack(side = RIGHT)
+bluebutton = Button(frame, text="Blue", fg="blue")
+bluebutton.pack(side = BOTTOM)
+
+bottomframe = Frame( root, bd="3",  relief=GROOVE, padx=10, pady=10)
+bottomframe.pack(side = BOTTOM)
+blackbutton =  Button(bottomframe, text="Black", fg="black")
+blackbutton.pack(side = BOTTOM)
+
+root.mainloop()
+```
+
 
 - ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูป 
 
@@ -16764,52 +17312,19 @@ grid_options มีรูปแบบดังนี้คือ
 
 ส าหรับตัวอย่างการใช้งานเมธอด grid() ดังนี้ 
 
-###### **<mark>`Program Example 19.5:`</mark>** **_<u><mark>`grid() method`</mark></u>_** 
+######
 
-- <mark>`1`</mark> `import tkinter 2 root = tkinter.Tk(  ) 3 for r in range(4):` <mark>`4`</mark> `for c in range(4):` <mark></mark> **<mark>`5`</mark>** `tkinter.Label(root, text='Row[%s]/Cow[%s]'%(r,c), borderwidth=5).grid(row=r,column=c)` 
+**Program Example 19.5: grid() method**
 
-- <mark>`6`</mark> `root.mainloop()` ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูป 
-
-
-
-หน้า 487 
-
-
-
-จากตัวอย่างโปรแกรมที่ 19.5 แสดงการใช้เมธอด grid() ในการจัดวาง Widgets โดยบรรทัดที่ 5 โปรแกรมสร้างเลเบลที่ท าการพิมพ์ต าแหน่งแถวและคอลัมน์ลงบนวินโดสว์หลัก โดยใช้เมธอดกริดในการ ก าหนดต าแหน่งของเลเบล ผลลัพธ์ที่ได้แสดงดังรูปด้านบน 
-
-**3. เมธอด place()** ท าหน้าที่จัดวาง Widgets ลงในหน้าต่างหลัก (root window) โดยการ ระบุต าแหน่ง ซึ่งมีรูปแบบค าสั่งดังนี้ 
-
-```
-widget.place( place_options )
+```python
+import tkinter
+root = tkinter.Tk(  )
+for r in range(4):
+    for c in range(4):
+        tkinter.Label(root, text='Row[%s]/Cow[%s]'%(r,c), borderwidth=5).grid(row=r,column=c)
+root.mainloop()
 ```
 
-place_options มีรูปแบบดังนี้คือ 
-
-- anchor: ก าหนดต าแหน่งการวาง Widget โดยอาศัยทิศ เช่น N (ทิศเหนือ), E (ตะวันออก), S, W, NE, NW, SE หรือ SW เป็นต้น 
-
-- bordermode: ก าหนดต าแหน่งการวาง Widget โดยอาศัยขอบด้านใน (INSIDE) และขอบ ด้านนอก (OUTSIDE) ค่าดีฟอลต์คือ INSIDE 
-
-- height, width: ก าหนดขนาดความกว้างและความยาว มีหน่วยเป็นพิกเซล 
-
-- relheight, relwidth: ก าหนดขนาดความกว้างและความยาว โดยใช้เลขจ านวนจริงระหว่าง 0.0 – 1.0 
-
-- relx, rely: ขนาดแนวตั้งและแนวนอนของ offset โดยใช้เลขจ านวนจริงระหว่าง 0.0 – 1.0 
-
-- x, y: ขนาดแนวตั้งและแนวนอนของ offset มีหน่วยเป็นพิกเซล 
-
-ส าหรับตัวอย่างการใช้งานเมธอด place() ดังนี้ 
-
-|**`Prog `**|**`ram Example 19.6:`****_`place() method`_**|
-|---|---|
-|`1`<br>`2`<br>`3`|`from tkinter import *`<br>`import tkinter`|
-|**`4`**<br>`5`|`root = tkinter.Tk()`|
-|**`6`**|`def helloCallBack():`|
-|`7`<br>`8`|`tkinter.messagebox.showinfo("Hello Python", "Hello World")`|
-|**`9`**|`B = tkinter.Button(root, text ="Hello", command =`<br>`helloCallBack)`|
-|`10`|`B.pack()`|
-|**`11`**<br>`12`|`B.place(bordermode=OUTSIDE, height=100, width=100)`|
-|`13`|`root.mainloop()`|
 ||ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง|
 
 
@@ -16964,57 +17479,30 @@ NW: ทิศตะวันตกเฉียงเหนือ, N: ทิศ�
 
 ส าหรับตัวอย่างการใช้งาน Relief แสดงในโปรแกรมตัวอย่างที่ 19.7 ดังนี้ 
 
-###### **<mark>`Program Example 19.7:`</mark>** **_<mark>`Relief styles`</mark>_** 
+######
 
-- <mark>`1`</mark> `from tkinter import *` 
+**Program Example 19.7: Relief styles**
 
-- `2 import tkinter` 
+```python
+from tkinter import *
+import tkinter
 
-- `3` 
+root = tkinter.Tk()
 
-- `4 root = tkinter.Tk()` 
+B1 = tkinter.Button( root, text ="FLAT", relief= FLAT)
+B2 = tkinter.Button(root , text ="RAISED", relief= RAISED)
+B3 = tkinter.Button(root , text ="SUNKEN", relief= SUNKEN)
+B4 = tkinter.Button(root , text ="GROOVE", relief= GROOVE)
+B5 = tkinter.Button(root, text ="RIDGE",  relief=RIDGE)
 
-- `5` 
-
-- `6 B1 = tkinter.Button(root, text ="FLAT", relief=` **`FLAT`** `)` 
-
-- `7 B2 = tkinter.Button(root, text ="RAISED", relief=` **`RAISED`** `)` 
-
-- `8 B3 = tkinter.Button(root, text ="SUNKEN", relief=` **`SUNKEN`** `)` 
-
-- `9 B4 = tkinter.Button(root, text ="GROOVE", relief=` **`GROOVE`** `)` 
-
-- `10 B5 = tkinter.Button(root, text ="RIDGE", relief=` **`RIDGE`** `)` 
-
-หน้า 492 
-
-```
-11
+B1.pack()
+B2.pack()
+B3.pack()
+B4.pack()
+B5.pack()
+root.mainloop()
 ```
 
-
-
-```
-12 B1.pack()
-```
-
-```
-13 B2.pack()
-```
-
-```
-14 B3.pack()
-```
-
-```
-15 B4.pack()
-```
-
-- <mark>`16`</mark> `B5.pack()` 
-
-```
-17 root.mainloop()
-```
 
 ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง 
 
@@ -17030,49 +17518,32 @@ Bitmap คือภาพที่เกิดจากจุดสีที่�
 
 ส าหรับตัวอย่างการใช้งาน Bitmaps แสดงในโปรแกรมตัวอย่างที่ 19.8 ดังนี้ 
 
-###### **<mark>`Program Example 19.8:`</mark>** **_<mark>`Bitmaps`</mark>_** 
+######
 
-- <mark>`1`</mark> `from tkinter import *` 
+**Program Example 19.8: Bitmaps**
 
-- `2 import tkinter` 
+```python
+from tkinter import *
+import tkinter
 
-- `3` 
+root = tkinter.Tk()
+B1 = tkinter.Button(root, relief=RAISED, bitmap=" error")
+B2 = tkinter.Button(root, relief=RAISED, bitmap=" hourglass ")
+B3 = tkinter.Button(root, relief=RAISED, bitmap=" info")
+B4 = tkinter.Button(root, relief=RAISED, bitmap=" question ")
+B5 = tkinter.Button(root, relief=RAISED, bitmap=" warning")
+B6 = tkinter.Button(root, relief=RAISED, bitmap=" gray75")
+B7 = tkinter.Button(root, relief=RAISED, bitmap=" questhead ")
+B1.pack()
+B2.pack()
+B3.pack()
+B4.pack()
+B5.pack()
+B6.pack()
+B7.pack()
+root.mainloop()
+```
 
-- `4 root = tkinter.Tk()` 
-
-- `5 B1 = tkinter.Button(root, relief=RAISED, bitmap="` **`error`** `")` 
-
-- `6 B2 = tkinter.Button(root, relief=RAISED, bitmap="` **`hourglass`** `")` 
-
-- `7 B3 = tkinter.Button(root, relief=RAISED, bitmap="` **`info`** `")` 
-
-หน้า 493 
-
-
-
-- `8 B4 = tkinter.Button(root, relief=RAISED, bitmap="` **`question`** `")` 
-
-- `9 B5 = tkinter.Button(root, relief=RAISED, bitmap="` **`warning`** `")` 
-
-- `10 B6 = tkinter.Button(root, relief=RAISED, bitmap="` **`gray75`** `")` 
-
-- `11 B7 = tkinter.Button(root, relief=RAISED, bitmap="` **`questhead`** `")` 
-
-- <mark>`12`</mark> `B1.pack()` 
-
-- <mark>`13`</mark> `B2.pack()` 
-
-- <mark>`14`</mark> `B3.pack()` 
-
-- <mark>`15`</mark> `B4.pack()` 
-
-- <mark>`16`</mark> `B5.pack()` 
-
-- <mark>`17`</mark> `B6.pack()` 
-
-- <mark>`18`</mark> `B7.pack()` 
-
-- <mark>`19`</mark> `root.mainloop()` 
 
 ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง 
 
@@ -17092,99 +17563,23 @@ Bitmap คือภาพที่เกิดจากจุดสีที่�
 
 ส าหรับตัวอย่างการใช้งานเคอร์เซอร์ แสดงในโปรแกรมตัวอย่างที่ 19.9 ดังนี้ 
 
-###### **<mark>`Program Example 19.9:`</mark>** **_<mark>`Cursors`</mark>_** 
+######
 
-- <mark>`1`</mark> `from tkinter import * 2 import tkinter 3 4 root = tkinter.Tk() 5 6 B1 = tkinter.Button(root, relief=RAISED, cursor="` **`hand1`** `")` 
+**Program Example 19.9: Cursors**
 
-- `7 B2 = tkinter.Button(root, relief=RAISED, cursor="` **`heart`** `")` 
+```python
+from tkinter import *
+import tkinter
 
-- `8 B1.pack()` 
+root = tkinter.Tk()
 
-- `9 B2.pack()` 
-
-- `10 root.mainloop()` 
-
-ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง ให้ทดลองเลื่อเคอร์เซอร์ไปทับที่ปุ่มดังกล่าว 
-
-หน้า 495 
-
-
-
-
-
-### **5. การสร้างและใช้งาน Widgets พื้นฐาน** 
-
-ในหัวข้อนี้จะกล่าวถึงวิธีการสร้าง Widgets พื้นฐานที่ส าคัญๆ ส าหรับใช้ในการสร้าง GUI เช่น frames, labels, buttons, checkbuttons, radiobuttons, entries และ comboboxes เป็นต้น ซึ่งผู้เขียน แนะน าให้อ่านไปตามล าดับ เพราะเนื้อหาทั้งหมดจะมีความเกี่ยวเนื่องกัน 
-
-### **1. Frame (เฟรม)** 
-
-เฟรมเป็น Widget ที่มีลักษณะเป็นรูปสี่เหลี่ยม โดยปกติเฟรมจะถูกใช้ส าหรับจัดกลุ่ม หรือบรรจุ Widgets อื่นๆ ที่เกี่ยวข้องหรือสัมพันธ์กันเข้าไว้ด้วยกัน รูปร่างของเฟรมแสดงในรูปที่ 19.13 
-
-
-
-รูปที่ 19.13 แสดงรูปแบบของเฟรมบนระบบปฏิบัติการต่างๆ 
-
-อ้างอิงจาก http://www.tkdocs.com/ 
-
-_รูปแบบค ำสั่งส ำหรับกำรสร้ำงเฟรมคือ_ 
-
-_<mark>`f =`</mark>_ **_<mark>`Frame`</mark>_** _<mark>`( root, option=value, ... )`</mark> พำรำมิเตอร์คือ_ 
-
-`o` root คือ วินโดวส์หลัก (root window) 
-
-`o` option คือ คุณสมบัติต่างๆ ของเฟรม แสดงในตารางด้านล่าง 
-
-||**Option**|**ค าอธิบาย**|
-|---|---|---|
-|bd||ก าหนดขนาดความกว้างของขอบเฟรมมีหน่วยเป็นพิกเซล ค่า|
-|||เริ่มต้นเท่ากับ 2 พิกเซล เช่น Frame(root,**bd=5**, height=50,|
-|||width=100, relief=GROOVE)|
-
-
-
-หน้า 496 
-
-
-
-|bg|ก าหนดสีพื้นด้านหลังของเฟรม เช่น Frame(root, bd=5,<br>height=50, width=100, relief=GROOVE,**bg="green"**)|
-|---|---|
-|cursor|ก าหนดรูปแบบของเคอร์เซอร์ เคอร์เซอร์จะเปลี่ยนรูปเมื่อ<br>เคลื่อนเมาส์ทับบนเฟรม เช่น Frame(root, bd=3, height=50,<br>width=100, relief=GROOVE,**cursor="hand1"**)|
-|height|ก าหนดความสูงของเฟรมมีหน่วยเป็นพิกเซล เช่น Frame(root,<br>bd=3,**height=50**, width=100, relief=GROOVE)|
-|width|ก าหนดความกว้างของเฟรม ถ้าไม่ก าหนดไพธอนจะก าหนด<br>ขนาดเท่ากับความกว้างของฟอนต์แทน เช่น Frame(root,<br>bd=3, height=50,**width=100**)|
-|highlightbackground  ีื้ัื่้ั  ่|ก าหนดแถบสีพื้นหลังเมื่อเฟรมได้รับความสนใจ (Focus) เช่น Frame(root,<br>bd=3, height=50, width=100,**highlightbackground="green"**)|
-|highlightcolor|ก าหนดแถบสีเมื่อเฟรมได้รับความสนใจ เช่น Frame(root, bd=3,<br>height=50, width=100,**highlightcolor="green"**)|
-|highlightthickness|ก าหนดความกว้างจากขอบของเฟรม เช่น Frame(root, bd=3, height=50,<br>width=100,**highlightthickness =2**)|
-|relief|ก าหนดลักษณะเฟรมในรูปแบบ 3 มิติ เช่น Frame(root, bd=5, height=50,<br>width=100,**relief=GROOVE**)|
-
-
-
-
-
-ส าหรับตัวอย่างการใช้งานเฟรม แสดงในโปรแกรมตัวอย่างที่ 19.10 ดังนี้ 
-
-|**`Prog `**|**`ram Example 19.10:`****_`Frame andpack()`_**|
-|---|---|
-|`1`<br>`2`<br>`3`|`from tkinter import *`<br>`root = Tk()`|
-|**`4`**|`frame = Frame(root, bd=3, height=300, width=500,`<br>`relief=GROOVE, cursor="hand1", highlightthickness=20)`|
-|**`5`**|`frame.pack(expand=True)`|
-|**`6`**|`redbutton = Button(frame, text="Red", fg="red")`|
-|`7`|`redbutton.pack(side=LEFT)`|
-|**`8`**|`greenbutton = Button(frame, text="Brown", fg="brown")`|
-|`9`|`greenbutton.pack(side=LEFT)`|
-|`10`|`bluebutton = Button(frame, text="Blue", fg="blue")`|
-|**`11`**<br>`12`|`bluebutton.pack(side=LEFT)`|
-|**`13`**|`bottomframe = Frame(root, bd=3, cursor="hand1",`<br>`relief=SUNKEN)`|
-|**`14`**|`bottomframe.pack(side = BOTTOM)`|
-|**`15`**|`blackbutton = Button(bottomframe, text="Black", fg="black")`|
-|`16`<br>`17`|`blackbutton.pack(side = BOTTOM)`|
-
-
-
-หน้า 497 
-
+B1 = tkinter.Button(root, relief=RAISED, cursor=" hand1")
+B2 = tkinter.Button(root, relief=RAISED, cursor=" heart")
+B1.pack()
+B2.pack()
+root.mainloop()
 ```
-18 root.mainloop()
-```
+
 
 
 
@@ -17307,29 +17702,30 @@ B.flash()
 
 ส าหรับตัวอย่างการสร้างและใช้งานปุ่ม แสดงในโปรแกรมตัวอย่างที่ 19.12 ดังนี้ 
 
+
+**Program Example 19.12: Button**
+
+```python
+from tkinter import *
+import tkinter
+
+root = tkinter.Tk()
+
+def helloCallBack():
+    messagebox.showinfo( "Hello Python", "Hello World")
+
+def printCallBack():
+    messagebox.showinfo( "Print", "Hello Printer")
+
+image = PhotoImage(file='printer.png')
+B1 = Button(root, text ="Go!", relief=GROOVE, underline=0, activebackground="yellow", activeforeground="red", command = helloCallBack)
+B2 = Button(root , image=image, padx=30, pady=20, command=printCallBack)
+B1.pack(expand=True)
+B2.pack()
+
+root.mainloop()
 ```
-Program Example 19.12: Button
-```
 
-|`1`<br>`2`<br>`3`<br>`4`<br>`5`|`from tkinter import *`<br>`import tkinter`<br>`root = tkinter.Tk()`|
-|---|---|
-|**`6`**|`def helloCallBack():`|
-|`7`|`messagebox.showinfo( "Hello Python", "Hello World")`|
-|`8`||
-|**`9`**|`def printCallBack():`|
-|`10`<br>`11`|`messagebox.showinfo( "Print", "Hello Printer")`|
-|**`12`**|`image = PhotoImage(file='printer.png')`|
-|**`13`**|`B1 = Button(root, text ="Go!", relief=GROOVE, underline=0,`<br>`activebackground="yellow", activeforeground="red", command =`<br>`helloCallBack)`|
-|**`14`**|`B2 = Button(root, image=image, padx=30, pady=20,`<br>`command=printCallBack)`|
-|`15`|`B1.pack(expand=True)`|
-|`16`<br>`17`|`B2.pack()`|
-
-
-
-หน้า 501 
-
-```
-18 root.mainloop()
 ```
 
 
@@ -17599,13 +17995,32 @@ C = Checkbutton(root, text = "Music")
 
 ส าหรับตัวอย่างการสร้างและใช้งานปุ่ม แสดงในโปรแกรมตัวอย่างที่ 19.14 ดังนี้ 
 
-###### **<mark>`Program Example 19.14:`</mark>** **_<mark>`Checkbutton`</mark>_** 
+######
+```
 
-- <mark>`1`</mark> `from tkinter import * 2 import tkinter 3 4 root = tkinter.Tk()` <mark></mark> **<mark>`5`</mark>** `CheckVar1 = StringVar()` <mark></mark> **<mark>`6`</mark>** `CheckVar2 = IntVar() 7` <mark></mark> **<mark>`8`</mark>** `def checkCallBack():` <mark></mark> **<mark>`9`</mark>** `C1.select()` <mark></mark> **<mark>`10`</mark>** `C2.toggle()` <mark></mark> **<mark>`11`</mark>** `print(CheckVar1.get())` <mark></mark> **<mark>`12`</mark>** `print(CheckVar2.get())` <mark>`13`</mark>  **`14`** `C1 = Checkbutton(root, text = "Music", variable = CheckVar1, onvalue = "on", offvalue = "off", height=5, width = 20, command=checkCallBack)` 
+**Program Example 19.14: Checkbutton**
 
-- **`15`** `C2 = Checkbutton(root, text = "Video", variable = CheckVar2, onvalue = 1, offvalue = 0, height=5, width = 20, command=checkCallBack)` 
+```python
+from tkinter import *
+import tkinter
 
-- `16 C1.pack() 17 C2.pack() 18 root.mainloop()` 
+root = tkinter.Tk()
+CheckVar1 = StringVar()
+CheckVar2 = IntVar()
+
+def checkCallBack():
+    C1.select()
+    C2.toggle()
+    print(CheckVar1.get())
+    print(CheckVar2.get())
+
+C1 = Checkbutton(root, text = "Music", variable = CheckVar1, onvalue = "on", offvalue =  "off", height=5, width = 20, command=checkCallBack)
+C2 = Checkbutton(root, text = "Video", variable = CheckVar2, onvalue = 1, offvalue = 0, height=5, width = 20, command=checkCallBack)
+C1.pack()
+C2.pack()
+root.mainloop()
+```
+
 
 ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง ให้ทดลองคลิกที่ Checkbutton และสังเกตการ เปลี่ยนแปลง 
 
@@ -18195,24 +18610,27 @@ wraplength ส าหรับ option ที่แตกต่างจาก Wi
 
 ส าหรับตัวอย่างการสร้างและใช้งาน Menubutton แสดงในโปรแกรมตัวอย่างที่ 19.19 ดังนี้ 
 
+
+**Program Example 19.19: Menubutton**
+
+```python
+from tkinter import *
+import tkinter
+
+root = Tk()
+
+mb = Menubutton(root, text="Colors", relief=RAISED, direction=RIGHT)
+mb.grid()
+mb.menu = Menu(mb, tearoff=0)
+mb["menu"] = mb.menu
+
+mb.menu.add_checkbutton(label="Red")
+mb.menu.add_checkbutton(label="Green")
+
+mb.pack()
+root.mainloop()
 ```
-Program Example 19.19: Menubutton
-```
 
-- <mark>`1`</mark> `from tkinter import *` 
-
-- `2 import tkinter` 
-
-- `3` 
-
-หน้า 523 
-
-
-
-
-
-<!-- Start of picture text -->
-4  root = Tk()<br>5<br> 6  mb = Menubutton(root, text="Colors", relief=RAISED,<br>direction=RIGHT)<br>7  mb.grid()<br> 8  mb.menu = Menu(mb, tearoff=0)<br> 9  mb["menu"] = mb.menu<br>10<br> 11  mb.menu.add_checkbutton(label="Red")<br> 12  mb.menu.add_checkbutton(label="Green")<br>13<br>14  mb.pack()<br>15  root.mainloop()<br>ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง<br><!-- End of picture text -->
 
 จากตัวอย่างโปรแกรมที่ 19.19 แสดงการสร้างและใช้งาน Menubutton บรรทัดที่ 6 สร้าง Menubutton ชื่อ mb โดยเมนูดังกล่าวมีข้อความคือ "Colors" และเมนูย่อยจะปรากฎทางด้านขวาของเมนู "Colors" บรรทัดที่ 8 สร้างเมนูย่อยภายใน Menubutton บรรทัดที่ 11 และ 12 เพิ่มรายการในเมนูย่อยชื่อ "Red" และ "Green" ตามล าดับ 
 
@@ -18251,7 +18669,22 @@ Option ดังต่อไปนี้มีคุณสมบัติกา�
 
 
 <!-- Start of picture text -->
-Program Example 19.20:  Message<br>1  from tkinter import *<br>2<br>3  root = Tk()<br>4<br> 5  var = StringVar()<br> 6  me = Message(root, textvariable=var, relief=RAISED )<br>7<br> 8  var.set("Hello!! Welcome to Python Programming?")<br>9  me.pack()<br>10  root.mainloop()<br>ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง<br><!-- End of picture text -->
+
+**Program Example 19.20: Message**
+
+```python
+from tkinter import *
+
+root = Tk()
+
+var = StringVar()
+me = Message(root, textvariable=var, relief=RAISED )
+
+var.set("Hello!! Welcome to Python Programming?")
+me.pack()
+root.mainloop()
+```
+
 
 
 
@@ -18619,24 +19052,31 @@ Widget ชนิด Scale มีเมธอดที่ช่วยสนับ
 
 ส าหรับตัวอย่างการสร้างและใช้งาน Scale แสดงในโปรแกรมตัวอย่างที่ 19.23 ดังนี้ 
 
-###### **<mark>`Program Example 19.23:`</mark>** **_<mark>`Scale`</mark>_** 
+######
 
-|`1`<br>`2`|`from tkinter import *`|
-|---|---|
-|**`3`**|`def sel():`|
-|`4`|`selection = "Value = " + str(var.get())`|
-|`5`<br>`6`|`label.config(text = selection)`|
-|`7`|`root = Tk()`|
-|**`8`**|`var = DoubleVar()`|
-|**`9`**|`scale = Scale(root, from_=1, to=15, resolution=1,`<br>`tickinterval=1, troughcolor="yellow", variable=var,`<br>`orient=VERTICAL)`|
-|`10`|`scale.pack(anchor=CENTER)`|
-|`11`||
-|**`12`**|`button = Button(root, text="Get Scale Value", command=sel)`|
-|`13`|`button.pack(anchor=CENTER)`|
-|`14`||
-|**`15`**|`label = Label(root)`|
-|`16`<br>`17`|`label.pack()`|
-|`18`|`root.mainloop()`|
+**Program Example 19.23: Scale**
+
+```python
+from tkinter import *
+
+def sel():
+    selection = "Value = " + str(var.get())
+    label.config(text = selection)
+
+root = Tk()
+var = DoubleVar()
+scale = Scale(root, from_=1, to=15, resolution=1, tickinterval=1, troughcolor="yellow", variable=var, orient=VERTICAL)
+scale.pack(anchor=CENTER)
+
+button = Button(root, text="Get Scale Value", command=sel)
+button.pack(anchor=CENTER)
+
+label = Label(root)
+label.pack()
+
+root.mainloop()
+```
+
 
 
 
@@ -18705,7 +19145,28 @@ Widget ชนิด Scale มีเมธอดที่ช่วยสนับ
 
 
 <!-- Start of picture text -->
-Program Example 19.24:  Scrollbar<br>1  from tkinter import *<br>2<br>3  root = Tk()<br>4<br> 5  scrollbar = Scrollbar(root)<br>6  scrollbar.pack(side = RIGHT, fill=Y)<br>7<br> 8  mylist = Listbox(root, yscrollcommand = scrollbar.set)<br>9<br> 10  for line in range(100):<br>11     mylist.insert(END, "This is line number " + str(line))<br>12<br>13  mylist.pack(side = LEFT, fill = BOTH)<br> 14  scrollbar.config(command = mylist.yview)<br>15<br>16  mainloop()<br>ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง<br><!-- End of picture text -->
+
+**Program Example 19.24: Scrollbar**
+
+```python
+from tkinter import *
+
+root = Tk()
+
+scrollbar = Scrollbar(root)
+scrollbar.pack(side = RIGHT, fill=Y)
+
+mylist = Listbox(root, yscrollcommand = scrollbar.set)
+
+for line in range(100):
+    mylist.insert(END, "This is line number " + str(line))
+
+mylist.pack(side = LEFT, fill = BOTH)
+scrollbar.config(command = mylist.yview)
+
+mainloop()
+```
+
 
 จากตัวอย่างโปรแกรมที่ 19.24 แสดงการสร้างและใช้งาน Scrollbar บรรทัดที่ 5 สร้าง Scrollbar ชื่อ scrollbar บรรทัดที่ 8 สร้าง Listbox ชื่อว่า mylist จากนั้นท าการเพิ่ม Scrollbar เข้าไปใน Listbox ใน แนวตั้งหรือแนวแกน y ด้วยค าสั่ง yscrollcommand (yscrollcommand = scrollbar.set) บรรทัดที่ 10 โปรแกรมใช้ลูป for สั่งพิมพ์ "This is line number" และตามด้วยตัวเลขที่เริ่มตั้งแต่ 0 – 99 ลงใน Listbox โดยใช้เมธอด insert() ส่งผลให้ Scrollbar สร้างแท็บสไลด์มีขนาดที่ครอบคลุมรายการทั้งหมด (ถ้าสั่งพิมพ์รายการน้อยๆ เช่น 5 รายการ Scrollbar จะไม่สร้างแท็บส าหรับเลื่อนสไลด์ให้) บรรทัดที่ 14 โปรแกรมสั่งกระตุ้นให้ Scrollbar ท างานด้วยเมธอด config() ผ่านอ๊อปชัน command ผลการท างานของ โปรแกรมแสดงดังรูปด้านบน 
 
@@ -18949,29 +19410,25 @@ Program Example 19.26:  Toplevel<br>1  from tkinter import *<br>2<br> 3  root
 
 โปรแกรมตัวอย่างที่ 19.27 แสดงตัวอย่างการสร้างและใช้งาน Toplevel อีกตัวอย่างหนึ่ง 
 
+
+**Program Example 19.27: Other Toplevel**
+
+```python
+from tkinter import *
+
+root = Tk()
+root.withdraw()
+
+top = Toplevel(root)
+top.protocol("WM_DELETE_WINDOW", root.destroy)
+
+but = Button(top, text='deiconify')
+but['command'] = root.deiconify
+but.pack()
+
+root.mainloop()
 ```
-Program Example 19.27: OtherToplevel
-```
 
-```
-1 from tkinter import *
-```
-
-หน้า 544 
-
-
-
-|`2`||
-|---|---|
-|**`3`**|`root = Tk()`|
-|**`4`**|`root.withdraw()`|
-|`5`||
-|**`6`**|`top = Toplevel(root)`|
-|**`7`**<br>`8`|`top.protocol("WM_DELETE_WINDOW", root.destroy)`|
-|**`9`**|`but = Button(top, text='deiconify')`|
-|**`10`**|`but['command'] = root.deiconify`|
-|`11`<br>`12`|`but.pack()`|
-|`13`|`root.mainloop()`|
 
 
 
@@ -19095,7 +19552,23 @@ text, width ส าหรับ option ที่แตกต่างจาก W
 
 
 <!-- Start of picture text -->
-Program Example 19.29:  LabelFrame<br>1  from tkinter import *<br>2<br>3  root = Tk()<br>4<br> 5  lf = LabelFrame(root, text="Group", labelanchor="n", padx=5,<br>pady=5)<br>6  lf.pack(padx=10, pady=10)<br>7<br> 8  e = Entry(lf)<br>9  e.pack()<br>10<br>11  root.mainloop()<br>ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง<br><!-- End of picture text -->
+
+**Program Example 19.29: LabelFrame**
+
+```python
+from tkinter import *
+
+root = Tk()
+
+lf = LabelFrame(root, text="Group", labelanchor="n", padx=5, pady=5)
+lf.pack(padx=10, pady=10)
+
+e = Entry(lf)
+e.pack()
+
+root.mainloop()
+```
+
 
 จากตัวอย่างโปรแกรมที่ 19.29 แสดงการสร้างและใช้งาน LabelFrame ในบรรทัดที่ 5 สร้าง LabelFrame ชื่อ lf โดยมีข้อความว่า "Group" วางอยู่ในทิศเหนือ (labelanchor="n") ของวินโดวส์ บรรทัดที่ 8 สร้าง Entry และเพิ่มลงใน LabelFrame 
 
@@ -19153,120 +19626,23 @@ _พำรำมิเตอร์คือ_
 
 ส าหรับตัวอย่างการสร้างและใช้งาน messagebox แสดงในโปรแกรมตัวอย่างที่ 19.30 ดังนี้ 
 
-```
-Program Example 19.30: messagebox
-```
 
-- <mark>`1`</mark> `from tkinter import *` <mark>`2`</mark> `import tkinter` 
+**Program Example 19.30: messagebox**
 
-หน้า 549 
+```python
+from tkinter import *
+import tkinter
 
+root = Tk()
+def hello():
+    messagebox.showinfo("Say Hello", "Hello World")
 
+B1 = Button(root, text = "Say Hello", command = hello)
+B1.pack()
 
-<mark>`3 4`</mark> `root = Tk()` <mark></mark> **<mark>`5`</mark>** `def hello():` <mark>`6`</mark> `messagebox.showinfo("Say Hello", "Hello World")` <mark>`7` </mark> **<mark>`8`</mark>** `B1 = Button(root, text = "Say Hello", command = hello)` <mark>`9`</mark> `B1.pack()` <mark>`10 11`</mark> `root.mainloop()` 
-
-ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง 
-
-
-
-จากตัวอย่างโปรแกรมที่ 19.30 แสดงการสร้างและใช้งาน messagebox ในบรรทัดที่ 5 สร้างฟังชันชื่อ hello() โดยพิมพ์ข้อความว่า "Hello World" ผ่าน messagebox บรรทัดที่ 8 สร้างปุ่มชื่อ B1 มีข้อความ ว่า "Say Hello" เมื่อกดปุ่มดังกล่าว โปรแกรมจะเรียกฟังชัน hello() มาท างาน 
-
-
-
-### **19. Widgets อื่นๆ ที่น่าสนใจ** 
-
-ไพธอนยังมี Widgets ที่น่าสนใจอื่นๆ เช่น Paned Windows, Notebook, Tree, Combobox, SizeGrip, Progressbar ซึ่งมีรูปแบบคือ 
-
-
-
-Paned Windows 
-
-
-
-
-
-Notebook Tree 
-
-หน้า 550 
-
-
-
-
-
-
-
-
-
-Combobox SizeGrip Progressbar 
-
-ตัวอย่างโปรแกรมที่ 19.31 แสดงการสร้างและใช้งาน Widgets ต่างๆ ที่แสดงไว้ในรูปด้านบน 
-
-|**`Prog `**|**`ram Example 19.31:`****_`Other Widgets`_**|
-|---|---|
-|`1`|`from tkinter import *`|
-|`2`|`import tkinter`|
-|`3`|`from tkinter import ttk`|
-|`4`||
-|`5`|`root = Tk()`|
-|`6`||
-|**`7`**|_`# PanedWindow`_|
-|`8`|`p = PanedWindow(root, orient=VERTICAL)`|
-|`9`|`f1 = LabelFrame(p, text='Pane1', width=100, height=100)`|
-|`10`|`f2 = LabelFrame(p, text='Pane2', width=100, height=100)`|
-|`11`|`p.add(f1)`|
-|`12`|`p.add(f2)`|
-|`13`|`p.pack()`|
-|`14`||
-|**`15`**|_`# Notebook`_|
-|`16`|`n = ttk.Notebook(root)`|
-|`17`|`f1 = Frame(n)`|
-|`18`|`f2 = Frame(n)`|
-|`19`|`n.add(f1, text='One')`|
-|`20`|`n.add(f2, text='Two')`|
-|`21`|`n.pack()`|
-|`22`||
-|**`23`**|_`# Treeview`_|
-|`24`|`tree = ttk.Treeview(root)`|
-|`25`|`tree.insert('', 'end', 'widgets', text='Widget Tour')`|
-|`26`|`tree.insert('', 0, 'gallery', text='Applications')`|
-|`27`|`id = tree.insert('', 'end', text='Tutorial')`|
-|`28`|`tree.insert('widgets', 'end', text='Canvas')`|
-|`29`|`tree.insert(id, 'end', text='Tree')`|
-|`30`|`tree.pack()`|
-|`31`||
-|**`32`**|_`# Combobox`_|
-|`33`|`countryvar = StringVar()`|
-|`34`|`country = ttk.Combobox(root, textvariable=countryvar)`|
-|`35`|`country['values'] = ('USA', 'Canada', 'Australia')`|
-|`36`|`country.pack()`|
-|`37`||
-|**`38`**|_`# Sizegrip`_|
-|`39`|`sg = ttk.Sizegrip(root)`|
-
-
-
-หน้า 551 
-
-
-
-```
-40 sg.pack()
-41
+root.mainloop()
 ```
 
-- **<mark>`42`</mark>** _`# Progressbar`_ 
-
-- `43 p = ttk.Progressbar(root, orient=HORIZONTAL, length=200,` 
-
-   - `mode='determinate')` 
-
-- <mark>`44`</mark> `p.start()` 
-
-- <mark>`45`</mark> `p.pack()` 
-
-- <mark>`46`</mark> 
-
-- <mark>`47`</mark> `root.mainloop()` 
 
 ผลลัพธ์ที่ได้เมื่อสั่งรันโปรแกรมดังรูปด้านล่าง 
 

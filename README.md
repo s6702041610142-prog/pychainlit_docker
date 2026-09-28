@@ -57,4 +57,4 @@ git add embeddings.npy && git commit -m "add embeddings" && git push
 
 ## หมายเหตุ
 - ต้องมี GEMINI_API_KEY จาก https://aistudio.google.com/apikey
-- โมเดลที่ใช้กำหนดใน `cl_app.py` (`gemini-3.5-flash-lite`, `gemini-3.6-flash`, ...) — หากบัญชีไม่มีโมเดลนี้ ให้เปลี่ยนเป็น `gemini-2.0-flash` / `gemini-2.5-flash`
+- โมเดลที่ใช้กำหนดใน `cl_app.py` (`gemini-3.5-flash-lite`, `gemini-3.6-flash`, ...) — หากบัญชีไม่มีโมเดลนี้ ให้เปลี่ยนเป็น `gemini-3.8-flash` (`gemini-2.0-flash` / `gemini-1.5-flash` ถูกปิดแล้ว)

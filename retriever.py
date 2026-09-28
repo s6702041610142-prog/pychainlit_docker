@@ -31,14 +31,25 @@ MAX_CHARS      = 1600     # เกินนี้บังคับหั่น
 OVERLAP_CHARS  = 150      # overlap ระหว่าง sub-chunk ของ section เดียวกัน
 
 # ---------- retrieval ----------
-PDF_TOP_K   = 7           # ดึง chunk จากหนังสือเยอะขึ้นเพื่อให้ครอบคลุมเนื้อหา
+PDF_TOP_K   = 8           # ดึง chunk จากหนังสือเยอะขึ้นเพื่อให้ครอบคลุมเนื้อหา
 EXCEL_TOP_K = 3
 SEM_POOL    = 20          # จำนวน candidate จาก semantic ก่อน fuse (เพิ่มเพื่อจับเนื้อหาที่เกี่ยวข้องแม้ไม่ตรง)
 KW_POOL     = 20          # จำนวน candidate จาก keyword ก่อน fuse
 MIN_SIM     = 0.25        # ลดลงเพื่อให้จับ semantic match ที่ "เกี่ยวข้อง" แม้ไม่ตรงทั้งหมด
 RRF_K       = 60          # ค่าคงที่ Reciprocal Rank Fusion
+DEFAULT_PER_HEAD_CAP  = 3 # จำกัด chunk/หัวข้อ ปกติ เพื่อให้ context ครอบคลุมหลายหัวข้อ ไม่กระจุก
+DOMINANT_PER_HEAD_CAP = 6 # ยกเว้นหัวข้อที่ตรงกับคำถามที่สุด (rank 1) ให้ดึงได้มากกว่า เพราะคำถาม
+                          # แบบ "มีกี่ข้อ/กี่ตัว" มักต้องใช้ทุก sub-chunk ของหัวข้อเดียวกันจึงจะครบ
 
 HEADING_RE = re.compile(r'^(#{1,6})\s+(.+?)\s*#*$')
+# บางหัวข้อในต้นฉบับเป็นตัวหนาล้วน ไม่มี # นำหน้า เช่น "**3. ประวัติการสร้างภาษาไพธอน...**"
+# (พบ ~40 จุดทั่วเล่ม จากการแปลง PDF ที่ไม่สม่ำเสมอ) — ถ้าไม่จับเป็นหัวข้อ เนื้อหาทั้งหมด
+# ใต้บรรทัดนั้นจะไหลเข้าไปติด breadcrumb ของหัวข้อก่อนหน้าไปเรื่อยๆ จนกว่าจะเจอ ### จริงถัดไป
+BOLD_HEADING_RE = re.compile(r'^\*\*(\d+(?:\.\d+)*\.?)\s+(.+?)\*\*\s*$')
+BOLD_HEADING_LEVEL = 3   # เทียบเท่าหัวข้อย่อยระดับ ### ของหัวข้อจริงแบบเดียวกันในเล่มนี้
+# แต่บางหัวข้อตัวหนาเป็นหัวข้อ "ลูก" ที่เริ่มนับ 1 ใหม่ใต้ ### (เช่น "### 6. ...GUI" ตามด้วย
+# "**1. เครื่องคิดเลข...**") — ถ้าให้ระดับเท่ากันจะเบียดหัวข้อแม่ออกจาก breadcrumb
+LEADING_NUM_RE = re.compile(r'^(\d+)')
 # หัวข้อขยะจากการแปลง PDF (เลขหน้า / "จบภาค X" / "ภ X") — ไม่เอาเข้า breadcrumb
 JUNK_HEADING_RE = re.compile(r'^(จบภาค|ภาค|ภ|บท|หน้า)?\s*[\d.\)]*\s*$')
 CRUMB_DEPTH = 2          # จำนวนชั้นหัวข้อสูงสุดใน breadcrumb
@@ -127,11 +138,25 @@ def _pack(body: str) -> list[str]:
     return pieces
 
 
+def _bold_level(num: int, stack: list[tuple[int, str, int | None]]) -> int:
+    """เดาระดับของหัวข้อตัวหนาจากความต่อเนื่องของเลขข้อ:
+    ต่อจากหัวข้อลูกก่อนหน้า -> ลูก, ต่อจาก ### -> พี่น้องของ ###, เริ่ม 1 ใหม่ใต้ ### -> ลูก"""
+    last = {lvl: n for lvl, _, n in stack}
+    child = BOLD_HEADING_LEVEL + 1
+    if last.get(child) == num - 1:
+        return child
+    if last.get(BOLD_HEADING_LEVEL) == num - 1:
+        return BOLD_HEADING_LEVEL
+    if num == 1 and BOLD_HEADING_LEVEL in last:
+        return child
+    return BOLD_HEADING_LEVEL
+
+
 def load_chunks(md_path: str) -> list[str]:
     """หั่นหนังสือตามลำดับชั้นหัวข้อ Markdown แล้วแนบ breadcrumb (h1 > h2 > h3)
     ไว้บรรทัดแรกของทุก chunk เพื่อให้ทั้ง keyword และ semantic search เห็นบริบทหัวข้อ"""
     text = clean_thai(Path(md_path).read_text(encoding="utf-8"))
-    stack: list[tuple[int, str]] = []   # [(level, title), ...]
+    stack: list[tuple[int, str, int | None]] = []   # [(level, title, เลขนำหน้า), ...]
     buf: list[str] = []
     chunks: list[str] = []
     in_fence = False
@@ -141,7 +166,7 @@ def load_chunks(md_path: str) -> list[str]:
         buf.clear()
         if not body:
             return
-        crumb = ' > '.join(t for _, t in stack[-CRUMB_DEPTH:])
+        crumb = ' > '.join(t for _, t, _ in stack[-CRUMB_DEPTH:])
         for piece in _pack(body):
             chunks.append(f"{crumb}\n\n{piece}" if crumb else piece)
 
@@ -152,14 +177,22 @@ def load_chunks(md_path: str) -> list[str]:
             buf.append(line)
             continue
         m = HEADING_RE.match(s) if not in_fence else None
-        if m:
+        bm = BOLD_HEADING_RE.match(s) if (not in_fence and not m) else None
+        if m or bm:
             flush()
-            level = len(m.group(1))
-            title = re.sub(r'[*_`]+', '', m.group(2)).strip()
+            if m:
+                level = len(m.group(1))
+                title = re.sub(r'[*_`]+', '', m.group(2)).strip()
+                num_m = LEADING_NUM_RE.match(title)
+                num = int(num_m.group(1)) if num_m else None
+            else:
+                num = int(LEADING_NUM_RE.match(bm.group(1)).group(1))
+                level = _bold_level(num, stack)
+                title = bm.group(2).strip()
             while stack and stack[-1][0] >= level:
                 stack.pop()
             if len(title) >= 3 and not JUNK_HEADING_RE.match(title):
-                stack.append((level, title))
+                stack.append((level, title, num))
                 buf.append(line)               # เก็บบรรทัดหัวข้อจริงไว้ในเนื้อ chunk ด้วย
             # หัวข้อขยะ (เลขหน้า / "จบภาค X") ทิ้งไปเลย ไม่ให้ปนเนื้อหา
         else:
@@ -260,39 +293,49 @@ def embeddings_ready(embeddings: np.ndarray | None, chunks: list[str]) -> bool:
     return embeddings is not None and len(embeddings) == len(chunks)
 
 
+def _kw_rank(query: str, chunks: list[str]) -> tuple[list[int], list[tuple[float, int]]]:
+    scored = sorted(((_score(query, c), i) for i, c in enumerate(chunks)), reverse=True)
+    return [i for s, i in scored[:KW_POOL] if s > 0], scored
+
+
 def search_pdf(query: str, chunks: list[str],
                top_k: int = PDF_TOP_K,
                embeddings: np.ndarray | None = None,
-               embed_fn=None) -> str:
+               embed_fn=None,
+               semantic_query: str | None = None) -> str:
+    """query = คำถามที่ขยาย keyword แล้ว (ช่วย keyword match คำสะกดผิด/ไทย-อังกฤษ)
+    semantic_query = คำถามเดิมของผู้ใช้ — ใช้ทำ semantic search เพราะ keyword ที่ LLM เติมมา
+    (เช่น "Built-in functions") ดึง embedding ออกนอกเรื่องได้ และใช้ทำ keyword search อีกชุดด้วย"""
     clean_q = clean_thai(query)
+    clean_sem_q = clean_thai(semantic_query) if semantic_query else clean_q
 
     # --- keyword ranking (ใช้ทุกโหมด) ---
-    kw_scored = sorted(
-        ((_score(clean_q, c), i) for i, c in enumerate(chunks)),
-        reverse=True,
-    )
-    kw_rank = [i for s, i in kw_scored[:KW_POOL] if s > 0]
+    kw_rank, kw_scored = _kw_rank(clean_q, chunks)
+    kw_rank_orig = _kw_rank(clean_sem_q, chunks)[0] if semantic_query else []
 
     # --- semantic ranking (ถ้ามี embeddings ที่ตรงกับ chunks) ---
     sem_rank: list[int] = []
     if embeddings is not None and embed_fn is not None and embeddings_ready(embeddings, chunks):
         try:
-            ranked = _semantic_rank(embed_fn(clean_q), embeddings, SEM_POOL)
+            ranked = _semantic_rank(embed_fn(clean_sem_q), embeddings, SEM_POOL)
             sem_rank = [i for i, sim in ranked if sim >= MIN_SIM] or [ranked[0][0]]
         except Exception:
             sem_rank = []                      # fall back to keyword only
 
-    if sem_rank:
-        ordered = _rrf(sem_rank, kw_rank)
-    else:
-        ordered = kw_rank or [i for _, i in kw_scored[:2]]
+    rankings = [r for r in (sem_rank, kw_rank_orig, kw_rank) if r]
+    ordered = _rrf(*rankings) if rankings else [i for _, i in kw_scored[:2]]
 
-    # เลือกไม่เกิน 3 chunk ต่อหัวข้อ เพื่อให้ครอบคลุมเนื้อหาแต่ไม่กระจุกเกินไป
+    # เลือกไม่เกิน DEFAULT_PER_HEAD_CAP chunk ต่อหัวข้อ เพื่อให้ครอบคลุมหลายหัวข้อไม่กระจุกเกินไป
+    # ยกเว้นหัวข้อที่ rank อันดับ 1 (ตรงกับคำถามที่สุด) ให้ดึงได้ถึง DOMINANT_PER_HEAD_CAP
+    # เพราะคำถามที่คำตอบสมบูรณ์ต้องมาจากหัวข้อเดียวกันทั้งหมด (เช่น "มีกี่ข้อ/กี่ตัว") ไม่ควรถูก
+    # หัวข้ออื่นที่ไม่เกี่ยวข้องแย่ง slot ไปจนคำตอบขาดหาย
+    dominant_head = chunks[ordered[0]].split('\n', 1)[0] if ordered else None
     per_head: dict[str, int] = {}
     picked: list[int] = []
     for i in ordered:
         h = chunks[i].split('\n', 1)[0]
-        if per_head.get(h, 0) >= 3:
+        cap = DOMINANT_PER_HEAD_CAP if h == dominant_head else DEFAULT_PER_HEAD_CAP
+        if per_head.get(h, 0) >= cap:
             continue
         per_head[h] = per_head.get(h, 0) + 1
         picked.append(i)
@@ -308,10 +351,12 @@ def search_pdf(query: str, chunks: list[str],
 
 def search(query: str, chunks: list[str], qa_rows: list[dict],
            embeddings: np.ndarray | None = None,
-           embed_fn=None) -> str:
+           embed_fn=None,
+           semantic_query: str | None = None) -> str:
     qa_result = search_qa(query, qa_rows)
     pdf_result = search_pdf(query, chunks,
-                            embeddings=embeddings, embed_fn=embed_fn)
+                            embeddings=embeddings, embed_fn=embed_fn,
+                            semantic_query=semantic_query)
     parts = []
     # เนื้อหาจากหนังสือเป็นแหล่งข้อมูลหลัก — วางก่อนเสมอ
     if pdf_result:
