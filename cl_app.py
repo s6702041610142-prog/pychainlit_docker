@@ -5,7 +5,7 @@ import asyncio
 import chainlit as cl
 from dotenv import load_dotenv
 from google import genai
-from google.genai import types, errors
+from google.genai import types
 import numpy as np
 
 # โหลดฟังก์ชันค้นหาจากไฟล์เดิม
@@ -15,8 +15,10 @@ from prompt import PROMPT_PYBOT
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY", "")
 try:
-    # timeout (ms) กันคำขอที่ค้างไม่ตอบ — ไม่งั้นแอปจะรอไปเรื่อย ๆ
-    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=60_000))
+    # timeout (ms) กันคำขอที่ค้างไม่ตอบ และปิดการ retry ภายใน SDK (attempts=1)
+    # — เดิม SDK แอบลองซ้ำเองตอนโดน 429/503 ทำให้ผู้ใช้รอเกือบ 2 นาทีก่อนสลับโมเดล
+    client = genai.Client(api_key=api_key, http_options=types.HttpOptions(
+        timeout=60_000, retry_options=types.HttpRetryOptions(attempts=1)))
 except ValueError:
     client = None
 
@@ -37,38 +39,59 @@ CHAT_CONFIG = types.GenerateContentConfig(
 BASE_DIR = os.path.dirname(__file__)
 MAX_HISTORY_MESSAGES = 20   # 10 รอบคุย — 6 (3 รอบ) ทำให้ลืมสิ่งที่ผู้ใช้บอกเร็วเกินไป
 
+# ขั้นช่วยค้นหา (แก้คำผิด / ขยายคำค้น / embedding) ไม่จำเป็นต้องสำเร็จ — ให้เวลาสั้นแล้วข้ามไป (API รับขั้นต่ำ 10 วินาที)
+HELPER_MODEL = "gemini-3.5-flash-lite"
+HELPER_HTTP = types.HttpOptions(timeout=10_000, retry_options=types.HttpRetryOptions(attempts=1))
+
+# โมเดลที่เพิ่งโควตาหมดหรือเซิร์ฟเวอร์ล่ม ข้ามไปชั่วคราว ไม่ต้องเสียเวลาลองซ้ำทุกคำถาม
+QUOTA_COOLDOWN = 60   # วินาที
+_quota_until: dict[str, float] = {}
+
+def _cooling(model: str) -> bool:
+    return time.monotonic() < _quota_until.get(model, 0.0)
+
+def _note_failure(where: str, model: str, e: Exception):
+    msg = str(e)
+    # 429/402 = โควตาหมด, 503/504 = เซิร์ฟเวอร์ Gemini คนใช้เยอะ/ตอบไม่ทัน — ทั้งคู่มักเป็นต่อเนื่องสักพัก
+    if any(k in msg for k in ("429", "RESOURCE_EXHAUSTED", "402", "503", "UNAVAILABLE", "504", "DEADLINE_EXCEEDED")) \
+            or isinstance(e, asyncio.TimeoutError):
+        _quota_until[model] = time.monotonic() + QUOTA_COOLDOWN
+    print(f"{where} ({model} failed): {type(e).__name__} {msg[:160]}")
+
 def normalize_query(query: str) -> str:
-    if not client: return query
+    if not client or _cooling(HELPER_MODEL): return query
     try:
         result = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
+            model=HELPER_MODEL,
             contents=(
                 f"คำถามเกี่ยวกับ Python: '{query}'\n"
                 f"งาน: แก้ typo, ดึง Python keyword ที่ถูกต้อง, และแปลงเป็นคำภาษาไทยที่เกี่ยวข้อง\n"
                 f"ตอบเฉพาะ keywords 2-5 คำ คั่นด้วย space ห้ามอธิบาย"
             ),
-            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=30),
+            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=30, http_options=HELPER_HTTP),
         )
         return f"{query} {result.text.strip().replace(chr(10), ' ')}"
-    except Exception:
+    except Exception as e:
+        _note_failure("normalize_query skipped", HELPER_MODEL, e)
         return query
 
 def expand_query(query: str, chunks: list) -> str:
-    if not client: return query
+    if not client or _cooling(HELPER_MODEL): return query
     try:
         initial_context = search_pdf(query, chunks)
         result = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
+            model=HELPER_MODEL,
             contents=(
                 f"เนื้อหาจากหนังสือ Python MSU:\n{initial_context[:1500]}\n\n"
                 f"คำถาม: {query}\n\n"
                 f"ดึง keywords ภาษาไทยและอังกฤษที่เกี่ยวข้องกับ Python concept นี้ 2-3 คำ\n"
                 f"ตอบเฉพาะ keywords คั่นด้วย space เท่านั้น ห้ามอธิบาย"
             ),
-            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=20),
+            config=types.GenerateContentConfig(temperature=0.0, max_output_tokens=20, http_options=HELPER_HTTP),
         )
         return f"{query} {result.text.strip().replace(chr(10), ' ')}"
-    except Exception:
+    except Exception as e:
+        _note_failure("expand_query skipped", HELPER_MODEL, e)
         return query
 
 GREETING_PATTERNS = {
@@ -102,7 +125,7 @@ def embed_query(text: str) -> np.ndarray:
     result = client.models.embed_content(
         model="gemini-embedding-001",
         contents=text[:2000],
-        config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY"),
+        config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY", http_options=HELPER_HTTP),
     )
     return np.array(result.embeddings[0].values, dtype=np.float32)
 
@@ -190,31 +213,30 @@ async def answer_with_gemini(msg: cl.Message, raw_history: list, user_input: str
         return False
     gemini_history = [types.Content(role=h["role"], parts=[types.Part(text=h["content"])]) for h in raw_history]
     for model in GEMINI_MODELS:
-        for attempt in range(3):
-            try:
-                await _reset(msg)
-                # ใช้ client.aio (async) — ตัว sync จะบล็อก event loop ทั้งเซิร์ฟเวอร์ระหว่างรอ Gemini
-                chat = client.aio.chats.create(model=model, config=CHAT_CONFIG, history=gemini_history)
-                stream = await asyncio.wait_for(chat.send_message_stream(user_input), STREAM_IDLE_TIMEOUT)
-                async for chunk in _with_idle_timeout(stream):
-                    if chunk.text:
-                        await msg.stream_token(chunk.text)
-                await msg.update()
-                print(f"Answered by {model}")
-                return True
-            except errors.ServerError:
-                if attempt < 2:
-                    await asyncio.sleep(7)
-            except Exception as e:   # 404 / 429 quota หมด ฯลฯ -> ข้ามไปโมเดลถัดไป
-                print(f"Gemini Fallback ({model} failed): {type(e).__name__} {str(e)[:200]}")
-                break
+        if _cooling(model):
+            print(f"Gemini skip {model}: quota cooldown")
+            continue
+        try:
+            await _reset(msg)
+            # ใช้ client.aio (async) — ตัว sync จะบล็อก event loop ทั้งเซิร์ฟเวอร์ระหว่างรอ Gemini
+            chat = client.aio.chats.create(model=model, config=CHAT_CONFIG, history=gemini_history)
+            stream = await asyncio.wait_for(chat.send_message_stream(user_input), STREAM_IDLE_TIMEOUT)
+            async for chunk in _with_idle_timeout(stream):
+                if chunk.text:
+                    await msg.stream_token(chunk.text)
+            await msg.update()
+            print(f"Answered by {model}")
+            return True
+        except Exception as e:   # 404 / 429 / 503 / timeout -> ข้ามไปโมเดลถัดไปทันที ไม่ลองซ้ำ
+            _note_failure("Gemini Fallback", model, e)
     return False
 
 async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input: str, openrouter_key: str | None) -> bool:
     if not openrouter_key:
         return False
     from openai import AsyncOpenAI
-    openai_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=openrouter_key, timeout=60)
+    openai_client = AsyncOpenAI(base_url="https://openrouter.ai/api/v1", api_key=openrouter_key,
+                                timeout=60, max_retries=0)
 
     # แปลง role: "model" -> "assistant"
     or_history = [{"role": "system", "content": PROMPT_PYBOT}]
@@ -224,6 +246,9 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
     or_history.append({"role": "user", "content": user_input})
 
     for model_name in OPENROUTER_MODELS:
+        if _cooling(model_name):
+            print(f"OpenRouter skip {model_name}: quota cooldown")
+            continue
         try:
             await _reset(msg)
             stream = await openai_client.chat.completions.create(
@@ -240,7 +265,7 @@ async def answer_with_openrouter(msg: cl.Message, raw_history: list, user_input:
             print(f"Answered by {model_name}")
             return True
         except Exception as e:
-            print(f"OpenRouter Fallback ({model_name} failed): {type(e).__name__} {str(e)[:200]}")
+            _note_failure("OpenRouter Fallback", model_name, e)
     return False
 
 def build_raw_history(session_messages: list, relevant_context: str) -> list:
